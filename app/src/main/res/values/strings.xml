@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">EasyItalian</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">设置</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="button_learn">背单词</string>
+    <string name="button_read">读美文</string>
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">全局设置</string>
+
+
+    <string name="language_setting">语言设置</string>
+    <string-array name="language_setting_list">
+        <item>中文</item>
+        <item>English</item>
+        <item>Italiano</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+</resources>
