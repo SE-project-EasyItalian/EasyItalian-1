@@ -12,6 +12,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
+import com.example.youngkaaa.ycircleview.CircleView
 import kotlinx.android.synthetic.main.content_main.*
 
 
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // CHOICE make the profile to a circle
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
-        val profile = headerView.findViewById(R.id.profile_picture) as ImageView
+        val profile = headerView.findViewById(R.id.profile_picture) as CircleView
         profile.setOnClickListener(){
             Toast.makeText(this,"call 个人资料 activity",Toast.LENGTH_SHORT).show()
 

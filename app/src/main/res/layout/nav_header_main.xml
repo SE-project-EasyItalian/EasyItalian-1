@@ -11,16 +11,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <com.example.youngkaaa.ycircleview.CircleView
         android:id="@+id/profile_picture"
-        android:contentDescription="@string/des_profile"
-        android:layout_width="102dp"
-        android:layout_height="97dp"
-        android:baselineAligned="false"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:clickable="true"
-        android:focusable="true"
-        app:srcCompat="@mipmap/laura" />
+        android:layout_width="113dp"
+        android:layout_height="94dp"
+        app:imgSrc="@mipmap/laura" />
 
     <TextView
         android:id="@+id/textView"
