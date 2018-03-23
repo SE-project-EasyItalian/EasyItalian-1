@@ -7,10 +7,13 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
+import android.view.View
+import kotlinx.android.synthetic.main.content_main.*
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -19,12 +22,43 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        // find parent view to make profile clickable on first call
+        // CHOICE make the profile to a circle
+        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+        val headerView = navigationView.getHeaderView(0)
+        val profile = headerView.findViewById(R.id.profile_picture) as ImageView
+        profile.setOnClickListener(){
+            Toast.makeText(this,"call 个人资料 activity",Toast.LENGTH_SHORT).show()
+
+            //the following part to call PersonalInfoActivity
+            //val changeToPersonalInfoActivity = Intent()
+            // changeToPersonalInfoActivity.setClass(this,PersonalInfoActivity::class.java)
+            // startActivity(changeToPersonalInfoActivity)
+
+            drawer_layout.closeDrawer(GravityCompat.START) // close side bar
+        }
+
+
+        //search_new_word & learn_button & read_button
+
+        searchWordButton.setOnClickListener(){
+            Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
+        }
+        button_learn.setOnClickListener(){
+            Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
+        }
+        button_read.setOnClickListener(){
+            Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
+        }
+        //end
+
+
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
         nav_view.setNavigationItemSelectedListener(this)
+
     }
 
     override fun onBackPressed() {
@@ -35,9 +69,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
+
         when (item.itemId) {
             R.id.nav_new_word -> {
                 Toast.makeText(this,"call 生词本 activity",Toast.LENGTH_SHORT).show()
@@ -50,6 +84,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_setting -> {
                 Toast.makeText(this,"call 设置 activity",Toast.LENGTH_SHORT).show()
+                // call SettingActivity
                 val changeToSetting = Intent()
                 changeToSetting.setClass(this,SettingsActivity::class.java)
                 startActivity(changeToSetting)
@@ -57,10 +92,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_about -> {
                 Toast.makeText(this,"call 关于 activity",Toast.LENGTH_SHORT).show()
             }
-
-        }
-        profile_picture.setOnClickListener(){
-            Toast.makeText(this,"call 个人资料 activity",Toast.LENGTH_SHORT).show()
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)

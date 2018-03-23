@@ -13,6 +13,7 @@
 
     <ImageView
         android:id="@+id/profile_picture"
+        android:contentDescription="@string/des_profile"
         android:layout_width="102dp"
         android:layout_height="97dp"
         android:baselineAligned="false"
@@ -25,7 +26,7 @@
         android:id="@+id/textView"
         android:layout_width="172dp"
         android:layout_height="wrap_content"
-        android:text="  Laura"
+        android:text="@string/example_id"
         android:textSize="44sp" />
 
 </LinearLayout>

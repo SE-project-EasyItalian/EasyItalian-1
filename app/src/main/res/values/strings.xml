@@ -3,11 +3,13 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="example_id">  Laura</string>
     <string name="action_settings">设置</string>
     <string name="title_activity_settings">设置</string>
     <string name="button_learn">背单词</string>
     <string name="button_read">读美文</string>
+    <string name="des_search_new_word">Search New Word</string>
+    <string name="des_profile">the profile of user</string>
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
