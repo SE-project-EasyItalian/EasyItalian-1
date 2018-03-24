@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 /**
+ *
  * Created by liaoyujun on 2018/3/22.
  */
 
@@ -45,7 +46,6 @@ public class ResitePage extends Activity{
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent=new Intent(ResitePage.this,MainActivity.class);
                 startActivity(intent);
             }
@@ -85,4 +85,5 @@ public class ResitePage extends Activity{
             }
         });
     }
+
 }

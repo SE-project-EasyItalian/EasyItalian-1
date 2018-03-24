@@ -27,15 +27,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
         val profile = headerView.findViewById<CircleView>(R.id.profile_picture) as CircleView
+
         profile.setOnClickListener(){
             Toast.makeText(this,"call 个人资料 activity",Toast.LENGTH_SHORT).show()
 
             //the following part to call PersonalInfoActivity
-             val changeToPersonalInfoActivity = Intent()
-            changeToPersonalInfoActivity.setClass(this,FragmentPreferences::class.java)
+            val changeToPersonalInfoActivity = Intent()
+            changeToPersonalInfoActivity.setClass(this,PersonalInfo::class.java)
             startActivity(changeToPersonalInfoActivity)
 
-            //fragmentManager.beginTransaction().replace(android.R.id.content, FragmentPreferences.PrefsFragement()).commit()
 
             drawer_layout.closeDrawer(GravityCompat.START) // close side bar
         }
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         //end
 
-
+        // make sure the nav_view open&close in time
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -88,16 +88,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_finished_word-> {
                 // new word ? from lyj
-               // val changeToNewWords = Intent()
-               // changeToNewWords.setClass(this, NewWords::class.java)
-               // startActivity(changeToNewWords)
+                val changeToNewWords = Intent()
+                changeToNewWords.setClass(this, NewWords::class.java)
+                startActivity(changeToNewWords)
                 Toast.makeText(this,"call 已完成单词 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_coming_word -> {
                 // same as above
-               // val changeToNewWords = Intent()
-               // changeToNewWords.setClass(this, NewWords::class.java)
-               // startActivity(changeToNewWords)
+               val changeToNewWords = Intent()
+               changeToNewWords.setClass(this, NewWords::class.java)
+               startActivity(changeToNewWords)
                 Toast.makeText(this,"call 未背单词 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_setting -> {
@@ -106,10 +106,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 changeToSetting.setClass(this, Setting::class.java)
                 startActivity(changeToSetting)
                 Toast.makeText(this,"call 设置 activity",Toast.LENGTH_SHORT).show()
-                // call SettingActivity
-              //  val changeToSetting = Intent()
-              //  changeToSetting.setClass(this,SettingsActivity::class.java)
-              //  startActivity(changeToSetting)
             }
             R.id.nav_about -> {
                 Toast.makeText(this,"call 关于 activity",Toast.LENGTH_SHORT).show()

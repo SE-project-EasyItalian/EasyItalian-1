@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 /**
+ *
  * Created by liaoyujun on 2018/3/22.
  */
 
@@ -21,25 +22,43 @@ public class Setting extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(Setting.this,android.R.layout.simple_list_item_1,data);
-        ListView listView=(ListView)findViewById(R.id.list_view);
+        ArrayAdapter adapter=new ArrayAdapter<String>(Setting.this,android.R.layout.simple_list_item_1,data);
+        ListView listView=findViewById(R.id.list_view);
         listView.setAdapter(adapter);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // String text = (String) ((TextView)view.findViewById(R.id.text)).getText();
-                //大多数情况下，position和id相同，并且都从0开始
-                String showText = "点击第" + position + "项，文本内容为："  + "，ID为：" + id;
-                Toast.makeText(Setting.this,showText,Toast.LENGTH_SHORT).show();
+                String showText;
+                switch (position+1){
+
+                    case 1:
+                        showText = "执行第" +1+ "个函数";
+                        Toast.makeText(Setting.this,showText,Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        showText = "执行第" +2+ "个函数";
+                        Toast.makeText(Setting.this,showText,Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        showText = "执行第" +3+ "个函数";
+                        Toast.makeText(Setting.this,showText,Toast.LENGTH_SHORT).show();
+                        break;
+                    case 4:
+                        showText = "执行第" +4+"个函数";
+                        Toast.makeText(Setting.this,showText,Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
 
             }
         });
 
 
 
-        Button button_back=(Button)findViewById(R.id.back_);
+        Button button_back=findViewById(R.id.back_);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
