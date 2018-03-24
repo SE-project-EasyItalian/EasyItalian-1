@@ -13,11 +13,18 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
 import com.example.youngkaaa.ycircleview.CircleView
 import kotlinx.android.synthetic.main.content_main.*
+import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val login = Intent(this,LoginActivity::class.java)
+        startActivity(login)
+
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
