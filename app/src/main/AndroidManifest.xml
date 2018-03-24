@@ -22,6 +22,20 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
+        <activity android:name=".FragmentPreferences"
+            android:label="个人"/>
+
+        <!-- activity form lyj -->
+        <activity
+            android:name=".ResitePage"/>
+        <activity
+            android:name=".WordImformation"/>
+        <activity
+            android:name=".Setting"/>
+        <activity
+            android:name=".NewWords"/>
+
+
     </application>
 
 </manifest>

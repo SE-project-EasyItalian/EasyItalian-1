@@ -1,12 +1,19 @@
 package layout.com.anew.layout1
 
 import android.annotation.TargetApi
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceActivity
 import android.preference.PreferenceFragment
+import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Adapter
+import android.widget.ArrayAdapter
+import android.widget.ListView
 
 /**
  * A [PreferenceActivity] that presents a set of application settings. On
@@ -82,3 +89,30 @@ class SettingsActivity : AppCompatPreferenceActivity() {
 }
 
 
+class FragmentPreferences : PreferenceActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //setContentView(R.layout.personal_info)
+
+       fragmentManager.beginTransaction().replace(android.R.id.content, PrefsFragment()).commit()
+    }
+
+   class PrefsFragment : PreferenceFragment() {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            addPreferencesFromResource(R.xml.pref_personal_info)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return true
+    }
+
+
+
+
+}

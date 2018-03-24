@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <ListPreference
+        android:defaultValue="-1"
+        android:entries="@array/language_setting_list"
+        android:entryValues="@array/pref_example_list_values"
+        android:key="example_list"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="个人" />
+    <ListPreference
+        android:defaultValue="-1"
+        android:entries="@array/language_setting_list"
+        android:entryValues="@array/pref_example_list_values"
+        android:key="example_list"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="第二个" />
+
+</PreferenceScreen>
