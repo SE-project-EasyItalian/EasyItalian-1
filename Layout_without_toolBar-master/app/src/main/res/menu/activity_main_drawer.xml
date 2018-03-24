@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_new_word"
+            android:icon="@mipmap/vocab_book_new"
+            android:title="生词本" />
+        <item
+            android:id="@+id/nav_finished_word"
+            android:icon="@mipmap/vocab_book_finished"
+            android:title="已经掌握" />
+        <item
+            android:id="@+id/nav_coming_word"
+            android:icon="@mipmap/ic_unfinished"
+            android:title="还未学习" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@mipmap/ic_settings"
+            android:title="设置" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@mipmap/ic_info"
+            android:title="关于" />
+    </group>
+
+</menu>
