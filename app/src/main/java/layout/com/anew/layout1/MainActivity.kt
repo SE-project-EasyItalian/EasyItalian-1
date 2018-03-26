@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val login = Intent(this,LoginActivity::class.java)
-        startActivity(login)
+      //  val login = Intent(this,LoginActivity::class.java)
+     //   startActivity(login)
 
 
 
@@ -61,10 +61,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         button_learn.setOnClickListener(){
 
             val changeToResitePage = Intent()
-            changeToResitePage.setClass(this, ResitePage::class.java)
+            //changeToResitePage.setClass(this, ResitePage::class.java)
+            changeToResitePage.setClass(this,ReciteWord::class.java)
             startActivity(changeToResitePage)
 
-            Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
         }
         button_read.setOnClickListener(){
             //Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()

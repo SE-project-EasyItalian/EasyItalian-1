@@ -7,19 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-/**
- *
- * Created by liaoyujun on 2018/3/22.
- */
+
 
 public class ResitePage extends Activity{
-   // private Button button_remember;
-   // private Button button_incognizance;
-    //private Button button_back;
-   // private Button button;
-   // private Button button2;
-   // private Button button3;
-   // private Button button4;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resite_page);

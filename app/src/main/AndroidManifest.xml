@@ -32,6 +32,7 @@
         <activity
             android:name=".PersonalInfo"
             android:label="personal_info" />
+        <activity android:name=".ReciteWord"/>
 
         <!-- activity form lyj -->
         <activity android:name=".ResitePage" />
