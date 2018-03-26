@@ -13,7 +13,12 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
 import com.example.youngkaaa.ycircleview.CircleView
 import kotlinx.android.synthetic.main.content_main.*
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.parsers.SAXParser
 import kotlin.math.log
+import android.content.res.XmlResourceParser
+
+
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -51,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //search_new_word & learn_button & read_button
 
         searchWordButton.setOnClickListener(){
-            Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
+           Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
         }
         button_learn.setOnClickListener(){
 
@@ -62,7 +67,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
         }
         button_read.setOnClickListener(){
-            Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"此按钮目前为x用来测试词库用。",Toast.LENGTH_SHORT).show()
+            val dbf = DocumentBuilderFactory.newInstance()
+            val db = dbf.newDocumentBuilder()
+            val doc = db.parse(assets.open("wordbook.xml"))
+            val wordList = doc.getElementsByTagName("items")
+            val len = wordList.length
+            Toast.makeText(this,"共有" +len+ "个单词",Toast.LENGTH_SHORT).show()
         }
         //end
 
