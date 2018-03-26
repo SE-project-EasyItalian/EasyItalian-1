@@ -60,10 +60,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         button_learn.setOnClickListener(){
 
-            val changeToResitePage = Intent()
-            //changeToResitePage.setClass(this, ResitePage::class.java)
-            changeToResitePage.setClass(this,ReciteWord::class.java)
-            startActivity(changeToResitePage)
+            val changeToRecitePage = Intent()
+            // uncomment the following 2 lines and comment 3 lines written by xsx ..
+            //.. to show recite page written by lyj
+            // changeToRecitePage.setClass(this, ResitePage::class.java)
+            // startActivity(changeToRecitePage)
+
+
+            // the following 3 lines are the RecitePage written by xsx in Kotlin
+            val firstReciteWord = ReciteWord()
+            changeToRecitePage.setClass(this,firstReciteWord::class.java)
+            startActivity(changeToRecitePage)
 
             //Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
         }
