@@ -23,7 +23,7 @@ class SettingActivity : Activity() {
         listView.adapter = adapter
 
 
-        listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             val showText: String
             when (position + 1) {
 

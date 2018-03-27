@@ -7,23 +7,25 @@ import android.widget.Button
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_recite_word.*
 import java.util.Random
+import javax.xml.parsers.DocumentBuilderFactory
 
 
 class ReciteWord : Activity() {
 
-    var wordForRecite = "Ciao"
-    var wordTrans = "你好，再见"  //word translation . use setTrans to change it
-    var otherWordTrans = mutableListOf<String>("番茄","函数","相等")
-
+    var wordForRecite = " "
+    var wordTrans = " "  //word translation . use setTrans to change it
+    var otherWordTrans = mutableListOf<String>()
+    var  n =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recite_word)
-        // create recite page
-        createRecite()
+        //show the n-th word
+        createNew(n)
 
         // functional button listener
         remembereIt.setOnClickListener {
-            Toast.makeText(this,"call creat new function",Toast.LENGTH_SHORT).show()
+            createNew(++n)
+            //Toast.makeText(this,"call creat new function",Toast.LENGTH_SHORT).show()
         }
 
         showDetails.setOnClickListener {
@@ -71,7 +73,7 @@ class ReciteWord : Activity() {
         buttonMap[randNum]?.setOnClickListener(){
             Toast.makeText(this, "答对了！", Toast.LENGTH_LONG).show()
             // this should  turn to a new word
-            createNew() // the input maybe a database
+            createNew(++n)  // the input maybe a database
             //Toast.makeText(this,wordForRecite+wordTrans+otherWordTrans,Toast.LENGTH_SHORT).show()
             //Toast for test
         }
@@ -100,15 +102,29 @@ class ReciteWord : Activity() {
 
     //setter new function
     //current just for test
-    fun createNew(){
-        setWord("pomodolo")
-        setTrans("番茄[sm]")
-        setOtherWordTranslation(mutableListOf("早上好","中午好","晚上好"))
+    fun createNew(num:Int){
+        val newWord = getWordFromXml(num)
+        setWord(newWord.word)
+        setTrans(newWord.trans)
+        setOtherWordTranslation(mutableListOf("混淆1","混淆2","混淆3"))
         createRecite()
     }
 
-    fun getWordFromXml(){
-        //
+    fun getWordFromXml(num:Int):Word{
+        val dbf = DocumentBuilderFactory.newInstance()
+        val db = dbf.newDocumentBuilder()
+        val doc = db.parse(assets.open("wordbook.xml"))
+        val wordList = doc.getElementsByTagName("items")
+        val newWrod = Word()
+        if(num<wordList.length) {
+            val elem = wordList.item(num)
+            newWrod.word = elem.childNodes.item(1).textContent
+            newWrod.pos = elem.childNodes.item(3).textContent
+            newWrod.tran = elem.childNodes.item(5).textContent
+            newWrod.trans = elem.childNodes.item(7).textContent
+            newWrod.example = elem.childNodes.item(9).textContent
+        }
+        return newWrod
     }
 
 
