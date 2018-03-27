@@ -33,12 +33,9 @@
             android:name=".PersonalInfo"
             android:label="personal_info" />
         <activity android:name=".ReciteWord"/>
-
-        <!-- activity form lyj -->
-        <activity android:name=".ResitePage" />
-        <activity android:name=".WordImformation" />
-        <activity android:name=".Setting" />
-        <activity android:name=".NewWords" />
+        <activity android:name=".SettingActivity"/>
+        <activity android:name=".WordDetailsActivity" />
+        <activity android:name=".NewWords"/>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">

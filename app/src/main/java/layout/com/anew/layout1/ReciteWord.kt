@@ -27,7 +27,7 @@ class ReciteWord : Activity() {
         }
 
         showDetails.setOnClickListener {
-            val intent = Intent(this, WordImformation::class.java)
+            val intent = Intent(this, WordDetailsActivity::class.java)
             startActivity(intent)
             /*
             * should call a function like this:
@@ -105,6 +105,10 @@ class ReciteWord : Activity() {
         setTrans("番茄[sm]")
         setOtherWordTranslation(mutableListOf("早上好","中午好","晚上好"))
         createRecite()
+    }
+
+    fun getWordFromXml(){
+        //
     }
 
 

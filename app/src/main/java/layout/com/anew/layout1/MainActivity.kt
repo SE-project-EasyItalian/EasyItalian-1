@@ -14,9 +14,7 @@ import android.view.View
 import com.example.youngkaaa.ycircleview.CircleView
 import kotlinx.android.synthetic.main.content_main.*
 import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.parsers.SAXParser
-import kotlin.math.log
-import android.content.res.XmlResourceParser
+
 
 
 
@@ -61,13 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         button_learn.setOnClickListener(){
 
             val changeToRecitePage = Intent()
-            // uncomment the following 2 lines and comment 3 lines written by xsx ..
-            //.. to show recite page written by lyj
-            // changeToRecitePage.setClass(this, ResitePage::class.java)
-            // startActivity(changeToRecitePage)
 
-
-            // the following 3 lines are the RecitePage written by xsx in Kotlin
             val firstReciteWord = ReciteWord()
             changeToRecitePage.setClass(this,firstReciteWord::class.java)
             startActivity(changeToRecitePage)
@@ -111,7 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val changeToNewWords = Intent()
                 changeToNewWords.setClass(this, NewWords::class.java)
                 startActivity(changeToNewWords)
-                Toast.makeText(this,"call 生词本 activity",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"call 生词本 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_finished_word-> {
                 // new word ? from lyj
@@ -130,7 +122,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_setting -> {
                 // setting from lyj
                 val changeToSetting = Intent()
-                changeToSetting.setClass(this, Setting::class.java)
+                changeToSetting.setClass(this, SettingActivity::class.java)
                 startActivity(changeToSetting)
                 Toast.makeText(this,"call 设置 activity",Toast.LENGTH_SHORT).show()
             }
