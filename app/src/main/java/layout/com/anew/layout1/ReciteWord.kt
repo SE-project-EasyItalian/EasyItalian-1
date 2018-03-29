@@ -103,29 +103,96 @@ class ReciteWord : Activity() {
     //setter new function
     //current just for test
     fun createNew(num:Int){
-        val newWord = getWordFromXml(num)
-        setWord(newWord.word)
-        setTrans(newWord.trans)
-        setOtherWordTranslation(mutableListOf("混淆1","混淆2","混淆3"))
+       // val newWord = getWordFromXml(num)
+       // setWord(newWord.word)
+       // setTrans(newWord.trans)
+       // setOtherWordTranslation(mutableListOf("混淆1","混淆2","混淆3"))
+       // createRecite()
+
+        val newWords = getWordsFromXml(num)
+        setWord(newWords[0].word)
+        setTrans(newWords[0].trans)
+        val otherWordsTrans =  mutableListOf(newWords[1].trans,newWords[2].trans,newWords[3].trans)
+        setOtherWordTranslation(otherWordsTrans)
+       // setOtherWordTranslation(mutableListOf("混淆1","混淆2","混淆3"))
         createRecite()
     }
 
-    fun getWordFromXml(num:Int):Word{
+    fun getWordFromXml( num:Int):Word{
         val dbf = DocumentBuilderFactory.newInstance()
         val db = dbf.newDocumentBuilder()
         val doc = db.parse(assets.open("wordbook.xml"))
         val wordList = doc.getElementsByTagName("items")
-        val newWrod = Word()
+        val newWord = Word()
         if(num<wordList.length) {
             val elem = wordList.item(num)
-            newWrod.word = elem.childNodes.item(1).textContent
-            newWrod.pos = elem.childNodes.item(3).textContent
-            newWrod.tran = elem.childNodes.item(5).textContent
-            newWrod.trans = elem.childNodes.item(7).textContent
-            newWrod.example = elem.childNodes.item(9).textContent
+            newWord.word = elem.childNodes.item(1).textContent
+            newWord.pos = elem.childNodes.item(3).textContent
+            newWord.tran = elem.childNodes.item(5).textContent
+            newWord.trans = elem.childNodes.item(7).textContent
+            newWord.example = elem.childNodes.item(9).textContent
         }
-        return newWrod
+        return newWord
     }
 
+    fun getWordsFromXml( num:Int):List<Word>{
+        val dbf = DocumentBuilderFactory.newInstance()
+        val db = dbf.newDocumentBuilder()
+        val doc = db.parse(assets.open("wordbook.xml"))
+        val wordList = doc.getElementsByTagName("items")
+        val newWords = mutableListOf<Word>()
+        if(num<wordList.length) {
+            val elem = wordList.item(num)
+            val thisWord = Word()
+            thisWord.word = elem.childNodes.item(1).textContent
+            thisWord.pos = elem.childNodes.item(3).textContent
+            thisWord.tran = elem.childNodes.item(5).textContent
+            thisWord.trans = elem.childNodes.item(7).textContent
+            thisWord.example = elem.childNodes.item(9).textContent
+            newWords.add(thisWord)
+        }
+        else{
+            val thisWord = Word()
+            thisWord.word = "None"
+            thisWord.pos = "None"
+            thisWord.tran = "None"
+            thisWord.trans = "None"
+            thisWord.example = "None"
+            newWords.add(thisWord)
+        }
+
+        val rand = Random()
+        val randomSet = mutableSetOf<Int>(num)
+        while(randomSet.size<4){
+            randomSet.add(rand.nextInt(wordList.length))
+        }
+     //   Toast.makeText(this,randomSet.toString(),Toast.LENGTH_SHORT).show()
+
+        for (i in 0..3){
+            if(randomSet.toList()[i]!=num)
+            {
+                val elem = wordList.item(randomSet.toList()[i])
+                val thisWord = Word()
+                thisWord.word = elem.childNodes.item(1).textContent
+                thisWord.pos = elem.childNodes.item(3).textContent
+                thisWord.tran = elem.childNodes.item(5).textContent
+                thisWord.trans = elem.childNodes.item(7).textContent
+                thisWord.example = elem.childNodes.item(9).textContent
+                newWords.add(thisWord)
+                if(newWords.size==4) break
+            }
+
+        }
+
+
+        return newWords
+    }
+    /*
+    * fun createChoices(){
+    *  // use this function to create 3 other words'translation
+    *  // consider the algorithm
+    * }
+    *
+    * */
 
 }
