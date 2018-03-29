@@ -25,18 +25,10 @@ class ReciteWord : Activity() {
         // functional button listener
         remembereIt.setOnClickListener {
             createNew(++n)
-            //Toast.makeText(this,"call creat new function",Toast.LENGTH_SHORT).show()
         }
 
         showDetails.setOnClickListener {
-            val intent = Intent(this, WordDetailsActivity::class.java)
-            startActivity(intent)
-            /*
-            * should call a function like this:
-            * showDetails(word:String){
-            *  show the page of that exact word
-            * }
-            * */
+            showDetails( getWordsFromXml(n)[0])
         }
 
         backForRecite.setOnClickListener {
@@ -44,7 +36,7 @@ class ReciteWord : Activity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             //return to main rather than recreate a main activity
-            //waiting for coding
+            //waiting for coding TODO
         }
 
     }
@@ -69,20 +61,18 @@ class ReciteWord : Activity() {
         }
 
         // set button listener for telling if the user gets the right answer
-
         buttonMap[randNum]?.setOnClickListener(){
             Toast.makeText(this, "答对了！", Toast.LENGTH_LONG).show()
             // this should  turn to a new word
             createNew(++n)  // the input maybe a database
-            //Toast.makeText(this,wordForRecite+wordTrans+otherWordTrans,Toast.LENGTH_SHORT).show()
-            //Toast for test
+
         }
         for(i in 0..3){
             if(i!=randNum){
                 buttonMap[i]?.setOnClickListener({
                     Toast.makeText(this, "答错了！", Toast.LENGTH_LONG).show()
                     // this should  turn to a detail pages
-                    //same as above showDetails() function
+                    showDetails( getWordsFromXml(n)[0])
                 })
             }
         }
@@ -101,24 +91,18 @@ class ReciteWord : Activity() {
      }
 
     //setter new function
-    //current just for test
     fun createNew(num:Int){
-       // val newWord = getWordFromXml(num)
-       // setWord(newWord.word)
-       // setTrans(newWord.trans)
-       // setOtherWordTranslation(mutableListOf("混淆1","混淆2","混淆3"))
-       // createRecite()
-
         val newWords = getWordsFromXml(num)
         setWord(newWords[0].word)
         setTrans(newWords[0].trans)
         val otherWordsTrans =  mutableListOf(newWords[1].trans,newWords[2].trans,newWords[3].trans)
         setOtherWordTranslation(otherWordsTrans)
-       // setOtherWordTranslation(mutableListOf("混淆1","混淆2","混淆3"))
         createRecite()
     }
 
-    fun getWordFromXml( num:Int):Word{
+    /*
+    *  // the code before
+    * fun getWordFromXml( num:Int):Word{
         val dbf = DocumentBuilderFactory.newInstance()
         val db = dbf.newDocumentBuilder()
         val doc = db.parse(assets.open("wordbook.xml"))
@@ -134,7 +118,11 @@ class ReciteWord : Activity() {
         }
         return newWord
     }
+    */
 
+    // getWordsFromXml function returns a word list contains 4 word
+    // the 0-index word is the current word to recite
+    // the other 3 words are words for incorrect choices
     fun getWordsFromXml( num:Int):List<Word>{
         val dbf = DocumentBuilderFactory.newInstance()
         val db = dbf.newDocumentBuilder()
@@ -166,7 +154,6 @@ class ReciteWord : Activity() {
         while(randomSet.size<4){
             randomSet.add(rand.nextInt(wordList.length))
         }
-     //   Toast.makeText(this,randomSet.toString(),Toast.LENGTH_SHORT).show()
 
         for (i in 0..3){
             if(randomSet.toList()[i]!=num)
@@ -187,12 +174,16 @@ class ReciteWord : Activity() {
 
         return newWords
     }
-    /*
-    * fun createChoices(){
-    *  // use this function to create 3 other words'translation
-    *  // consider the algorithm
-    * }
-    *
-    * */
 
+
+    // showDetails function turns to WordDetailsActivity, show the current word to recite
+    fun showDetails(word: Word){
+        val data = arrayListOf(word.word,word.pos,word.tran,word.trans,word.example)
+        val showDetailsActivity = Intent()
+        showDetailsActivity.setClass(this,WordDetailsActivity::class.java)
+        // pass the word info to WordDetailsActivity
+        showDetailsActivity.putStringArrayListExtra("data",data)
+        startActivity(showDetailsActivity)
+
+    }
 }
