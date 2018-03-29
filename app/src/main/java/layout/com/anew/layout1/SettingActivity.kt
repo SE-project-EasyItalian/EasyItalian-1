@@ -13,7 +13,7 @@ import android.widget.Toast
 
 class SettingActivity : Activity() {
     private val data = arrayOf("语言", "主题", "壁纸")
-    //   private Button button_back;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
@@ -49,8 +49,8 @@ class SettingActivity : Activity() {
         }
 
 
-        val button_back = findViewById<Button>(R.id.back_)
-        button_back.setOnClickListener {
+        val buttonForBack = findViewById<Button>(R.id.back_)
+        buttonForBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

@@ -1,6 +1,5 @@
 package layout.com.anew.layout1
 
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle

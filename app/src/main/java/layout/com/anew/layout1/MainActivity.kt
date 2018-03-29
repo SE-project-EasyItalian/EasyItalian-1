@@ -65,20 +65,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         button_read.setOnClickListener(){
             Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
-           // Toast.makeText(this,"此按钮目前为x用来测试词库用。",Toast.LENGTH_SHORT).show()
-           // val dbf = DocumentBuilderFactory.newInstance()
-           // val db = dbf.newDocumentBuilder()
-           // val doc = db.parse(assets.open("wordbook.xml"))
-           // val wordList = doc.getElementsByTagName("items")
-
-            //val len = wordList.length
-            //Toast.makeText(this,"共有" +len+ "个单词",Toast.LENGTH_SHORT).show()
-           // val elem =  wordList.item(1)
-          //  val a = elem.childNodes.item(1).textContent
-            // 1 3 5 7 9 11 13 index for [word pos tran trans example tag progress]
-
-          //  Toast.makeText(this,a,Toast.LENGTH_SHORT).show()
-
         }
         //end
 
