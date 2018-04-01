@@ -6,24 +6,24 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_new_word"
-            android:icon="@mipmap/vocab_book_new"
-            android:title="生词本" />
+            android:icon="@drawable/vocab_book_new"
+            android:title="@string/new_word_list" />
         <item
             android:id="@+id/nav_finished_word"
-            android:icon="@mipmap/vocab_book_finished"
-            android:title="已经掌握" />
+            android:icon="@drawable/vocab_book_finished"
+            android:title="@string/already_finished" />
         <item
             android:id="@+id/nav_coming_word"
-            android:icon="@mipmap/ic_unfinished"
-            android:title="还未学习" />
+            android:icon="@drawable/ic_unfinished"
+            android:title="@string/coming_word" />
         <item
             android:id="@+id/nav_setting"
-            android:icon="@mipmap/ic_settings"
-            android:title="设置" />
+            android:icon="@drawable/ic_settings"
+            android:title="@string/setting" />
         <item
             android:id="@+id/nav_about"
-            android:icon="@mipmap/ic_info"
-            android:title="关于" />
+            android:icon="@drawable/ic_info"
+            android:title="@string/about" />
     </group>
 
 </menu>

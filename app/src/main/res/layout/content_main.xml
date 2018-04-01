@@ -11,7 +11,7 @@
 
 
     <Button
-        android:id="@+id/button_learn"
+        android:id="@+id/buttonForLearn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_learn"
@@ -22,25 +22,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_read"
+        android:id="@+id/buttonForRead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="@string/button_read"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_learn" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonForLearn" />
 
     <ImageView
         android:id="@+id/searchWordButton"
-        android:contentDescription="@string/des_search_new_word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="41dp"
+        android:layout_height="37dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/des_search_new_word"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@mipmap/ic_search_black" />
+        app:srcCompat="@drawable/ic_search_black" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -16,14 +16,13 @@ class DaoOpt private constructor(){
 
     /**
      * 添加数据至数据库
-
      * @param context
      * *
-     * @param stu
+     * @param word
      */
-    fun insertData(context: Context?, stu: WordForDB) {
+    fun insertData(context: Context?, word: WordForDB) {
 
-        GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.insert(stu)
+        GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.insert(word)
     }
 
 
@@ -47,10 +46,10 @@ class DaoOpt private constructor(){
 
      * @param context
      * *
-     * @param student
+     * @param word
      */
-    fun saveData(context: Context?, student: WordForDB) {
-        GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.save(student)
+    fun saveData(context: Context?, word: WordForDB) {
+        GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.save(word)
     }
 
     /**
@@ -58,10 +57,10 @@ class DaoOpt private constructor(){
 
      * @param context
      * *
-     * @param student 删除具体内容
+     * @param word 删除具体内容
      */
-    fun deleteData(context: Context?, student: WordForDB) {
-        GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.delete(student)
+    fun deleteData(context: Context?, word: WordForDB) {
+        GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.delete(word)
     }
 
     /**
@@ -89,10 +88,10 @@ class DaoOpt private constructor(){
 
      * @param context
      * *
-     * @param student
+     * @param word
      */
-    fun updateData(context: Context?, student: WordForDB) {
-        GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.update(student)
+    fun updateData(context: Context?, word: WordForDB) {
+        GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.update(word)
     }
 
 
@@ -121,12 +120,12 @@ class DaoOpt private constructor(){
         val builder = GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.queryBuilder()
         /**
          * 返回当前id的数据集合,当然where(这里面可以有多组，做为条件);
-         * 这里build.list()；与where(StudentDao.Properties.Id.eq(id)).list()结果是一样的；
+         * 这里build.list()；与where(WordForDBDao.Properties.Id.eq(id)).list()结果是一样的；
          * 在QueryBuilder类中list()方法return build().list();
 
          */
-        // Query<Student> build = builder.where(StudentDao.Properties.Id.eq(id)).build();
-        // List<Student> list = build.list();
+        // Query<word> build = builder.where(WordForDBDao.Properties.Id.eq(id)).build();
+        // List<word> list = build.list();
         return builder?.where(WordForDBDao.Properties.Id.eq(id))?.list()
     }
 }

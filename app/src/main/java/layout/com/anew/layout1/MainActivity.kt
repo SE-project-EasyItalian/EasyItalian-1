@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         searchWordButton.setOnClickListener(){
            Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
         }
-        button_learn.setOnClickListener(){
+        buttonForLearn.setOnClickListener(){
 
             val changeToRecitePage = Intent()
 
@@ -63,8 +63,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
         }
-        button_read.setOnClickListener(){
-            Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
+        buttonForRead.setOnClickListener(){
+           // Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"测试database in GreenDao",Toast.LENGTH_SHORT).show()
             val changesto = Intent(this,TestActivity::class.java)
             startActivity(changesto)
         }

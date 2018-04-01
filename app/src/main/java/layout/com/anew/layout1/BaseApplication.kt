@@ -3,7 +3,6 @@ package layout.com.anew.layout1
 import android.app.Application
 import layout.com.anew.layout1.gen.DaoSession
 import layout.com.anew.layout1.gen.DaoMaster
-import android.database.sqlite.SQLiteDatabase
 
 
 
