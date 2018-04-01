@@ -26,7 +26,7 @@ import android.Manifest.permission.READ_CONTACTS
 import android.content.Intent
 
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_resite_page.*
+
 
 /**
  * A login screen that offers login via email/password.

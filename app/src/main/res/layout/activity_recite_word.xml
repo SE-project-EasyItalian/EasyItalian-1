@@ -142,8 +142,11 @@
     <Button
         android:id="@+id/backForRecite"
         android:layout_width="38dp"
-        android:layout_height="57dp"
-        android:background="@drawable/icon_back" />
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
