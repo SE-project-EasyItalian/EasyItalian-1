@@ -65,6 +65,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         button_read.setOnClickListener(){
             Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
+            val changesto = Intent(this,TestActivity::class.java)
+            startActivity(changesto)
         }
         //end
 
