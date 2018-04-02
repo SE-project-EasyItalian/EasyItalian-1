@@ -8,7 +8,7 @@ import layout.com.anew.layout1.gen.DaoSession
 
 class GreenDaoManager private constructor(mContext: Context) {
 
-    private val DB_NAME = "test.db"
+    private val DB_NAME = "wordList.db"
     private var mDevOpenHelper: DaoMaster.DevOpenHelper? = null
     private var mDaoMaster: DaoMaster? = null
     private var mDaoSession: DaoSession? = null
