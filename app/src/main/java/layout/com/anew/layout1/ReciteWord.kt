@@ -1,9 +1,14 @@
 package layout.com.anew.layout1
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_recite_word.*
 import java.util.Random
@@ -12,13 +17,18 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 class ReciteWord : Activity() {
 
+
     var wordForRecite = " "
     var wordTrans = " "  //word translation . use setTrans to change it
     var otherWordTrans = mutableListOf<String>()
     var  n =0
+
+    //tts
+
+    //end
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recite_word)
+        setContentView(R.layout.activity_recite_word_new)
         //show the n-th word
         createNew(n)
 
@@ -39,7 +49,13 @@ class ReciteWord : Activity() {
             //waiting for coding TODO
         }
 
+        voice.setOnClickListener(){
+            val thisView = findViewById<View>(R.id.word)
+            btnSpeakNowOnClick(thisView)
+        }
+
     }
+    //end
 
     // to create the page of word recite
     fun createRecite(){
@@ -62,7 +78,7 @@ class ReciteWord : Activity() {
 
         // set button listener for telling if the user gets the right answer
         buttonMap[randNum]?.setOnClickListener(){
-            Toast.makeText(this, "答对了！", Toast.LENGTH_LONG).show()
+           // Toast.makeText(this, "答对了！", Toast.LENGTH_LONG).show()
             // this should  turn to a new word
             createNew(++n)  // the input maybe a database
 
@@ -70,7 +86,7 @@ class ReciteWord : Activity() {
         for(i in 0..3){
             if(i!=randNum){
                 buttonMap[i]?.setOnClickListener({
-                    Toast.makeText(this, "答错了！", Toast.LENGTH_LONG).show()
+                   // Toast.makeText(this, "答错了！", Toast.LENGTH_LONG).show()
                     // this should  turn to a detail pages
                     showDetails( getWordsFromXml(n)[0])
                 })
@@ -98,6 +114,9 @@ class ReciteWord : Activity() {
         val otherWordsTrans =  mutableListOf(newWords[1].trans,newWords[2].trans,newWords[3].trans)
         setOtherWordTranslation(otherWordsTrans)
         createRecite()
+        val thisView = findViewById<View>(R.id.word)
+        btnSpeakNowOnClick(thisView)
+
     }
 
     /*
@@ -184,6 +203,60 @@ class ReciteWord : Activity() {
         // pass the word info to WordDetailsActivity
         showDetailsActivity.putStringArrayListExtra("data",data)
         startActivity(showDetailsActivity)
+
+    }
+
+    //tts start
+    private fun buildSpeechUrl(words: String, language: String): String {
+        val kVoiceRssServer = "http://api.voicerss.org"
+        val kVoiceRSSAppKey = "e4f83f4e095646cbad5bbc28bf1a65ec"
+        var url = ""
+
+        url = kVoiceRssServer + "/?key=" + kVoiceRSSAppKey + "&t=text&hl=" + language + "&src=" + words
+
+        return url
+    }
+
+    fun btnSpeakNowOnClick(v: View) {
+        var mp : MediaPlayer? = null
+        val txtSentence = findViewById<TextView>(R.id.word)
+
+        val text = txtSentence.text.toString()
+
+        try {
+            val onPreparedListener = MediaPlayer.OnPreparedListener {
+                mp?.setVolume(1f, 1f)
+                mp?.start()
+            }
+
+            val onErrorListener = MediaPlayer.OnErrorListener { mp, _, _ -> false }
+
+            val onCompletionListener = MediaPlayer.OnCompletionListener { mp ->
+                mp.release()
+            }
+
+            val url = buildSpeechUrl(text, "it-it")
+
+            val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0)
+
+            try {
+                if (mp != null)
+                    mp.release()
+
+                mp = MediaPlayer()
+                mp.setDataSource(url)
+                mp.setOnErrorListener(onErrorListener)
+                mp.setOnCompletionListener(onCompletionListener)
+                mp.setOnPreparedListener(onPreparedListener)
+                mp.prepareAsync()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 }

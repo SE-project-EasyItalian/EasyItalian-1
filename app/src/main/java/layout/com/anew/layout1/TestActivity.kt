@@ -6,11 +6,15 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_test.*
 import kotlinx.android.synthetic.main.content_test.*
+import java.net.HttpURLConnection
+import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
 
 
-// next step : design the recite word algorithm
+// next step : build the vocabulary dadabase
+//          and  design the recite word algorithm
 // based on these codes and ReciteWord Activity
+// get xml from server
 class TestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +41,7 @@ class TestActivity : AppCompatActivity() {
         val my = DaoOpt.getInstance()
         my.deleteAllData(this)
         for (i in 0..8){
-            val insertWord = getWordsFromXml(i)
+            val insertWord = getWordFromXml(i)
             my.insertData(this,insertWord)
         }
     }
@@ -58,9 +62,16 @@ class TestActivity : AppCompatActivity() {
     }
 
 
-    fun getWordsFromXml(num:Int):WordForDB{
+    fun getWordFromXml(num:Int):WordForDB{
         val dbf = DocumentBuilderFactory.newInstance()
         val db = dbf.newDocumentBuilder()
+
+     //   val conn = URL("192.168.1.171/wordbook.xml").openConnection() as HttpURLConnection
+      //  conn.connectTimeout=5000
+       // conn.requestMethod="GET"
+        //val inputStream = conn.inputStream
+        //val doc = db.parse(inputStream)
+
         val doc = db.parse(assets.open("wordbook.xml"))
         val wordList = doc.getElementsByTagName("items")
         val thisWord = WordForDB()
