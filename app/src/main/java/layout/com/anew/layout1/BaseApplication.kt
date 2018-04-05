@@ -21,7 +21,7 @@ class BaseApplication : Application(){
      * 配置数据库
      */
     private fun setupDatabase() {
-        //创建数据库shop.db"
+        //创建数据库
         val helper = DaoMaster.DevOpenHelper(this, "wordList.db", null)
         //获取可写数据库
         val db = helper.writableDatabase

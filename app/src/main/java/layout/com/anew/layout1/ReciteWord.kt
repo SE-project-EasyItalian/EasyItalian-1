@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_recite_word.*
 import java.util.Random
 import javax.xml.parsers.DocumentBuilderFactory
@@ -23,9 +22,7 @@ class ReciteWord : Activity() {
     var otherWordTrans = mutableListOf<String>()
     var  n =0
 
-    //tts
 
-    //end
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recite_word_new)
@@ -50,8 +47,9 @@ class ReciteWord : Activity() {
         }
 
         voice.setOnClickListener(){
-            val thisView = findViewById<View>(R.id.word)
-            btnSpeakNowOnClick(thisView)
+           // val thisView = findViewById<View>(R.id.word)
+            //btnSpeakNowOnClick(thisView)
+            callTTS()
         }
 
     }
@@ -114,8 +112,9 @@ class ReciteWord : Activity() {
         val otherWordsTrans =  mutableListOf(newWords[1].trans,newWords[2].trans,newWords[3].trans)
         setOtherWordTranslation(otherWordsTrans)
         createRecite()
-        val thisView = findViewById<View>(R.id.word)
-        btnSpeakNowOnClick(thisView)
+        //val thisView = findViewById<View>(R.id.word)
+        //btnSpeakNowOnClick(thisView)
+        callTTS()
 
     }
 
@@ -146,6 +145,7 @@ class ReciteWord : Activity() {
         val dbf = DocumentBuilderFactory.newInstance()
         val db = dbf.newDocumentBuilder()
         val doc = db.parse(assets.open("wordbook.xml"))
+       // val doc = db.parse(assets.open("wordlist.xml"))
         val wordList = doc.getElementsByTagName("items")
         val newWords = mutableListOf<Word>()
         if(num<wordList.length) {
@@ -153,6 +153,7 @@ class ReciteWord : Activity() {
             val thisWord = Word()
             thisWord.word = elem.childNodes.item(1).textContent
             thisWord.pos = elem.childNodes.item(3).textContent
+           // thisWord.pos = "pos"
             thisWord.tran = elem.childNodes.item(5).textContent
             thisWord.trans = elem.childNodes.item(7).textContent
             thisWord.example = elem.childNodes.item(9).textContent
@@ -207,15 +208,23 @@ class ReciteWord : Activity() {
     }
 
     //tts start
-    private fun buildSpeechUrl(words: String, language: String): String {
-        val kVoiceRssServer = "http://api.voicerss.org"
-        val kVoiceRSSAppKey = "e4f83f4e095646cbad5bbc28bf1a65ec"
-        var url = ""
+    private fun buildSpeechUrl(words: String): String {
 
-        url = kVoiceRssServer + "/?key=" + kVoiceRSSAppKey + "&t=text&hl=" + language + "&src=" + words
+        //tts from VoiceRss
+        //val kVoiceRssServer = "http://api.voicerss.org"
+        //val kVoiceRSSAppKey = "ec58f36cbbe846edb12b9fcc6e217d9f"
+        //var url = ""
+        //url = kVoiceRssServer + "/?key=" + kVoiceRSSAppKey + "&t=text&hl=" + "it-it" + "&src=" + words
 
+        //tts from MARY TTS
+        //http://mary.dfki.de:59125/process?INPUT_TEXT=pomodoro&INPUT_TYPE=TEXT&OUTPUT_TYPE=AUDIO&AUDIO=WAVE_FILE&LOCALE=it
+        var url="http://mary.dfki.de:59125/process?INPUT_TEXT="
+        val endIt="&INPUT_TYPE=TEXT&OUTPUT_TYPE=AUDIO&AUDIO=WAVE_FILE&LOCALE=it"
+        url = url+words+endIt
+        url = url.replace(' ','+')
         return url
     }
+
 
     fun btnSpeakNowOnClick(v: View) {
         var mp : MediaPlayer? = null
@@ -235,7 +244,7 @@ class ReciteWord : Activity() {
                 mp.release()
             }
 
-            val url = buildSpeechUrl(text, "it-it")
+            val url = buildSpeechUrl(text)
 
             val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0)
@@ -259,4 +268,18 @@ class ReciteWord : Activity() {
         }
 
     }
+
+
+    fun callTTS(){
+        val txtSentence = findViewById<TextView>(R.id.word)
+        val text = txtSentence.text.toString()
+        val url = buildSpeechUrl(text)
+        val mediaPlayer =MediaPlayer()
+        mediaPlayer.setDataSource(url)
+        mediaPlayer.setOnErrorListener{_, _, _ -> false}
+        mediaPlayer.setOnCompletionListener { mediaPlayer.release() }
+        mediaPlayer.setOnPreparedListener {  mediaPlayer.start()}
+        mediaPlayer.prepareAsync()
+    }
+    //tts end
 }
