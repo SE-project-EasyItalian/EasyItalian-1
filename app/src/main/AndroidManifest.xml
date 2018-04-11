@@ -41,9 +41,8 @@
 
         </activity>
         <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".MyTestActivity"
+            android:label="@string/title_activity_test">
 
         </activity>
     </application>

@@ -66,7 +66,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         buttonForRead.setOnClickListener(){
            // Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
             Toast.makeText(this,"测试database in GreenDao",Toast.LENGTH_SHORT).show()
-            val changesto = Intent(this,TestActivity::class.java)
+            val changesto = Intent()
+            changesto.setClass(this,MyTestActivity::class.java)
             startActivity(changesto)
         }
         //end
