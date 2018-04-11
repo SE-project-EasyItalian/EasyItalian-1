@@ -1,6 +1,5 @@
 package layout.com.anew.layout1
 
-
 // Word Class
 
 

@@ -26,13 +26,15 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Word = new Property(1, String.class, "word", false, "word");
-        public final static Property Pos = new Property(2, String.class, "pos", false, "pos");
-        public final static Property Tran = new Property(3, String.class, "tran", false, "tran");
-        public final static Property Trans = new Property(4, String.class, "trans", false, "trans");
-        public final static Property Example = new Property(5, String.class, "example", false, "example");
-        public final static Property AppearTime = new Property(6, Integer.class, "appearTime", false, "appearTime");
-        public final static Property CorrectTime = new Property(7, Integer.class, "correctTime", false, "correctTime");
-        public final static Property IncorrectTime = new Property(8, Integer.class, "incorrectTime", false, "incorrectTime");
+        public final static Property Transform = new Property(2, String.class, "transform", false, "transform");
+        public final static Property Translation = new Property(3, String.class, "translation", false, "translation");
+        public final static Property Example = new Property(4, String.class, "example", false, "example");
+        public final static Property AppearTime = new Property(5, Integer.class, "appearTime", false, "appearTime");
+        public final static Property CorrectTime = new Property(6, Integer.class, "correctTime", false, "correctTime");
+        public final static Property IncorrectTime = new Property(7, Integer.class, "incorrectTime", false, "incorrectTime");
+        public final static Property EFactor = new Property(8, Double.class, "EFactor", false, "EFactor");
+        public final static Property Interval = new Property(9, Integer.class, "interval", false, "interval");
+        public final static Property NextAppearTime = new Property(10, Integer.class, "nextAppearTime", false, "nextAppearTime");
     }
 
 
@@ -50,13 +52,15 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"WORD_FOR_DB\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"word\" TEXT," + // 1: word
-                "\"pos\" TEXT," + // 2: pos
-                "\"tran\" TEXT," + // 3: tran
-                "\"trans\" TEXT," + // 4: trans
-                "\"example\" TEXT," + // 5: example
-                "\"appearTime\" INTEGER," + // 6: appearTime
-                "\"correctTime\" INTEGER," + // 7: correctTime
-                "\"incorrectTime\" INTEGER);"); // 8: incorrectTime
+                "\"transform\" TEXT," + // 2: transform
+                "\"translation\" TEXT," + // 3: translation
+                "\"example\" TEXT," + // 4: example
+                "\"appearTime\" INTEGER," + // 5: appearTime
+                "\"correctTime\" INTEGER," + // 6: correctTime
+                "\"incorrectTime\" INTEGER," + // 7: incorrectTime
+                "\"EFactor\" REAL," + // 8: EFactor
+                "\"interval\" INTEGER," + // 9: interval
+                "\"nextAppearTime\" INTEGER);"); // 10: nextAppearTime
     }
 
     /** Drops the underlying database table. */
@@ -79,39 +83,49 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
             stmt.bindString(2, word);
         }
  
-        String pos = entity.getPos();
-        if (pos != null) {
-            stmt.bindString(3, pos);
+        String transform = entity.getTransform();
+        if (transform != null) {
+            stmt.bindString(3, transform);
         }
  
-        String tran = entity.getTran();
-        if (tran != null) {
-            stmt.bindString(4, tran);
-        }
- 
-        String trans = entity.getTrans();
-        if (trans != null) {
-            stmt.bindString(5, trans);
+        String translation = entity.getTranslation();
+        if (translation != null) {
+            stmt.bindString(4, translation);
         }
  
         String example = entity.getExample();
         if (example != null) {
-            stmt.bindString(6, example);
+            stmt.bindString(5, example);
         }
  
         Integer appearTime = entity.getAppearTime();
         if (appearTime != null) {
-            stmt.bindLong(7, appearTime);
+            stmt.bindLong(6, appearTime);
         }
  
         Integer correctTime = entity.getCorrectTime();
         if (correctTime != null) {
-            stmt.bindLong(8, correctTime);
+            stmt.bindLong(7, correctTime);
         }
  
         Integer incorrectTime = entity.getIncorrectTime();
         if (incorrectTime != null) {
-            stmt.bindLong(9, incorrectTime);
+            stmt.bindLong(8, incorrectTime);
+        }
+ 
+        Double EFactor = entity.getEFactor();
+        if (EFactor != null) {
+            stmt.bindDouble(9, EFactor);
+        }
+ 
+        Integer interval = entity.getInterval();
+        if (interval != null) {
+            stmt.bindLong(10, interval);
+        }
+ 
+        Integer nextAppearTime = entity.getNextAppearTime();
+        if (nextAppearTime != null) {
+            stmt.bindLong(11, nextAppearTime);
         }
     }
 
@@ -129,39 +143,49 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
             stmt.bindString(2, word);
         }
  
-        String pos = entity.getPos();
-        if (pos != null) {
-            stmt.bindString(3, pos);
+        String transform = entity.getTransform();
+        if (transform != null) {
+            stmt.bindString(3, transform);
         }
  
-        String tran = entity.getTran();
-        if (tran != null) {
-            stmt.bindString(4, tran);
-        }
- 
-        String trans = entity.getTrans();
-        if (trans != null) {
-            stmt.bindString(5, trans);
+        String translation = entity.getTranslation();
+        if (translation != null) {
+            stmt.bindString(4, translation);
         }
  
         String example = entity.getExample();
         if (example != null) {
-            stmt.bindString(6, example);
+            stmt.bindString(5, example);
         }
  
         Integer appearTime = entity.getAppearTime();
         if (appearTime != null) {
-            stmt.bindLong(7, appearTime);
+            stmt.bindLong(6, appearTime);
         }
  
         Integer correctTime = entity.getCorrectTime();
         if (correctTime != null) {
-            stmt.bindLong(8, correctTime);
+            stmt.bindLong(7, correctTime);
         }
  
         Integer incorrectTime = entity.getIncorrectTime();
         if (incorrectTime != null) {
-            stmt.bindLong(9, incorrectTime);
+            stmt.bindLong(8, incorrectTime);
+        }
+ 
+        Double EFactor = entity.getEFactor();
+        if (EFactor != null) {
+            stmt.bindDouble(9, EFactor);
+        }
+ 
+        Integer interval = entity.getInterval();
+        if (interval != null) {
+            stmt.bindLong(10, interval);
+        }
+ 
+        Integer nextAppearTime = entity.getNextAppearTime();
+        if (nextAppearTime != null) {
+            stmt.bindLong(11, nextAppearTime);
         }
     }
 
@@ -175,13 +199,15 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
         WordForDB entity = new WordForDB( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // word
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // pos
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // tran
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // trans
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // example
-            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // appearTime
-            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // correctTime
-            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8) // incorrectTime
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // transform
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // translation
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // example
+            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // appearTime
+            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // correctTime
+            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // incorrectTime
+            cursor.isNull(offset + 8) ? null : cursor.getDouble(offset + 8), // EFactor
+            cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9), // interval
+            cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10) // nextAppearTime
         );
         return entity;
     }
@@ -190,13 +216,15 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
     public void readEntity(Cursor cursor, WordForDB entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setWord(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setPos(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setTran(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setTrans(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setExample(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setAppearTime(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
-        entity.setCorrectTime(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
-        entity.setIncorrectTime(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
+        entity.setTransform(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setTranslation(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setExample(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setAppearTime(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
+        entity.setCorrectTime(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
+        entity.setIncorrectTime(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
+        entity.setEFactor(cursor.isNull(offset + 8) ? null : cursor.getDouble(offset + 8));
+        entity.setInterval(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
+        entity.setNextAppearTime(cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10));
      }
     
     @Override

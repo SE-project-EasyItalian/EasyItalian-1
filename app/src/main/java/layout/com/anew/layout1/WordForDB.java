@@ -4,7 +4,6 @@ package layout.com.anew.layout1;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
@@ -15,12 +14,10 @@ public class WordForDB {
 
     @Property(nameInDb = "word")
     private String word;
-    @Property(nameInDb = "pos")
-    private String pos;
-    @Property(nameInDb = "tran")
-    private String tran;
-    @Property(nameInDb = "trans")
-    private String trans;
+    @Property(nameInDb = "transform")
+    private String transform;
+    @Property(nameInDb = "translation")
+    private String translation;
     @Property(nameInDb = "example")
     private String example;
     @Property(nameInDb = "appearTime")
@@ -29,19 +26,30 @@ public class WordForDB {
     private Integer correctTime;
     @Property(nameInDb = "incorrectTime")
     private Integer incorrectTime;
-    @Generated(hash = 1256709422)
-    public WordForDB(Long id, String word, String pos, String tran, String trans,
+    @Property(nameInDb = "EFactor")
+    private Double EFactor;
+    @Property(nameInDb = "interval")
+    private Integer interval;
+    @Property(nameInDb = "nextAppearTime")
+    private Integer nextAppearTime;
+
+
+    @Generated(hash = 2130861856)
+    public WordForDB(Long id, String word, String transform, String translation,
             String example, Integer appearTime, Integer correctTime,
-            Integer incorrectTime) {
+            Integer incorrectTime, Double EFactor, Integer interval,
+            Integer nextAppearTime) {
         this.id = id;
         this.word = word;
-        this.pos = pos;
-        this.tran = tran;
-        this.trans = trans;
+        this.transform = transform;
+        this.translation = translation;
         this.example = example;
         this.appearTime = appearTime;
         this.correctTime = correctTime;
         this.incorrectTime = incorrectTime;
+        this.EFactor = EFactor;
+        this.interval = interval;
+        this.nextAppearTime = nextAppearTime;
     }
     @Generated(hash = 1882615787)
     public WordForDB() {
@@ -57,24 +65,6 @@ public class WordForDB {
     }
     public void setWord(String word) {
         this.word = word;
-    }
-    public String getPos() {
-        return this.pos;
-    }
-    public void setPos(String pos) {
-        this.pos = pos;
-    }
-    public String getTran() {
-        return this.tran;
-    }
-    public void setTran(String tran) {
-        this.tran = tran;
-    }
-    public String getTrans() {
-        return this.trans;
-    }
-    public void setTrans(String trans) {
-        this.trans = trans;
     }
     public String getExample() {
         return this.example;
@@ -100,4 +90,35 @@ public class WordForDB {
     public void setIncorrectTime(Integer incorrectTime) {
         this.incorrectTime = incorrectTime;
     }
+    public String getTransform() {
+        return this.transform;
+    }
+    public void setTransform(String transform) {
+        this.transform = transform;
+    }
+    public String getTranslation() {
+        return this.translation;
+    }
+    public void setTranslation(String translation) {
+        this.translation = translation;
+    }
+    public Integer getNextAppearTime() {
+        return this.nextAppearTime;
+    }
+    public void setNextAppearTime(Integer nextAppearTime) {
+        this.nextAppearTime = nextAppearTime;
+    }
+    public Double getEFactor() {
+        return this.EFactor;
+    }
+    public void setEFactor(Double EFactor) {
+        this.EFactor = EFactor;
+    }
+    public Integer getInterval() {
+        return this.interval;
+    }
+    public void setInterval(Integer interval) {
+        this.interval = interval;
+    }
+
 }
