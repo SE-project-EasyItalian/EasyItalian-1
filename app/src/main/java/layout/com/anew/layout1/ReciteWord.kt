@@ -207,6 +207,19 @@ class ReciteWord : Activity() {
 
     }
 
+    //rewrite these function for using database
+
+ //   fun getWordsFromDatabase(num: Int):List<WordForDB> {
+ //       val wordList = DaoOpt.getInstance()
+ //
+ //   }
+
+
+
+
+
+
+
     //tts start
     private fun buildSpeechUrl(words: String): String {
 
@@ -224,7 +237,6 @@ class ReciteWord : Activity() {
         url = url.replace(' ','+')
         return url
     }
-
 
     fun btnSpeakNowOnClick(v: View) {
         var mp : MediaPlayer? = null
@@ -269,7 +281,6 @@ class ReciteWord : Activity() {
 
     }
 
-
     fun callTTS(){
         val txtSentence = findViewById<TextView>(R.id.word)
         val text = txtSentence.text.toString()
@@ -282,4 +293,6 @@ class ReciteWord : Activity() {
         mediaPlayer.prepareAsync()
     }
     //tts end
+
+
 }

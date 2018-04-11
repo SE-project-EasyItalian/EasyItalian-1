@@ -56,9 +56,11 @@ class TestActivity : AppCompatActivity() {
         val getTestTrans = my.queryAll(this)?.get(n)?.trans
         val getExample = my.queryAll(this)?.get(n)?.example
 
-        textView3.setText(getId.toString()+" "+getTestWord.toString()+" "+getTestTrans+" "+getTestWordTran.toString()+" "+getExample.toString())
+     //   textView3.setText(getId.toString()+" "+getTestWord.toString()+" "+getTestTrans+" "+getTestWordTran.toString()+" "+getExample.toString())
 
 
+        val testWord = my.queryForAppearTime(this,1)?.get(n)?.word
+        textView3.setText(testWord)
     }
 
 
@@ -77,7 +79,12 @@ class TestActivity : AppCompatActivity() {
         val thisWord = WordForDB()
         thisWord.id = num.toLong()
         thisWord.incorrectTime=0
-        thisWord.appearTime=0
+        if(thisWord.id.toInt()%2==0){
+            thisWord.appearTime=0
+        }
+        else{
+            thisWord.appearTime=1
+        }
         thisWord.correctTime=0
         if(num<wordList.length) {
             val elem = wordList.item(num)
