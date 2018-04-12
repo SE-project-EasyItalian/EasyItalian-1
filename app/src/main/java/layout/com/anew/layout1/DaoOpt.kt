@@ -179,7 +179,28 @@ class DaoOpt private constructor(){
          */
         // Query<word> build = builder.where(WordForDBDao.Properties.Id.eq(id)).build();
         // List<word> list = build.list();
-
         return builder?.where(WordForDBDao.Properties.NextAppearTime.eq(id))?.list()
     }
+
+    fun queryForNotZeroIncorrectTimes(context: Context?,id: Long): MutableList<WordForDB>? {
+        val builder = GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.queryBuilder()
+        return builder?.where(WordForDBDao.Properties.NextAppearTime.gt(0),WordForDBDao.Properties.Id.notEq(id))?.list()
+    }
+
+    fun queryForIdNotEqual(context: Context?, id: MutableCollection<Long>): MutableList<WordForDB>? {
+        val builder = GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.queryBuilder()
+        /**
+         * 返回当前id的数据集合,当然where(这里面可以有多组，做为条件);
+         * 这里build.list()；与where(WordForDBDao.Properties.Id.eq(id)).list()结果是一样的；
+         * 在QueryBuilder类中list()方法return build().list();
+         */
+        // Query<word> build = builder.where(WordForDBDao.Properties.Id.eq(id)).build();
+        // List<word> list = build.list();
+        return builder?.where(WordForDBDao.Properties.Id.notIn(id))?.list()
+    }
+    fun getNumberOfItems(context: Context?):Int {
+        val builder = GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordForDBDao?.queryBuilder()
+        return builder?.build()?.list()?.size ?:0
+    }
+
 }
