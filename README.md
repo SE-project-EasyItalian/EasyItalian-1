@@ -1,5 +1,9 @@
 # EasyItalian_layout
 
+experimental build for EasyItalian in Kotlin
+
+
+
 https://www.yihan.it/
 
 
@@ -11,3 +15,5 @@ http://yidaliyu.ohdict.com/
 XML 处理数据样例：
 
 https://blog.csdn.net/aaajj/article/details/46582531
+
+
