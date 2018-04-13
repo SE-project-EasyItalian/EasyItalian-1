@@ -80,7 +80,8 @@ class MyTestActivity : Activity() {
         my.insertData(this,zeroWord)
 
 
-        // 30 should be the length of xml factors
+       // val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("for_test.xml")).getElementsByTagName("items").length - 1
+
         for (i in 0..30){
             val insertWord = getWordFromXml(i)
             my.insertData(this,insertWord)
@@ -131,11 +132,11 @@ class MyTestActivity : Activity() {
 
     // the create new recite page function should add the current word number to the word's NextAppearTime
     // call updateWordDate function after the user give a feedback of the word (right,wrong,remember-it,don't know it)
-    //------------------------------------------------------------------
-    //| !!!!!!!  so feedInfo should have more than 2 conditions !!!!!!!|
-    //------------------------------------------------------------------
-    // TODO fix feedInfo
     private fun updateWordData(wordForDB: WordForDB,feedInfo: Int){
+        // 2 to rememberIt
+        // 1 to correct answer
+        // 0 to don't know
+        // -1 for incorrect answer
         if(feedInfo==2){
             wordForDB.correctTime+=2
             wordForDB.eFactor=newEFactor(wordForDB)
@@ -183,7 +184,7 @@ class MyTestActivity : Activity() {
     // n could be a global variable to record the number of the words(that showed repeat record)
         private fun createNew(){
 
-        setContentView(R.layout.activity_recite_word_new)
+        // setContentView(R.layout.activity_recite_word_new)
         // firstly search database for NextAppearTime property if exist one take that one
         // if no matches, take a new one in random(from those NextAppearTime ==0
         // after take a word firstly (above line's condition) update its NextAppearTime = n
@@ -191,22 +192,37 @@ class MyTestActivity : Activity() {
         val zeroWord = my.queryForId(this,-1)?.get(0)
         // zeroWord records the num (current number of all word shown)
         // -10000 is too large maybe
-        val num = zeroWord?.appearTime!!.toLong()-10000
+        var num = zeroWord?.appearTime!!.toLong()-10000
 
         // get thisWord to show
         val thisWordId : Long
         if (my.queryForNextAppearTime(this,num)?.size != 0){
-            Toast.makeText(this,"not null",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"not null",Toast.LENGTH_SHORT).show()
             thisWordId = my.queryForNextAppearTime(this,num)?.get(0)?.id  ?:0
         }else{
-            val rand = Random()
+
             // TODO add a limit to the randNum because it may be out of bounds
             // all the randNum should be re-consider it
-
             // ATTENTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // not just appearTime == 0 but also ==1 ==2
-            val randNum = rand.nextInt(6)
-            thisWordId =  my.queryForAppearTime(this,0)?.get(randNum)?.id ?:0
+         //   val rand = Random()
+          //  val randNum = rand.nextInt(6)
+          //  thisWordId =  my.queryForAppearTime(this,0)?.get(randNum)?.id ?:0
+           // var i : Long = 0
+           // while (my.queryForAppearTime(this,i)?.size==0) i+=1
+          //problem
+            if (my.queryForAppearTime(this,0)?.size!=0) {
+                val randLimit = my.queryForAppearTime(this, 0)?.size ?: 1-1
+                val rand = Random()
+                val randNum = rand.nextInt(randLimit / 2)
+                thisWordId = my.queryForAppearTime(this, 0)?.get(randNum)?.id ?: 0
+            }else{
+                while(my.queryForNextAppearTime(this,num)?.size == 0) num+=1
+                if (num==10000L) thisWordId = zeroWord.id
+                else {
+                    thisWordId = my.queryForNextAppearTime(this, num)?.get(0)?.id ?: 0
+                }
+            }
         }
 
         val errorWord = WordForDB(-10086,"Error","Error","Error","Error",-1,-1,-1,-1.0,-1,-1)
