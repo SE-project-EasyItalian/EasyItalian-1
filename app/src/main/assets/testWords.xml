@@ -1251,6 +1251,7 @@ mettersi in mare senza biscotto 仓促着手</example>
 	<items>
 		<word>pantaloncini</word>
 		<tran> </tran>
+		<trans>短裤</trans>
 		<example>pantaloncini corti 短裤</example>
 	</items>
 	<items>
@@ -1258,13 +1259,13 @@ mettersi in mare senza biscotto 仓促着手</example>
 		<tran> </tran>
 		<trans>s.m. [复] 裤子，长裤：</trans>
 		<example>pantaloni da donna 女裤
-pantaloni da uomo 男裤 
+pantaloni da uomo 男裤
 pantaloni alla pescatora 七分裤,齐膝裤</example>
 	</items>
 	<items>
 		<word>pelle</word>
 		<tran> </tran>
-		<trans>s.f.  皮,皮肤；兽皮,毛皮;皮革</trans>
+		<trans>s.f. 皮,皮肤；兽皮,毛皮;皮革</trans>
 		<example>pelle liscia 光滑的皮肤
 pelle rugosa 有皱纹的皮肤
 guanti di pelle 皮手套
@@ -1843,11 +1844,6 @@ diventare rosso come un pomodoro 脸涨得通红</example>
 		<example> </example>
 	</items>
 	<items>
-		<word>uimini</word>
-		<tran> </tran>
-		<example> </example>
-	</items>
-	<items>
 		<word>alimentari</word>
 		<tran> </tran>
 		<trans>食品</trans>
@@ -1857,11 +1853,6 @@ diventare rosso come un pomodoro 脸涨得通红</example>
 		<word>amica</word>
 		<tran> </tran>
 		<trans>女朋友 , 情人 , 朋友 , 女性朋友</trans>
-		<example> </example>
-	</items>
-	<items>
-		<word>lavadino</word>
-		<tran> </tran>
 		<example> </example>
 	</items>
 	<items>

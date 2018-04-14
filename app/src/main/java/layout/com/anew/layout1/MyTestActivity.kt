@@ -23,7 +23,13 @@ class MyTestActivity : Activity() {
         setContentView(R.layout.activity_recite_word_new)
      //   createDatabase()
         val my = DaoOpt.getInstance()
-        if (my.queryAll(this)?.size==0) createDatabase()
+        if (my.queryAll(this)?.size==0) {
+
+            //val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("testWords.xml")).getElementsByTagName("items").length - 2
+            val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("testWords.xml")).getElementsByTagName("items").length
+         //   Toast.makeText(this,n.toString(),Toast.LENGTH_SHORT).show()
+            createDatabase(n)
+        }
 
         createNew()
 
@@ -75,7 +81,7 @@ class MyTestActivity : Activity() {
         }
         return thisWord
     }
-    private fun createDatabase(){
+    private fun createDatabase(n : Int){
         //this function get words from xml and turn save to database
         val my = DaoOpt.getInstance()
        // my.deleteAllData(this)
@@ -85,13 +91,13 @@ class MyTestActivity : Activity() {
         my.insertData(this,zeroWord)
 
 
-       // val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("for_test.xml")).getElementsByTagName("items").length - 1
+     //   val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("testWords.xml")).getElementsByTagName("items").length - 2
 
-        for (i in 0..30){
+        for (i in 0..n-2){
             val insertWord = getWordFromXml(i)
             my.insertData(this,insertWord)
         }
-        Toast.makeText(this,"Create Database Successfully",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"Create Database Successfully "+ n ,Toast.LENGTH_SHORT).show()
     }
 
 
@@ -138,10 +144,8 @@ class MyTestActivity : Activity() {
     // the create new recite page function should add the current word number to the word's NextAppearTime
     // call updateWordDate function after the user give a feedback of the word (right,wrong,remember-it,don't know it)
     private fun updateWordData(wordForDB: WordForDB,feedInfo: Int){
-        // 2 to rememberIt
-        // 1 to correct answer
-        // 0 to don't know
-        // -1 for incorrect answer
+        // 2 to rememberIt // 1 to correct answer
+        // 0 to don't know // -1 for incorrect answer
         if(feedInfo==2){
             wordForDB.correctTime+=2
             wordForDB.eFactor=newEFactor(wordForDB)
@@ -162,9 +166,6 @@ class MyTestActivity : Activity() {
             wordForDB.interval = newInterval(wordForDB, -1)
         }
 
-
-
-        // try to resolve the word loss problem
        // wordForDB.nextAppearTime+=wordForDB.interval
         val my = DaoOpt.getInstance()
         if (wordForDB.correctTime<3) {
@@ -174,7 +175,6 @@ class MyTestActivity : Activity() {
             }
             wordForDB.nextAppearTime = nextTime.toInt()
         }
-
         // update appearTime
         wordForDB.appearTime+=1
         if (wordForDB.correctTime>=3){
