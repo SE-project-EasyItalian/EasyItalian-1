@@ -35,7 +35,7 @@ class ReciteWord : Activity() {
         }
 
         showDetails.setOnClickListener {
-            showDetails( getWordsFromXml(n)[0])
+       //     showDetails( getWordsFromXml(n)[0])
         }
 
         backForRecite.setOnClickListener {
@@ -86,7 +86,7 @@ class ReciteWord : Activity() {
                 buttonMap[i]?.setOnClickListener({
                    // Toast.makeText(this, "答错了！", Toast.LENGTH_LONG).show()
                     // this should  turn to a detail pages
-                    showDetails( getWordsFromXml(n)[0])
+                  //  showDetails( getWordsFromXml(n)[0])
                 })
             }
         }
@@ -197,15 +197,15 @@ class ReciteWord : Activity() {
 
 
     // showDetails function turns to WordDetailsActivity, show the current word to recite
-    fun showDetails(word: Word){
-        val data = arrayListOf(word.word,word.pos,word.tran,word.trans,word.example)
-        val showDetailsActivity = Intent()
-        showDetailsActivity.setClass(this,WordDetailsActivity::class.java)
-        // pass the word info to WordDetailsActivity
-        showDetailsActivity.putStringArrayListExtra("data",data)
-        startActivity(showDetailsActivity)
-
-    }
+  //  fun showDetails(word: Word){
+   //     val data = arrayListOf(word.word,word.pos,word.tran,word.trans,word.example)
+   //     val showDetailsActivity = Intent()
+   //     showDetailsActivity.setClass(this,WordDetailsActivity::class.java)
+   //     // pass the word info to WordDetailsActivity
+   //     showDetailsActivity.putStringArrayListExtra("data",data)
+   //     startActivity(showDetailsActivity)
+//
+//    }
 
     //rewrite these function for using database
 

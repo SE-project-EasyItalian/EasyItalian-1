@@ -9,17 +9,16 @@ import android.widget.ListView
 import kotlinx.android.synthetic.main.activity_word_imformation.*
 
 class WordDetailsActivity() : Activity() {
-    val word = Word()
+    val word = WordForDB()
     // getWord accepts the StringArrayList from ReciteWord or another Activity
     // and turn it to Word-info
     fun getWord() {
         val ins = intent
         val listdata = ins.getStringArrayListExtra("data")
         word.word=listdata[0]
-        word.pos=listdata[1]
-        word.tran=listdata[2]
-        word.trans=listdata[3]
-        word.example=listdata[4]
+        word.transform=listdata[1]
+        word.translation=listdata[2]
+        word.example=listdata[3]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +27,7 @@ class WordDetailsActivity() : Activity() {
 
         getWord()
         wordForDetails.setText(word.word)
-        val data = arrayOf(word.pos+" "+word.trans,word.tran,word.example)
+        val data = arrayOf(word.translation,word.transform,word.example)
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         val listView = findViewById<ListView>(R.id.wordDetails)
         listView.adapter = adapter
@@ -37,7 +36,7 @@ class WordDetailsActivity() : Activity() {
         // the buttons' listener has problem
         val button = findViewById<Button>(R.id.continue_study)
         button.setOnClickListener {
-            val intent = Intent(this, ReciteWord::class.java)
+            val intent = Intent(this, MyTestActivity::class.java)
             startActivity(intent)
         }
 

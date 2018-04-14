@@ -21,7 +21,10 @@ class MyTestActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recite_word_new)
-        createDatabase()
+     //   createDatabase()
+        val my = DaoOpt.getInstance()
+        if (my.queryAll(this)?.size==0) createDatabase()
+
         createNew()
 
         backForRecite.setOnClickListener {
@@ -46,7 +49,7 @@ class MyTestActivity : Activity() {
         //val inputStream = conn.inputStream
         //val doc = db.parse(inputStream)
 
-        val doc = db.parse(assets.open("for_test.xml"))
+        val doc = db.parse(assets.open("testWords.xml"))
         val wordList = doc.getElementsByTagName("items")
         val thisWord = WordForDB()
         thisWord.id = num.toLong()
@@ -75,7 +78,7 @@ class MyTestActivity : Activity() {
     private fun createDatabase(){
         //this function get words from xml and turn save to database
         val my = DaoOpt.getInstance()
-        my.deleteAllData(this)
+       // my.deleteAllData(this)
 
         // use zeroWord.appearTime-10000 show the current number n
         val zeroWord = WordForDB(-1,"zero","zero","zero","zero",0,-1,-1,-1.0,-1,-1,true)
@@ -290,7 +293,8 @@ class MyTestActivity : Activity() {
                     zeroWord.appearTime+=1
                     my.saveData(this,zeroWord)
                     //TODO
-                    createNew()// this should call wordDetails function
+                //    createNew()// this should call wordDetails function
+                    showDetails(thisWord)
                 })
                 otherWords.removeAt(0)
             }
@@ -298,7 +302,7 @@ class MyTestActivity : Activity() {
 
         //set rememberIt button
         remembereIt.setOnClickListener{
-            Toast.makeText(this, "已记住，correctTime += 2", Toast.LENGTH_SHORT).show()
+       //     Toast.makeText(this, "已记住，correctTime += 2", Toast.LENGTH_SHORT).show()
             updateWordData(thisWord,2)
             zeroWord.appearTime+=1
             my.saveData(this,zeroWord)
@@ -306,15 +310,26 @@ class MyTestActivity : Activity() {
         }
         //set showDetails button
         showDetails.setOnClickListener {
-            Toast.makeText(this, "不认识，展示详情", Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(this, "不认识，展示详情", Toast.LENGTH_SHORT).show()
             updateWordData(thisWord,0)
             zeroWord.appearTime+=1
             my.saveData(this,zeroWord)
             //TODO
-            createNew()   // this should call showDetails
+           // createNew()   // this should call showDetails
+            showDetails(thisWord)
         }
 
         return
+    }
+
+    fun showDetails(word :WordForDB){
+        val data = arrayListOf(word.word,word.transform,word.translation,word.example)
+        val showDetailsActivity = Intent()
+        showDetailsActivity.setClass(this,WordDetailsActivity::class.java)
+        // pass the word info to WordDetailsActivity
+        showDetailsActivity.putStringArrayListExtra("data",data)
+        startActivity(showDetailsActivity)
+
     }
 
 }

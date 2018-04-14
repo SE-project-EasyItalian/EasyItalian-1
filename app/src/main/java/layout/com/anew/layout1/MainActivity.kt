@@ -55,20 +55,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         buttonForLearn.setOnClickListener(){
 
-            val changeToRecitePage = Intent()
+         //   val changeToRecitePage = Intent()
 
-            val firstReciteWord = ReciteWord()
-            changeToRecitePage.setClass(this,firstReciteWord::class.java)
-            startActivity(changeToRecitePage)
+         //   val firstReciteWord = ReciteWord()
+         //   changeToRecitePage.setClass(this,firstReciteWord::class.java)
+          //  startActivity(changeToRecitePage)
 
-            Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
+            val changeToRead = Intent()
+            changeToRead.setClass(this,MyTestActivity::class.java)
+            startActivity(changeToRead)
         }
         buttonForRead.setOnClickListener(){
-           // Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
-            Toast.makeText(this,"测试database in GreenDao",Toast.LENGTH_SHORT).show()
-            val changesto = Intent()
-            changesto.setClass(this,MyTestActivity::class.java)
-            startActivity(changesto)
+            Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
         }
         //end
 
