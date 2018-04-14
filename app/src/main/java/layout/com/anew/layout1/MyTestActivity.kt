@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_recite_word.*
 import kotlinx.android.synthetic.main.content_test.*
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
+import kotlin.math.ceil
 
 
 // stage now : build the vocabulary dadabase
@@ -54,6 +55,7 @@ class MyTestActivity : Activity() {
         thisWord.incorrectTime=0
         thisWord.nextAppearTime=0
         thisWord.eFactor=2.0
+        thisWord.grasp = false
 
         if(num<wordList.length) {
             val elem = wordList.item(num)
@@ -76,7 +78,7 @@ class MyTestActivity : Activity() {
         my.deleteAllData(this)
 
         // use zeroWord.appearTime-10000 show the current number n
-        val zeroWord = WordForDB(-1,"zero","zero","zero","zero",10000,-1,-1,-1.0,-1,-1)
+        val zeroWord = WordForDB(-1,"zero","zero","zero","zero",0,-1,-1,-1.0,-1,-1,true)
         my.insertData(this,zeroWord)
 
 
@@ -172,6 +174,11 @@ class MyTestActivity : Activity() {
 
         // update appearTime
         wordForDB.appearTime+=1
+        if (wordForDB.correctTime>=3){
+            wordForDB.grasp=true
+            wordForDB.interval=-1
+            wordForDB.nextAppearTime= -1
+        }
 
         DaoOpt.getInstance().saveData(this,wordForDB)    //save to database
     }
@@ -192,11 +199,11 @@ class MyTestActivity : Activity() {
         val zeroWord = my.queryForId(this,-1)?.get(0)
         // zeroWord records the num (current number of all word shown)
         // -10000 is too large maybe
-        var num = zeroWord?.appearTime!!.toLong()-10000
+        val num = zeroWord?.appearTime!!.toLong()
 
         // get thisWord to show
         val thisWordId : Long
-        if (my.queryForNextAppearTime(this,num)?.size != 0){
+        if (my.queryForNextAppearTime(this,num)?.size != 0 ){
             //Toast.makeText(this,"not null",Toast.LENGTH_SHORT).show()
             thisWordId = my.queryForNextAppearTime(this,num)?.get(0)?.id  ?:0
         }else{
@@ -212,20 +219,25 @@ class MyTestActivity : Activity() {
            // while (my.queryForAppearTime(this,i)?.size==0) i+=1
           //problem
             if (my.queryForAppearTime(this,0)?.size!=0) {
-                val randLimit = my.queryForAppearTime(this, 0)?.size ?: 1-1
+                val randLimit = my.queryForAppearTime(this, 0)?.size ?:3 -1
                 val rand = Random()
-                val randNum = rand.nextInt(randLimit / 2)
-                thisWordId = my.queryForAppearTime(this, 0)?.get(randNum)?.id ?: 0
+                val randNum = rand.nextInt(ceil(randLimit / 2.0).toInt())
+                thisWordId = my.queryForAppearTime(this, 0)?.get(randNum)?.id ?:0
             }else{
-                while(my.queryForNextAppearTime(this,num)?.size == 0) num+=1
-                if (num==10000L) thisWordId = zeroWord.id
+              //  while(my.queryForNextAppearTime(this,num)?.size == 0) num+=1
+                if (my.queryForGrasp(this,false)?.size!=0) {
+                    thisWordId=my.queryForGrasp(this,false)?.get(0)?.id ?:0
+                }
                 else {
-                    thisWordId = my.queryForNextAppearTime(this, num)?.get(0)?.id ?: 0
+                    thisWordId=0
+                    val intent =Intent(this,Finished::class.java)
+                    startActivity(intent)
+                    Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
-        val errorWord = WordForDB(-10086,"Error","Error","Error","Error",-1,-1,-1,-1.0,-1,-1)
+        val errorWord = WordForDB(-10086,"Error","Error","Error","Error",-1,-1,-1,-1.0,-1,-1,true)
         val thisWord = my.queryForId(this,thisWordId)?.get(0) ?:errorWord
 
         // get word 2
@@ -262,7 +274,7 @@ class MyTestActivity : Activity() {
         randNum = rand.nextInt(4)
         buttonMap[randNum]?.setText(thisWord.translation)
         buttonMap[randNum]?.setOnClickListener{
-            Toast.makeText(this,"答对了",Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(this,"答对了",Toast.LENGTH_SHORT).show()
             updateWordData(thisWord,1)
             zeroWord.appearTime+=1
             my.saveData(this,zeroWord)
@@ -273,7 +285,7 @@ class MyTestActivity : Activity() {
             if(i!=randNum){
                 buttonMap[i]?.setText(my.queryForId(this,otherWords[0])?.get(0)?.translation)
                 buttonMap[i]?.setOnClickListener({
-                    Toast.makeText(this, "答错了！Call showDetails and create a new page", Toast.LENGTH_LONG).show()
+                 //   Toast.makeText(this, "答错了！Call showDetails and create a new page", Toast.LENGTH_LONG).show()
                     updateWordData(thisWord,-1)
                     zeroWord.appearTime+=1
                     my.saveData(this,zeroWord)

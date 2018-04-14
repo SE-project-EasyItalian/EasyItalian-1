@@ -32,13 +32,14 @@ public class WordForDB {
     private Integer interval;
     @Property(nameInDb = "nextAppearTime")
     private Integer nextAppearTime;
+    @Property(nameInDb = "grasp")
+    private Boolean grasp;
 
-
-    @Generated(hash = 2130861856)
+    @Generated(hash = 1331518243)
     public WordForDB(Long id, String word, String transform, String translation,
             String example, Integer appearTime, Integer correctTime,
             Integer incorrectTime, Double EFactor, Integer interval,
-            Integer nextAppearTime) {
+            Integer nextAppearTime, Boolean grasp) {
         this.id = id;
         this.word = word;
         this.transform = transform;
@@ -50,6 +51,7 @@ public class WordForDB {
         this.EFactor = EFactor;
         this.interval = interval;
         this.nextAppearTime = nextAppearTime;
+        this.grasp = grasp;
     }
     @Generated(hash = 1882615787)
     public WordForDB() {
@@ -119,6 +121,12 @@ public class WordForDB {
     }
     public void setInterval(Integer interval) {
         this.interval = interval;
+    }
+    public Boolean getGrasp() {
+        return this.grasp;
+    }
+    public void setGrasp(Boolean grasp) {
+        this.grasp = grasp;
     }
 
 }

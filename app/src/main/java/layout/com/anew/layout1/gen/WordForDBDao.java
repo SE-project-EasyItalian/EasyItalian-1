@@ -35,6 +35,7 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
         public final static Property EFactor = new Property(8, Double.class, "EFactor", false, "EFactor");
         public final static Property Interval = new Property(9, Integer.class, "interval", false, "interval");
         public final static Property NextAppearTime = new Property(10, Integer.class, "nextAppearTime", false, "nextAppearTime");
+        public final static Property Grasp = new Property(11, Boolean.class, "grasp", false, "grasp");
     }
 
 
@@ -60,7 +61,8 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
                 "\"incorrectTime\" INTEGER," + // 7: incorrectTime
                 "\"EFactor\" REAL," + // 8: EFactor
                 "\"interval\" INTEGER," + // 9: interval
-                "\"nextAppearTime\" INTEGER);"); // 10: nextAppearTime
+                "\"nextAppearTime\" INTEGER," + // 10: nextAppearTime
+                "\"grasp\" INTEGER);"); // 11: grasp
     }
 
     /** Drops the underlying database table. */
@@ -127,6 +129,11 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
         if (nextAppearTime != null) {
             stmt.bindLong(11, nextAppearTime);
         }
+ 
+        Boolean grasp = entity.getGrasp();
+        if (grasp != null) {
+            stmt.bindLong(12, grasp ? 1L: 0L);
+        }
     }
 
     @Override
@@ -187,6 +194,11 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
         if (nextAppearTime != null) {
             stmt.bindLong(11, nextAppearTime);
         }
+ 
+        Boolean grasp = entity.getGrasp();
+        if (grasp != null) {
+            stmt.bindLong(12, grasp ? 1L: 0L);
+        }
     }
 
     @Override
@@ -207,7 +219,8 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
             cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // incorrectTime
             cursor.isNull(offset + 8) ? null : cursor.getDouble(offset + 8), // EFactor
             cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9), // interval
-            cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10) // nextAppearTime
+            cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10), // nextAppearTime
+            cursor.isNull(offset + 11) ? null : cursor.getShort(offset + 11) != 0 // grasp
         );
         return entity;
     }
@@ -225,6 +238,7 @@ public class WordForDBDao extends AbstractDao<WordForDB, Long> {
         entity.setEFactor(cursor.isNull(offset + 8) ? null : cursor.getDouble(offset + 8));
         entity.setInterval(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
         entity.setNextAppearTime(cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10));
+        entity.setGrasp(cursor.isNull(offset + 11) ? null : cursor.getShort(offset + 11) != 0);
      }
     
     @Override
