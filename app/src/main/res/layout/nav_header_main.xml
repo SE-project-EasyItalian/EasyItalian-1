@@ -18,6 +18,12 @@
         app:imgSrc="@mipmap/laura" />
 
     <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="     " />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="172dp"
         android:layout_height="wrap_content"

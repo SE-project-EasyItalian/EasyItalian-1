@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.ListView
 
 
-class NewWords : Activity() {
+class WordsInList : Activity() {
 
     private val data = arrayOf("Ciao", "Buongiorno", "Senta")
 

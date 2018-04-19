@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
           //  Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
             val changeToRead = Intent()
-            changeToRead.setClass(this,MyTestActivity::class.java)
+            changeToRead.setClass(this,ReciteWordAcitivity::class.java)
             startActivity(changeToRead)
         }
         buttonForRead.setOnClickListener(){
@@ -94,21 +94,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_new_word -> {
                 val changeToNewWords = Intent()
-                changeToNewWords.setClass(this, NewWords::class.java)
+                changeToNewWords.setClass(this, WordsInList::class.java)
                 startActivity(changeToNewWords)
                     Toast.makeText(this,"call 生词本 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_finished_word-> {
                 // new word ? from lyj
                 val changeToNewWords = Intent()
-                changeToNewWords.setClass(this, NewWords::class.java)
+                changeToNewWords.setClass(this, WordsInList::class.java)
                 startActivity(changeToNewWords)
                 Toast.makeText(this,"call 已完成单词 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_coming_word -> {
                 // same as above
                val changeToNewWords = Intent()
-               changeToNewWords.setClass(this, NewWords::class.java)
+               changeToNewWords.setClass(this, WordsInList::class.java)
                startActivity(changeToNewWords)
                 Toast.makeText(this,"call 未背单词 activity",Toast.LENGTH_SHORT).show()
             }

@@ -31,18 +31,18 @@
         <activity
             android:name=".PersonalInfo"
             android:label="personal_info" />
-        <activity android:name=".ReciteWord" />
+
         <activity android:name=".SettingActivity" />
         <activity android:name=".WordDetailsActivity" />
-        <activity android:name=".NewWords" />
+        <activity android:name=".WordsInList" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"></activity>
         <activity
-            android:name=".MyTestActivity"
+            android:name=".ReciteWordAcitivity"
             android:label="@string/title_activity_test"></activity>
         <activity
-            android:name=".Finished"
+            android:name=".FinishedPage"
             android:label="@string/title_activity_finished"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
