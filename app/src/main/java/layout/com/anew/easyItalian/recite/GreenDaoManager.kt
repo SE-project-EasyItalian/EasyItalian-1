@@ -1,9 +1,9 @@
-package layout.com.anew.layout1
+package layout.com.anew.easyItalian.recite
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import layout.com.anew.layout1.gen.DaoMaster
-import layout.com.anew.layout1.gen.DaoSession
+import layout.com.anew.easyItalian.gen.DaoMaster
+import layout.com.anew.easyItalian.gen.DaoSession
 
 
 class GreenDaoManager private constructor(mContext: Context) {

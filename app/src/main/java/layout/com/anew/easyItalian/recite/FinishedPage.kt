@@ -1,10 +1,10 @@
-package layout.com.anew.layout1
+package layout.com.anew.easyItalian.recite
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_finished.*
+import layout.com.anew.easyItalian.R
 
 class FinishedPage : AppCompatActivity() {
 

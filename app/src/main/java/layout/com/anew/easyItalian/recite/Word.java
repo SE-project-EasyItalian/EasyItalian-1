@@ -1,4 +1,4 @@
-package layout.com.anew.layout1;
+package layout.com.anew.easyItalian.recite;
 
 
 import org.greenrobot.greendao.annotation.Entity;

@@ -1,8 +1,8 @@
-package layout.com.anew.layout1
+package layout.com.anew.easyItalian.recite
 
 import android.app.Application
-import layout.com.anew.layout1.gen.DaoSession
-import layout.com.anew.layout1.gen.DaoMaster
+import layout.com.anew.easyItalian.gen.DaoSession
+import layout.com.anew.easyItalian.gen.DaoMaster
 
 
 

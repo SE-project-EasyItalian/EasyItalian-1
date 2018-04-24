@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="layout.com.anew.layout1.MainActivity"
+    tools:context="layout.com.anew.easyItalian.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
 

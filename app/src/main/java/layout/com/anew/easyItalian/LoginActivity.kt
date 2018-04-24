@@ -1,4 +1,4 @@
-package layout.com.anew.layout1
+package layout.com.anew.easyItalian
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

@@ -1,4 +1,4 @@
-package layout.com.anew.layout1
+package layout.com.anew.easyItalian.recite
 
 import android.app.Activity
 import android.content.Context
@@ -6,12 +6,13 @@ import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_word_imformation.*
+import layout.com.anew.easyItalian.MainActivity
+import layout.com.anew.easyItalian.R
 
 class WordDetailsActivity() : Activity() {
     val word = Word()

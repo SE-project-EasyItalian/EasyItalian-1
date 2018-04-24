@@ -1,7 +1,7 @@
-package layout.com.anew.layout1
+package layout.com.anew.easyItalian.recite
 
 import android.content.Context
-import layout.com.anew.layout1.gen.WordDao
+import layout.com.anew.easyItalian.gen.WordDao
 
 class DaoOpt private constructor(){
     private object mHolder {

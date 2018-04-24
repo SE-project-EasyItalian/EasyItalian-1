@@ -1,4 +1,4 @@
-package layout.com.anew.layout1
+package layout.com.anew.easyItalian.recite
 
 import android.app.Activity
 import android.content.Context
@@ -6,11 +6,12 @@ import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_recite_word.*
+import layout.com.anew.easyItalian.MainActivity
+import layout.com.anew.easyItalian.R
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.math.ceil
@@ -59,7 +60,7 @@ class ReciteWordAcitivity : Activity() {
         //val inputStream = conn.inputStream
         //val doc = db.parse(inputStream)
 
-        val doc = db.parse(assets.open("testWords.xml"))
+        val doc = db.parse(assets.open("for_test.xml"))
         val wordList = doc.getElementsByTagName("items")
         val thisWord = Word()
         thisWord.id = num.toLong()
@@ -237,7 +238,7 @@ class ReciteWordAcitivity : Activity() {
                 }
                 else {
                     thisWordId=0
-                    val intent =Intent(this,FinishedPage::class.java)
+                    val intent =Intent(this, FinishedPage::class.java)
                     startActivity(intent)
                     Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
                 }
@@ -329,7 +330,7 @@ class ReciteWordAcitivity : Activity() {
     fun showDetails(word : Word){
         val data = arrayListOf(word.word,word.transform,word.translation,word.example)
         val showDetailsActivity = Intent()
-        showDetailsActivity.setClass(this,WordDetailsActivity::class.java)
+        showDetailsActivity.setClass(this, WordDetailsActivity::class.java)
         // pass the word info to WordDetailsActivity
         showDetailsActivity.putStringArrayListExtra("data",data)
         startActivity(showDetailsActivity)

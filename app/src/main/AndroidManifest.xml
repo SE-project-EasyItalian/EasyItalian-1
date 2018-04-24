@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="layout.com.anew.layout1">
+    package="layout.com.anew.easyItalian">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".BaseApplication"
+        android:name=".recite.BaseApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_main"
@@ -31,20 +31,22 @@
         <activity
             android:name=".PersonalInfo"
             android:label="personal_info" />
-
         <activity android:name=".SettingActivity" />
-        <activity android:name=".WordDetailsActivity" />
+        <activity android:name=".recite.WordDetailsActivity" />
         <activity android:name=".WordsInList" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
+
         <activity
-            android:name=".ReciteWordAcitivity"
-            android:label="@string/title_activity_test"></activity>
+            android:name=".recite.ReciteWordAcitivity"/>
         <activity
-            android:name=".FinishedPage"
+            android:name=".recite.FinishedPage"
             android:label="@string/title_activity_finished"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
+
     </application>
 
 </manifest>

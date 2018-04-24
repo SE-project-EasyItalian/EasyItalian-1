@@ -1,4 +1,4 @@
-package layout.com.anew.layout1
+package layout.com.anew.easyItalian
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

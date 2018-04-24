@@ -1,4 +1,4 @@
-package layout.com.anew.layout1
+package layout.com.anew.easyItalian
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
 import com.example.youngkaaa.ycircleview.CircleView
 import kotlinx.android.synthetic.main.content_main.*
-
+import layout.com.anew.easyItalian.recite.ReciteWordAcitivity
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -62,12 +62,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           //  startActivity(changeToRecitePage)
 
           //  Toast.makeText(this,"call 背单词 activity",Toast.LENGTH_SHORT).show()
-            val changeToRead = Intent()
-            changeToRead.setClass(this,ReciteWordAcitivity::class.java)
-            startActivity(changeToRead)
+            val changeToRecite = Intent()
+            changeToRecite.setClass(this, ReciteWordAcitivity::class.java)
+            startActivity(changeToRecite)
         }
         buttonForRead.setOnClickListener(){
-            Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
+           // Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
+           // val changeToRead = Intent()
+           // changeToRead.setClass(this, ReadActivity::class.java)
+           // startActivity(changeToRead)
         }
         //end
 

@@ -1,4 +1,4 @@
-package layout.com.anew.layout1.gen;
+package layout.com.anew.easyItalian.gen;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
