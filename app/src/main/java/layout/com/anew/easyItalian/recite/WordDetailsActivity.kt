@@ -99,10 +99,10 @@ class WordDetailsActivity() : Activity() {
                 mp?.start()
             }
 
-            val onErrorListener = MediaPlayer.OnErrorListener { mp, _, _ -> false }
+            val onErrorListener = MediaPlayer.OnErrorListener { _, _, _ -> false }
 
-            val onCompletionListener = MediaPlayer.OnCompletionListener { mp ->
-                mp.release()
+            val onCompletionListener = MediaPlayer.OnCompletionListener { mpt ->
+                mpt.release()
             }
 
             val url = buildSpeechUrl(text)

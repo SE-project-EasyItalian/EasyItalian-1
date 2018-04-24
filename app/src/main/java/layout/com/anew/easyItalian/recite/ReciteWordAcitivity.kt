@@ -26,13 +26,13 @@ class ReciteWordAcitivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recite_word)
-     //   createDatabase()
+
+     //   createDatabase() this should be put in personalInfo page
         val my = DaoOpt.getInstance()
         if (my.queryAll(this)?.size==0) {
 
-            //val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("testWords.xml")).getElementsByTagName("items").length - 2
+            // n is the total number of words
             val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("testWords.xml")).getElementsByTagName("items").length
-         //   Toast.makeText(this,n.toString(),Toast.LENGTH_SHORT).show()
             createDatabase(n)
         }
 
@@ -53,10 +53,10 @@ class ReciteWordAcitivity : Activity() {
     private fun getWordFromXml(num:Int): Word {
         val dbf = DocumentBuilderFactory.newInstance()
         val db = dbf.newDocumentBuilder()
-
-     //   val conn = URL("192.168.1.171/wordbook.xml").openConnection() as HttpURLConnection
-      //  conn.connectTimeout=5000
-       // conn.requestMethod="GET"
+        //TODO get xml from server
+         //   val conn = URL("192.168.1.171/wordbook.xml").openConnection() as HttpURLConnection
+         //  conn.connectTimeout=5000
+         // conn.requestMethod="GET"
         //val inputStream = conn.inputStream
         //val doc = db.parse(inputStream)
 
@@ -220,12 +220,12 @@ class ReciteWordAcitivity : Activity() {
             // all the randNum should be re-consider it
             // ATTENTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // not just appearTime == 0 but also ==1 ==2
-         //   val rand = Random()
-          //  val randNum = rand.nextInt(6)
-          //  thisWordId =  my.queryForAppearTime(this,0)?.get(randNum)?.id ?:0
-           // var i : Long = 0
-           // while (my.queryForAppearTime(this,i)?.size==0) i+=1
-          //problem
+            //   val rand = Random()
+            //  val randNum = rand.nextInt(6)
+            //  thisWordId =  my.queryForAppearTime(this,0)?.get(randNum)?.id ?:0
+            // var i : Long = 0
+            // while (my.queryForAppearTime(this,i)?.size==0) i+=1
+            //problem
             if (my.queryForAppearTime(this,0)?.size!=0) {
                 val randLimit = my.queryForAppearTime(this, 0)?.size ?:3 -1
                 val rand = Random()
@@ -358,48 +358,6 @@ class ReciteWordAcitivity : Activity() {
         return url
     }
 
-    fun btnSpeakNowOnClick() {
-        var mp : MediaPlayer? = null
-        val txtSentence = findViewById<TextView>(R.id.word)
-
-        val text = txtSentence.text.toString()
-
-        try {
-            val onPreparedListener = MediaPlayer.OnPreparedListener {
-                mp?.setVolume(1f, 1f)
-                mp?.start()
-            }
-
-            val onErrorListener = MediaPlayer.OnErrorListener { mp, _, _ -> false }
-
-            val onCompletionListener = MediaPlayer.OnCompletionListener { mp ->
-                mp.release()
-            }
-
-            val url = buildSpeechUrl(text)
-
-            val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0)
-
-            try {
-                if (mp != null)
-                    mp.release()
-
-                mp = MediaPlayer()
-                mp.setDataSource(url)
-                mp.setOnErrorListener(onErrorListener)
-                mp.setOnCompletionListener(onCompletionListener)
-                mp.setOnPreparedListener(onPreparedListener)
-                mp.prepareAsync()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-    }
 
     fun callTTS(){
         val txtSentence = findViewById<TextView>(R.id.word)
