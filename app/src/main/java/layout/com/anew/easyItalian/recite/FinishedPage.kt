@@ -12,7 +12,5 @@ class FinishedPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finished)
         setSupportActionBar(toolbar)
-
     }
-
 }

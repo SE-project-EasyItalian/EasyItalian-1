@@ -130,7 +130,7 @@ class WordDetailsActivity() : Activity() {
 
     }
 
-    fun callTTS(){
+    private fun callTTS(){
         val txtSentence = findViewById<TextView>(R.id.wordForDetails)
         val text = txtSentence.text.toString()
         val url = buildSpeechUrl(text)

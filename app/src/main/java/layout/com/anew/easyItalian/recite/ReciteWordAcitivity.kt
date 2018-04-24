@@ -32,7 +32,7 @@ class ReciteWordAcitivity : Activity() {
         if (my.queryAll(this)?.size==0) {
 
             // n is the total number of words
-            val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("testWords.xml")).getElementsByTagName("items").length
+            val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("for_test.xml")).getElementsByTagName("items").length
             createDatabase(n)
         }
 
