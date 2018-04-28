@@ -1,66 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:layout_editor_absoluteY="81dp">
-
+    android:background="#44ff0000"
+    android:layout_height="wrap_content" >
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:gravity="center"
-        android:text="title"
-        android:textSize="38sp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-
-        android:layout_width="144dp"
-        android:layout_height="125dp"
-
-        android:layout_gravity="center_vertical"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/level" />
-
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="227dp"
-        android:layout_height="123dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="8dp"
-
-
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:text="text"
-        android:textSize="38sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/level" />
-
-    <TextView
-        android:id="@+id/level"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-
-        android:text="level"
-        android:textSize="38sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-</android.support.constraint.ConstraintLayout>
+        android:text="1" />
+</FrameLayout>

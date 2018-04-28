@@ -67,6 +67,9 @@ dependencies {
 
     // SelectableTextView
     implementation 'com.github.Brioal:SelectableTextViewProject:1.0'
+
+    //recycleview
+
 }
 repositories {
     maven {
