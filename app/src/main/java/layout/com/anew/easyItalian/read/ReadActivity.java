@@ -1,21 +1,15 @@
 package layout.com.anew.easyItalian.read;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
-
-
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,19 +104,4 @@ public class ReadActivity extends Activity {
 
     }
 
-    void readArticle(String uid){
-        /*
-        *      val data = arrayListOf(uid)
-            val showArticlePageActivity = Intent()
-            showArticlePageActivity.setClass(this, ArticlePageActivity::class.java)
-            // pass the word info to WordDetailsActivity
-            showArticlePageActivity.putStringArrayListExtra("data",data)
-            startActivity(showArticlePageActivity)*/
-        ArrayList<String> data = new ArrayList<String>();
-        data.add(uid);
-        Intent showArticlePageActivity = new Intent();
-        showArticlePageActivity.setClass(this, ArticlePageActivity.class);
-        // pass the word info to WordDetailsActivity
-        showArticlePageActivity.putStringArrayListExtra("data",data);
-    }
 }

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -63,7 +62,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         holder.level.setText(article.getLevel());
         holder.text.setText(article.getText());
         Picasso.get().load(article.getimageUrl()).resize(88,95).into(holder.image);
-        //holder.image.setImageResource(article.getimageUrl());
     }
 
 
@@ -85,9 +83,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                 data.add(uid);
                 Intent showArticlePageActivity = new Intent();
                 showArticlePageActivity.setClass(v.getContext(),ArticlePageActivity.class);
-                // pass the word info to WordDetailsActivity
                 showArticlePageActivity.putStringArrayListExtra("data",data);
-               // Toast.makeText(v.getContext(),"you click item "+position,Toast.LENGTH_SHORT).show();
+                v.getContext().startActivity(showArticlePageActivity);
             }
         });
 
@@ -106,9 +103,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                 showArticlePageActivity.setClass(v.getContext(),ArticlePageActivity.class);
                 showArticlePageActivity.putStringArrayListExtra("data",data);
                 v.getContext().startActivity(showArticlePageActivity);
-
-                //  Toast.makeText(v.getContext(),"you click title of item "+position+article.getTitle(),Toast.LENGTH_SHORT).show();
-            }
+                }
         });
 
         //点击正文
@@ -117,7 +112,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 Article article=mList.get(position);
-                //Toast.makeText(v.getContext(),"you click text of item "+position+article.getTitle(),Toast.LENGTH_SHORT).show();
                 String uid = article.getId();
                 ArrayList<String> data = new ArrayList<String>();
                 data.add(uid);
