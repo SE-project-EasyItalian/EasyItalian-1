@@ -26,44 +26,58 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         //this.context = context;
         this.mList = mList;
     }
-
-
-
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-        private View articleView;
+        //private View articleView;
         private TextView title;
-        private TextView level;
-        private TextView text;
-        private ImageView image;
-
-
+        //private TextView level;
+        //private TextView text;
+        //private ImageView image;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.title);
-            level = (TextView) itemView.findViewById(R.id.level);
-            text = (TextView) itemView.findViewById(R.id.text);
+            //level = (TextView) itemView.findViewById(R.id.level);
+            //text = (TextView) itemView.findViewById(R.id.text);
 
-            image = (ImageView) itemView.findViewById(R.id.image);
-            articleView=itemView;
+            //image = (ImageView) itemView.findViewById(R.id.image);
+            //articleView=itemView;
         }
     }
 
 
 
+    @Override
+
+    public int getItemCount() {
+        return mList.size();
+    }
+
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        /**
+         * 给itemView设置tag
+         */
+        Article article =mList.get(position);
+        //holder.itemView.setTag(position);
+        holder.title.setText(article.getTitle());
+        //holder.level.setText(article.getLevel());
+        //holder.text.setText(article.getText());
+        //    holder.image.setImageResource(article.getimageUrl());
+    }
+
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.article_item,parent,false);
+        //View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.article_item,parent,false);
 
-        //View view = View.inflate(context, R.layout.article_item, null);
+        View view = View.inflate(parent.getContext(), android.R.layout.simple_list_item_1, null);
 
         final ViewHolder holder = new ViewHolder(view);
 
+        /*
         holder.articleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,26 +95,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                 Toast.makeText(v.getContext(),"you click image of"+article.getTitle(),Toast.LENGTH_SHORT).show();
             }
         });
-
+        */
         return holder;
     }
 
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        /**
-         * 给itemView设置tag
-         */
-        Article article =mList.get(position);
-        holder.itemView.setTag(position);
-        holder.title.setText(article.getTitle());
-        holder.level.setText(article.getLevel());
-        holder.text.setText(article.getText());
-    //    holder.image.setImageResource(article.getimageUrl());
-    }
 
 
-    public int getItemCount() {
-        return mList.size();
-    }
+
+
 
 
 }

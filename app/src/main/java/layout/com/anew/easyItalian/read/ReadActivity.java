@@ -42,15 +42,16 @@ public class ReadActivity extends Activity {
 
     private void initArticle(){
 
-        int i;
 
 
-        for(i=0;i<5;i++){
+
+        for(int
+            i=0;i<5;i++){
             String title="title1";
-            int level=4;
+            String level="4";
             String text="text1";
-            int imageId=R.drawable.ic_info;
-            Article article=new Article(i,title,level,text,R.drawable.ic_unfinished);
+            String id="id"+i;
+            Article article=new Article(id,title,level,text,"image1");
 
             articleList.add(article);
         }

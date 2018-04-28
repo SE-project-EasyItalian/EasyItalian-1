@@ -2,14 +2,14 @@ package layout.com.anew.easyItalian.read;
 
 // define the Class Article
 public class Article {
-    private  Long id;
+    private  String id;
     private String title;
-    private int level;
+    private String level;
     private String text;
     private String imageUrl;
     //and so on
 
-    public Article(Long id,String title, int level,String text,String imageUrl){
+    public Article(String id,String title, String level,String text,String imageUrl){
         this.id=id;
         this.title=title;
         this.level=level;
@@ -22,14 +22,14 @@ public class Article {
 
     }
 
-    public long getId(){
+    public String getId(){
         return this.id;
     }
 
     public String getTitle(){
         return this.title;
     }
-    public int getLevel(){
+    public String getLevel(){
         return this.level;
     }
     public String getText(){
