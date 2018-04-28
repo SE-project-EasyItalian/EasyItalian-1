@@ -1,6 +1,7 @@
 package layout.com.anew.easyItalian.read;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ public class ReadActivity extends Activity {
 
         //初始化数据
         initArticle();
+
 
         //将articleTist里的文章展示出来
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -74,6 +76,8 @@ public class ReadActivity extends Activity {
             Article article2 = getArticle("9900002");
         //将article放入链表中
             articleList.add(article2);
+
+
         //}
     }
 
@@ -102,5 +106,21 @@ public class ReadActivity extends Activity {
         thisArticle = new Article("9900000","Error","0","Error","Error");
         return thisArticle;
 
+    }
+
+    void readArticle(String uid){
+        /*
+        *      val data = arrayListOf(uid)
+            val showArticlePageActivity = Intent()
+            showArticlePageActivity.setClass(this, ArticlePageActivity::class.java)
+            // pass the word info to WordDetailsActivity
+            showArticlePageActivity.putStringArrayListExtra("data",data)
+            startActivity(showArticlePageActivity)*/
+        ArrayList<String> data = new ArrayList<String>();
+        data.add(uid);
+        Intent showArticlePageActivity = new Intent();
+        showArticlePageActivity.setClass(this, ArticlePageActivity.class);
+        // pass the word info to WordDetailsActivity
+        showArticlePageActivity.putStringArrayListExtra("data",data);
     }
 }

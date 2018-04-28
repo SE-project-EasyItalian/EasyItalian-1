@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import layout.com.anew.easyItalian.R;
@@ -21,12 +22,11 @@ import layout.com.anew.easyItalian.R;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder>{
 
-    private Context context;
+
     private List<Article> mList;
 
     public ArticleAdapter(Context context, List<Article> mList) {
         this.mList = mList;
-        this.context=context;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -80,11 +80,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 Article article=mList.get(position);
-                Toast.makeText(v.getContext(),"you click item "+position,Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(context, ArticlePageActivity.class);
-                //intent.putExtra("article_data", article);
-                //startActivity(intent);
+                String uid = article.getId();
+                ArrayList<String> data = new ArrayList<String>();
+                data.add(uid);
+                Intent showArticlePageActivity = new Intent();
+                showArticlePageActivity.setClass(v.getContext(),ArticlePageActivity.class);
+                // pass the word info to WordDetailsActivity
+                showArticlePageActivity.putStringArrayListExtra("data",data);
+               // Toast.makeText(v.getContext(),"you click item "+position,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -94,7 +97,17 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 Article article=mList.get(position);
-                Toast.makeText(v.getContext(),"you click title of item "+position+article.getTitle(),Toast.LENGTH_SHORT).show();
+
+                // the following part is ok
+                String uid = article.getId();
+                ArrayList<String> data = new ArrayList<String>();
+                data.add(uid);
+                Intent showArticlePageActivity = new Intent();
+                showArticlePageActivity.setClass(v.getContext(),ArticlePageActivity.class);
+                showArticlePageActivity.putStringArrayListExtra("data",data);
+                v.getContext().startActivity(showArticlePageActivity);
+
+                //  Toast.makeText(v.getContext(),"you click title of item "+position+article.getTitle(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -104,7 +117,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 Article article=mList.get(position);
-                Toast.makeText(v.getContext(),"you click text of item "+position+article.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(),"you click text of item "+position+article.getTitle(),Toast.LENGTH_SHORT).show();
+                String uid = article.getId();
+                ArrayList<String> data = new ArrayList<String>();
+                data.add(uid);
+                Intent showArticlePageActivity = new Intent();
+                showArticlePageActivity.setClass(v.getContext(),ArticlePageActivity.class);
+                showArticlePageActivity.putStringArrayListExtra("data",data);
+                v.getContext().startActivity(showArticlePageActivity);
             }
         });
         return holder;
