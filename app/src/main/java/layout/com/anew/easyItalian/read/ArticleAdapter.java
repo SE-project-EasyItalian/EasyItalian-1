@@ -69,7 +69,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 Article article=mList.get(position);
-                Toast.makeText(v.getContext(),"you click item"+article.getTitle(),Toast.LENGTH_SHORT);
+                Toast.makeText(v.getContext(),"you click item"+article.getTitle(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -78,7 +78,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 Article article=mList.get(position);
-                Toast.makeText(v.getContext(),"you click image of"+article.getTitle(),Toast.LENGTH_SHORT);
+                Toast.makeText(v.getContext(),"you click image of"+article.getTitle(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -94,7 +94,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         holder.title.setText(article.getTitle());
         holder.level.setText(article.getLevel());
         holder.text.setText(article.getText());
-        holder.image.setImageResource(article.getImageId());
+    //    holder.image.setImageResource(article.getimageUrl());
     }
 
 
