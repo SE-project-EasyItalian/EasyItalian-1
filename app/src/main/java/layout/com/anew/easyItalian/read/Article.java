@@ -1,5 +1,7 @@
 package layout.com.anew.easyItalian.read;
 
+import android.content.Intent;
+
 import java.io.Serializable;
 
 // define the Class Article
