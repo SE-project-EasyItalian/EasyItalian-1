@@ -50,9 +50,9 @@ public class ReadActivity extends Activity {
             int level=4;
             String text="text1";
             int imageId=R.drawable.ic_info;
-            Article article=new Article(i,title,level,text,R.drawable.ic_unfinished);
+          //  Article article=new Article(i,title,level,text,R.drawable.ic_unfinished);
 
-            articleList.add(article);
+         //   articleList.add(article);
         }
     }
 }
