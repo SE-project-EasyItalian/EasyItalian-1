@@ -37,16 +37,11 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-
-        <activity
-            android:name=".recite.ReciteWordAcitivity"/>
+        <activity android:name=".recite.ReciteWordAcitivity" />
         <activity
             android:name=".recite.FinishedPage"
-            android:label="@string/title_activity_finished"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-
-
+            android:label="@string/title_activity_finished" />
+        <activity android:name=".read.ReadActivity" />
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
 import com.example.youngkaaa.ycircleview.CircleView
 import kotlinx.android.synthetic.main.content_main.*
+import layout.com.anew.easyItalian.read.ReadActivity
 import layout.com.anew.easyItalian.recite.ReciteWordAcitivity
 
 
@@ -67,10 +68,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(changeToRecite)
         }
         buttonForRead.setOnClickListener(){
-           // Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
-           // val changeToRead = Intent()
-           // changeToRead.setClass(this, ReadActivity::class.java)
-           // startActivity(changeToRead)
+           Toast.makeText(this,"call 读美文 activity",Toast.LENGTH_SHORT).show()
+           val changeToRead = Intent();
+            changeToRead.setClass(this, ReadActivity::class.java)
+           startActivity(changeToRead)
         }
         //end
 

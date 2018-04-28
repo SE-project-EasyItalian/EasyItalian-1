@@ -12,9 +12,11 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_recite_word.*
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
+import java.lang.Math.ceil
+
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
-import kotlin.math.ceil
+//import kotlin.math.ceil
 
 
 // stage now : build the vocabulary database

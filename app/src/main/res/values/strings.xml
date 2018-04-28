@@ -37,4 +37,5 @@
     </string>
     <string name="title_activity_finished">Finished</string>
     <string name="title_activity_read">ReadActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
