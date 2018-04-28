@@ -2,11 +2,8 @@ package layout.com.anew.easyItalian.read;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,7 +65,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
 
         //View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.article_item,parent,false);
-        View view = View.inflate(parent.getContext(), R.layout.article_item2, null);
+        View view = View.inflate(parent.getContext(), R.layout.article_item, null);
         final ViewHolder holder = new ViewHolder(view);
 
         //点击效果
