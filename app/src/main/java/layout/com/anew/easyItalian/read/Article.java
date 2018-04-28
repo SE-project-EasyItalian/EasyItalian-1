@@ -1,7 +1,9 @@
 package layout.com.anew.easyItalian.read;
 
+import java.io.Serializable;
+
 // define the Class Article
-public class Article {
+public class Article implements Serializable {
     private  String id;
     private String title;
     private String level;

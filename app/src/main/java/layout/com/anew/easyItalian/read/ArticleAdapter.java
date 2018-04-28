@@ -1,6 +1,7 @@
 package layout.com.anew.easyItalian.read;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,12 @@ import layout.com.anew.easyItalian.R;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder>{
 
-
+    private Context context;
     private List<Article> mList;
 
     public ArticleAdapter(Context context, List<Article> mList) {
         this.mList = mList;
+        this.context=context;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -79,6 +81,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                 int position=holder.getAdapterPosition();
                 Article article=mList.get(position);
                 Toast.makeText(v.getContext(),"you click item "+position,Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, ArticlePageActivity.class);
+                //intent.putExtra("article_data", article);
+                //startActivity(intent);
             }
         });
 
