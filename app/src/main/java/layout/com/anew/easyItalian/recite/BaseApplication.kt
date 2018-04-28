@@ -1,6 +1,7 @@
 package layout.com.anew.easyItalian.recite
 
 import android.app.Application
+import com.avos.avoscloud.AVOSCloud
 import layout.com.anew.easyItalian.gen.DaoSession
 import layout.com.anew.easyItalian.gen.DaoMaster
 
@@ -15,6 +16,9 @@ class BaseApplication : Application(){
         //配置数据库
         setupDatabase()
         GreenDaoManager.getInstance(this)
+
+        // initialize leancloud
+        AVOSCloud.initialize(this, "SbkfRG1bPvdg2EWKGKa3igM5-gzGzoHsz", "iC5bfhEPRSufXzogvr4pynno")
     }
 
     /**

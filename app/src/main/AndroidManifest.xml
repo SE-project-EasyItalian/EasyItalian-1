@@ -42,6 +42,7 @@
             android:name=".recite.FinishedPage"
             android:label="@string/title_activity_finished" />
         <activity android:name=".read.ReadActivity" />
+        <activity android:name=".read.ArticlePageActivity"/>
     </application>
 
 </manifest>
