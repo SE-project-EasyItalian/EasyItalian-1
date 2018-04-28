@@ -4,8 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -30,14 +33,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         private TextView title;
         private TextView level;
         private TextView text;
-        //private ImageView image;
+        private ImageView image;
         public ViewHolder(View itemView) {
 
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
             level = (TextView) itemView.findViewById(R.id.level);
             text = (TextView) itemView.findViewById(R.id.text);
-            //image = (ImageView) itemView.findViewById(R.id.image);
+            image = (ImageView) itemView.findViewById(R.id.imageView);
             articleView=itemView;
         }
     }
@@ -57,7 +60,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         holder.title.setText(article.getTitle());
         holder.level.setText(article.getLevel());
         holder.text.setText(article.getText());
-        // holder.image.setImageResource(article.getimageUrl());
+        Picasso.get().load(article.getimageUrl()).resize(88,95).into(holder.image);
+        //holder.image.setImageResource(article.getimageUrl());
     }
 
 

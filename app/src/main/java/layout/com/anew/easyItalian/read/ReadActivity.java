@@ -1,20 +1,18 @@
 package layout.com.anew.easyItalian.read;
 
 import android.app.Activity;
-import android.media.Image;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.util.Log;
 import android.widget.Toast;
+
+
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +44,11 @@ public class ReadActivity extends Activity {
 
     //初始化数据
     private void initArticle(){
-        for(int i=0;i<5;i++){
-            String title="Amo la mia mamma e il mio papa  ";
+    //    for(int i=0;i<2;i++){
+            /*
+            *
+            *
+            * String title="Amo la mia mamma e il mio papa  ";
             String level="4星";
             String text="Per la maggior parte del mondo cristiano, il culmine della" +
                     " festività natalizia è il cenone di Natale. è il momento in cui le " +
@@ -62,10 +63,44 @@ public class ReadActivity extends Activity {
                     "prodotto nelle regione denominata Champagne, viene bevuto per celebrare " +
                     "entrambe le festività di Natale e di Capodanno."+i;
             String id="id"+i;
-            Article article=new Article(id,title,level,text,"image1");
+            Article article=new Article(id,title,level,text,"image1");*/
 
+            Article article = getArticle("9900000");
             //将article放入链表中
             articleList.add(article);
+            Article article1 = getArticle("9900001");
+        //将article放入链表中
+            articleList.add(article1);
+            Article article2 = getArticle("9900002");
+        //将article放入链表中
+            articleList.add(article2);
+        //}
+    }
+
+    private Article getArticle(String uid){
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads().detectDiskWrites().detectNetwork()
+                .penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+                .penaltyLog().penaltyDeath().build());
+
+
+        AVQuery<AVObject> query = new AVQuery<>("Articles");
+        Article thisArticle;
+        try {
+            String thisTitle = query.whereEqualTo("UID",uid).getFirst().fetch().get("title").toString();
+            String thisLevel = query.whereEqualTo("UID",uid).getFirst().fetch().get("level").toString();
+            String thisImageUrl = "http://avisy.ddns.net:3322/" + query.whereEqualTo("UID",uid).getFirst().fetch().get("imageUrl").toString();
+            String thisText = query.whereEqualTo("UID",uid).getFirst().fetch().get("text").toString();
+            thisArticle = new Article(uid,thisTitle,thisLevel,thisText,thisImageUrl);
+            return thisArticle;
+        }catch (AVException e){
+            Log.d("error","AVException=",e);
         }
+
+        thisArticle = new Article("9900000","Error","0","Error","Error");
+        return thisArticle;
+
     }
 }
