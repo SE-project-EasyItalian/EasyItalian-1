@@ -18,30 +18,15 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-class ArticlePageActivity : Activity() {
+class ArticlePageActivity() : Activity() {
 
+
+    var uid = "9900000"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_page)
 
-        // necessary for getting data from internet
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads().detectDiskWrites().detectNetwork()
-                .penaltyLog().build())
-        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
-                .penaltyLog().penaltyDeath().build())
-        //end
-
-        val query = AVQuery<AVObject>("Articles")
-        val mytitle = query.whereEqualTo("UID","9900000").first["title"].toString()
-        titleOfArticle.setText(mytitle)
-        // directly use url when saving into leancloud
-        val picNum = query.whereEqualTo("UID","9900000").first["imageUrl"].toString()
-        val imUrm = "http://avisy.ddns.net:3322/"+picNum
-        Picasso.get().load(imUrm).fit().into(image)
-        val mytext = query.whereEqualTo("UID","9900000").first["text"].toString()
-        text.setText(mytext)
+        getArticle()
         // onWordClickListener
         class onWordClick() : OnWordClickListener(){
             override  fun onNoDoubleClick(p0: String?) {
@@ -50,8 +35,31 @@ class ArticlePageActivity : Activity() {
             }
         }
         text.setOnWordClickListener(onWordClick())
+    }
 
+    private fun getArticle(){
 
+        val ins = intent
+        val listdata = ins.getStringArrayListExtra("data")
+        uid=listdata[0]
+        // necessary for getting data from internet
+        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads().detectDiskWrites().detectNetwork()
+                .penaltyLog().build())
+        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+                .penaltyLog().penaltyDeath().build())
+        val query = AVQuery<AVObject>("Articles")
+        val mytitle = query.whereEqualTo("UID",uid).first["title"].toString()
+        titleOfArticle.setText(mytitle)
+        val mylevel =  query.whereEqualTo("UID",uid).first["level"].toString()
+        Toast.makeText(this,mylevel,Toast.LENGTH_SHORT).show()
+        // directly use url when saving into leancloud
+        val picNum = query.whereEqualTo("UID",uid).first["imageUrl"].toString()
+        val imUrm = "http://avisy.ddns.net:3322/"+picNum
+        Picasso.get().load(imUrm).fit().into(image)
+        val mytext = query.whereEqualTo("UID",uid).first["text"].toString()
+        text.setText(mytext)
     }
 
     fun getTranslation(word :String){
@@ -92,7 +100,7 @@ class ArticlePageActivity : Activity() {
         }
     }
 
-    fun streamToString(myis: InputStream): String? {
+    private fun streamToString(myis: InputStream): String? {
         try {
             val out = ByteArrayOutputStream()
             val buffer = ByteArray(1024)

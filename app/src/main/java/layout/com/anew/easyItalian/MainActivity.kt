@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import layout.com.anew.easyItalian.read.ArticlePageActivity
 import layout.com.anew.easyItalian.read.ReadActivity
 import layout.com.anew.easyItalian.recite.ReciteWordAcitivity
+import layout.com.anew.easyItalian.recite.WordDetailsActivity
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -54,9 +55,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         searchWordButton.setOnClickListener(){
            Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
-            val changeToRead = Intent();
-            changeToRead.setClass(this, ArticlePageActivity::class.java)
-            startActivity(changeToRead)
+
+            // the way to call article by uid
+            val uid="9900000"
+            val data = arrayListOf(uid)
+            val ArticlePageActivity = Intent()
+            ArticlePageActivity.setClass(this, ArticlePageActivity::class.java)
+            // pass the word info to WordDetailsActivity
+            ArticlePageActivity.putStringArrayListExtra("data",data)
+            startActivity(ArticlePageActivity)
+
         }
         buttonForLearn.setOnClickListener(){
 
