@@ -66,10 +66,11 @@ dependencies {
     implementation('cn.leancloud.android:avoscloud-search:v4.6.4@aar')
 
     // SelectableTextView
-    implementation 'com.github.Brioal:SelectableTextViewProject:1.0'
+  //  implementation 'com.github.Brioal:SelectableTextViewProject:1.0'
 
-    //recycleview
 
+   // implementation 'com.jmpergar:AwesomeText:1.0.0'
+    implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
 }
 repositories {
     maven {

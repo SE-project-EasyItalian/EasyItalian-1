@@ -7,8 +7,12 @@ import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import kotlinx.android.synthetic.main.activity_article_page.*
 import android.os.StrictMode
+import android.util.LayoutDirection
+import android.view.Gravity
 import android.widget.Toast
-import com.brioal.selectabletextview.OnWordClickListener
+import layout.com.anew.easyItalian.selectabletextview.OnWordClickListener
+import layout.com.anew.easyItalian.selectabletextview.SelectableTextView
+import com.example.zhouwei.library.CustomPopWindow
 import com.squareup.picasso.Picasso
 import layout.com.anew.easyItalian.R
 import org.json.JSONArray
@@ -16,6 +20,10 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.widget.PopupWindow
+import kotlinx.android.synthetic.main.pop_layout1.view.*
 
 
 class ArticlePageActivity() : Activity() {
@@ -28,13 +36,29 @@ class ArticlePageActivity() : Activity() {
 
         getArticle()
         // onWordClickListener
-        class onWordClick() : OnWordClickListener(){
+        class onWordClick(a:Int,b:Int) : OnWordClickListener(){
+            val a =a
+            val b =b
             override  fun onNoDoubleClick(p0: String?) {
+
+                val text = findViewById<SelectableTextView>(R.id.text)
                 text.dismissSelected()
-                getTranslation(p0 ?:"")
+               // getTranslation(p0 ?:"")
+                val contentView = LayoutInflater.from(this@ArticlePageActivity).inflate(R.layout.pop_layout1, null)
+                //处理popWindow 显示内容
+               // handleLogic(contentView)
+                //创建并显示popWindow
+                contentView.translation.text = getTranslation(p0?:"ciao")
+                val mCustomPopWindow = CustomPopWindow.PopupWindowBuilder(this@ArticlePageActivity)
+                        .setView(contentView)
+                        .create().showAtLocation(text,Gravity.FILL_HORIZONTAL,a,b)
+                        //.showAsDropDown(text, a, b)
+
             }
         }
-        text.setOnWordClickListener(onWordClick())
+
+        text.setOnWordClickListener(onWordClick(MotionEvent.AXIS_HAT_X,MotionEvent.AXIS_HAT_Y))
+
     }
 
     private fun getArticle(){
@@ -53,6 +77,8 @@ class ArticlePageActivity() : Activity() {
         val mytitle = query.whereEqualTo("UID",uid).first["title"].toString()
         titleOfArticle.setText(mytitle)
         val mylevel =  query.whereEqualTo("UID",uid).first["level"].toString()
+        //show level
+        // change it
         Toast.makeText(this,mylevel,Toast.LENGTH_SHORT).show()
         // directly use url when saving into leancloud
         val picNum = query.whereEqualTo("UID",uid).first["imageUrl"].toString()
@@ -60,9 +86,11 @@ class ArticlePageActivity() : Activity() {
         Picasso.get().load(imUrm).fit().into(image)
         val mytext = query.whereEqualTo("UID",uid).first["text"].toString()
         text.setText(mytext)
+
+
     }
 
-    fun getTranslation(word :String){
+    fun getTranslation(word :String):String{
         var result = ""
         try{
             val googleTranslate = "https://translate.google.cn/translate_a/single?client=gtx&sl=it&tl=zh-CN&dt=t&q="
@@ -92,12 +120,14 @@ class ArticlePageActivity() : Activity() {
         for (i in 0 until jsonArray.length()) {
             result += jsonArray.getJSONArray(i).getString(0)
         }
-        Toast.makeText(this,result,Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,result,Toast.LENGTH_SHORT).show()
+            return result
         }catch (e :Exception){
             result = "翻译失败";
             e.printStackTrace();
             result = "";
         }
+        return result
     }
 
     private fun streamToString(myis: InputStream): String? {
