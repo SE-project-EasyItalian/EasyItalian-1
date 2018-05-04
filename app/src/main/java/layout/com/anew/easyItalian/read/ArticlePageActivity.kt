@@ -7,12 +7,7 @@ import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import kotlinx.android.synthetic.main.activity_article_page.*
 import android.os.StrictMode
-import android.util.LayoutDirection
-import android.view.Gravity
 import android.widget.Toast
-import layout.com.anew.easyItalian.selectabletextview.OnWordClickListener
-import layout.com.anew.easyItalian.selectabletextview.SelectableTextView
-import com.example.zhouwei.library.CustomPopWindow
 import com.squareup.picasso.Picasso
 import layout.com.anew.easyItalian.R
 import org.json.JSONArray
@@ -20,10 +15,10 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.widget.PopupWindow
-import kotlinx.android.synthetic.main.pop_layout1.view.*
+
+
+
+
 
 
 class ArticlePageActivity() : Activity() {
@@ -35,29 +30,27 @@ class ArticlePageActivity() : Activity() {
         setContentView(R.layout.activity_article_page)
 
         getArticle()
-        // onWordClickListener
-        class onWordClick(a:Int,b:Int) : OnWordClickListener(){
-            val a =a
-            val b =b
-            override  fun onNoDoubleClick(p0: String?) {
 
-                val text = findViewById<SelectableTextView>(R.id.text)
-                text.dismissSelected()
-               // getTranslation(p0 ?:"")
-                val contentView = LayoutInflater.from(this@ArticlePageActivity).inflate(R.layout.pop_layout1, null)
-                //处理popWindow 显示内容
-               // handleLogic(contentView)
-                //创建并显示popWindow
-                contentView.translation.text = getTranslation(p0?:"ciao")
-                val mCustomPopWindow = CustomPopWindow.PopupWindowBuilder(this@ArticlePageActivity)
-                        .setView(contentView)
-                        .create().showAtLocation(text,Gravity.FILL_HORIZONTAL,a,b)
-                        //.showAsDropDown(text, a, b)
 
+        /*
+        *
+        text.setCustomActionMenuCallBack(object : CustomActionMenuCallBack {
+            override fun onCreateCustomActionMenu(menu: ActionMenu): Boolean {
+                menu.setActionMenuBgColor(-0x99999a)                    // ActionMenu背景色
+                menu.setMenuItemTextColor(-0x1)                   // ActionMenu文字颜色
+                val titleList = ArrayList<String>()
+                titleList.add("翻译")
+                titleList.add("分享")
+                titleList.add("分享")
+                menu.addCustomMenuItem(titleList)                       // 添加菜单
+                return false                                            // 返回false，保留默认菜单(全选/复制)；返回true，移除默认菜单
             }
-        }
 
-        text.setOnWordClickListener(onWordClick(MotionEvent.AXIS_HAT_X,MotionEvent.AXIS_HAT_Y))
+            override fun onCustomActionItemClicked(itemTitle: String, selectedContent: String) {
+                Toast.makeText(this@ArticlePageActivity, "ActionMenu: $itemTitle", Toast.LENGTH_SHORT).show()
+            }
+        })*/
+       // text.setOnWordClickListener(onWordClick(MotionEvent.AXIS_HAT_X,MotionEvent.AXIS_HAT_Y))
 
     }
 
@@ -123,7 +116,6 @@ class ArticlePageActivity() : Activity() {
             Toast.makeText(this,result,Toast.LENGTH_SHORT).show()
             return result
         }catch (e :Exception){
-            result = "翻译失败";
             e.printStackTrace();
             result = "";
         }

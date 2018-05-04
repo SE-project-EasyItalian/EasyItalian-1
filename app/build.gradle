@@ -59,18 +59,10 @@ dependencies {
     // avoscloud-sns：LeanCloud 第三方登录包
     implementation('cn.leancloud.android:avoscloud-sns:v4.6.4@aar')
     implementation('cn.leancloud.android:qq-sdk:1.6.1-leancloud')
-    // 新浪微博 SDK
-    //compile('com.sina.weibo.sdk:core:4.1.4:openDefaultRelease@aar')
 
     // LeanCloud 应用内搜索包
     implementation('cn.leancloud.android:avoscloud-search:v4.6.4@aar')
 
-    // SelectableTextView
-  //  implementation 'com.github.Brioal:SelectableTextViewProject:1.0'
-
-
-   // implementation 'com.jmpergar:AwesomeText:1.0.0'
-    implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
 }
 repositories {
     maven {
