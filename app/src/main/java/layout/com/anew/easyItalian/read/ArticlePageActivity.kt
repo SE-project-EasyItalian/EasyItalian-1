@@ -2,6 +2,7 @@ package layout.com.anew.easyItalian.read
 
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
@@ -31,7 +32,12 @@ class ArticlePageActivity() : Activity() {
 
         getArticle()
 
-
+        backForArticlePage.setOnClickListener{
+            finish()
+            val intent = Intent()
+            intent.setClass(this, ReadActivity::class.java)
+            startActivity(intent)
+        }
         /*
         *
         text.setCustomActionMenuCallBack(object : CustomActionMenuCallBack {

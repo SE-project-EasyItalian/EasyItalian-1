@@ -1,5 +1,9 @@
 package layout.com.anew.easyItalian.TouchSelectWordTextView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +25,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-
-
-
+import org.json.JSONArray;
 
 
 public class TouchSelectWordText extends AppCompatTextView {
@@ -37,9 +39,9 @@ public class TouchSelectWordText extends AppCompatTextView {
     private int mLineY;
     private boolean select = true;
 
-    //add
+    //add popupWindow
     private CustomActionMenuCallBack mCustomActionMenuCallBack;
-    private PopupWindow mActionMenuPopupWindow; // 长按弹出菜单
+    private PopupWindow mActionMenuPopupWindow; // 点击弹出菜单
     //add end
     private SparseArray<List<WordTouchBean>> wordlist = new SparseArray<List<WordTouchBean>>();
 
@@ -123,30 +125,84 @@ public class TouchSelectWordText extends AppCompatTextView {
                 //call popupWindow
                 float mTouchDownRawY = event.getRawY();
                 int mPopWindowOffsetY = calculatorActionMenuYPosition((int) mTouchDownRawY, (int) event.getRawY());
-                ActionMenu mActionMenu = createActionMenu();
-                //TODO showActionMenu show word's translation
+                ActionMenu mActionMenu = createActionMenu(wordText);
+
+                // show word and its translation on Menu item
                 showActionMenu(mPopWindowOffsetY, mActionMenu);
 
-                //test for show wordText
-               // Toast.makeText(getContext(),wordText,Toast.LENGTH_LONG).show();
             }
 
         }
         return false;
     }
 
-    // create ActionMene
-    private ActionMenu createActionMenu() {
-        // 创建菜单
-        ActionMenu actionMenu = new ActionMenu(getContext());
-        // 是否需要移除默认item
-        boolean isRemoveDefaultItem = false;
-        if (null != mCustomActionMenuCallBack) {
-            isRemoveDefaultItem = mCustomActionMenuCallBack.onCreateCustomActionMenu(actionMenu);
-        }
-        if (!isRemoveDefaultItem)
-            actionMenu.addDefaultMenuItem(); // 添加默认item
 
+    // getTranslation functions
+    private String getTranslation(String word){
+        String result = "";
+        try{
+            String  googleTranslate = "https://translate.google.cn/translate_a/single?client=gtx&sl=it&tl=zh-CN&dt=t&q=";
+            String  translateUrl = googleTranslate+word;
+            URL url = new URL(translateUrl);
+            HttpURLConnection urlConn = (HttpURLConnection)url.openConnection();
+            // 设置连接主机超时时间
+            urlConn.setConnectTimeout(5 * 1000);
+            //设置从主机读取数据超时
+            urlConn.setReadTimeout(5 * 1000);
+            // 设置是否使用缓存  默认是true
+            urlConn.setUseCaches(false);
+            // 设置为Post请求
+            urlConn.setRequestMethod("GET");
+            //urlConn设置请求头信息
+            String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
+            urlConn.setRequestProperty("User-Agent", USER_AGENT);
+            urlConn.connect();
+            int statusCode = urlConn.getResponseCode();
+            String googleResult = "";
+            if (statusCode == 200) {
+                // 获取返回的数据
+                googleResult = streamToString(urlConn.getInputStream());
+            }
+
+            JSONArray jsonArray = new JSONArray(googleResult).getJSONArray(0);
+            for (int i=0;i<jsonArray.length();i++){
+                result += jsonArray.getJSONArray(i).getString(0);
+            }
+
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public static String streamToString(InputStream is) {
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = is.read(buffer)) != -1) {
+                out.write(buffer, 0, len);
+            }
+            out.close();
+            is.close();
+            byte[] byteArray = out.toByteArray();
+            return new String(byteArray);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // create ActionMenu
+    private ActionMenu createActionMenu(String word) {
+        // 创建菜单
+        //set word and its translation
+        ActionMenu actionMenu = new ActionMenu(getContext());
+        actionMenu.setWord(word+":");
+        actionMenu.setTranslation(getTranslation(word));
+
+        actionMenu.addDefaultMenuItem(); // 添加默认item
         actionMenu.addCustomItem();  // 添加自定义item
         actionMenu.setFocusable(true); // 获取焦点
         actionMenu.setFocusableInTouchMode(true);
@@ -184,13 +240,11 @@ public class TouchSelectWordText extends AppCompatTextView {
 
     //showActionMenu
     private void showActionMenu(int offsetY, layout.com.anew.easyItalian.TouchSelectWordTextView.ActionMenu actionMenu) {
-
         mActionMenuPopupWindow = new PopupWindow(actionMenu, WindowManager.LayoutParams.WRAP_CONTENT,
                 Utils.dp2px(getContext(), 45), true);
         mActionMenuPopupWindow.setFocusable(true);
         mActionMenuPopupWindow.setOutsideTouchable(false);
         mActionMenuPopupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-
         //TODO fix it
         mActionMenuPopupWindow.showAtLocation(this, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, offsetY);
 
@@ -339,8 +393,5 @@ public class TouchSelectWordText extends AppCompatTextView {
             return line.charAt(line.length() - 1) != '\n';
         }
     }
-
-
-    // add
 
 }

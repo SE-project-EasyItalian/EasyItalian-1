@@ -20,7 +20,7 @@
 
 
     <Button
-        android:id="@+id/backForRecite"
+        android:id="@+id/backForRead"
         android:layout_width="38dp"
         android:layout_height="41dp"
         android:layout_marginTop="8dp"

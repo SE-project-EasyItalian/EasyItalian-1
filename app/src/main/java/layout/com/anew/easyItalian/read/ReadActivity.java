@@ -1,18 +1,23 @@
 package layout.com.anew.easyItalian.read;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+import layout.com.anew.easyItalian.MainActivity;
 import layout.com.anew.easyItalian.R;
 
 public class ReadActivity extends Activity {
@@ -38,6 +43,16 @@ public class ReadActivity extends Activity {
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
+        Button back = findViewById(R.id.backForRead);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent();
+                intent.setClass(ReadActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //初始化数据

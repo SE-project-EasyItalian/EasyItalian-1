@@ -24,20 +24,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 /**
- * 触发长按事件后弹出的ActionMenu菜单
+ * 触发点击事件后弹出的ActionMenu菜单
  * Created by zengp on 2017/12/2.
+ * customized by xsx on 2018/05/04.
  */
 
 public class ActionMenu extends LinearLayout {
 
-    public static final String DEFAULT_MENU_ITEM_TITLE_SELECT_ALL = "全选";
-    public static final String DEFAULT_MENU_ITEM_TITLE_COPY = "复制";
+
+    public String word = "ciao";
+    public String translation = "你好";
 
     private Context mContext;
     private int mMenuItemMargin;
@@ -52,6 +54,7 @@ public class ActionMenu extends LinearLayout {
     public ActionMenu(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
+
 
     public ActionMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -69,6 +72,12 @@ public class ActionMenu extends LinearLayout {
         mMenuItemMargin = 25;
     }
 
+    public void setWord(String word) {
+        this.word = word;
+    }
+    public void setTranslation(String translation){
+        this.translation = translation;
+    }
     /**
      * 设置ActionMenu背景
      */
@@ -83,29 +92,13 @@ public class ActionMenu extends LinearLayout {
      * 添加默认MenuItem（全选，复制）
      */
     void addDefaultMenuItem() {
-        View item_select_all = createMenuItem(DEFAULT_MENU_ITEM_TITLE_SELECT_ALL);
-        View item_copy = createMenuItem(DEFAULT_MENU_ITEM_TITLE_COPY);
-        addView(item_select_all);
-        addView(item_copy);
+        View this_word = createMenuItem(word);
+        View this_translation = createMenuItem(translation);
+        addView(this_word);
+        addView(this_translation);
         invalidate();
     }
 
-    /**
-     * 移除默认MenuItem
-     */
-    public void removeDefaultMenuItem() {
-        if (getChildCount() == 0)
-            return;
-
-        View selAllItem = findViewWithTag(DEFAULT_MENU_ITEM_TITLE_SELECT_ALL);
-        View copyItem = findViewWithTag(DEFAULT_MENU_ITEM_TITLE_COPY);
-
-        if (null != selAllItem)
-            removeView(selAllItem);
-        if (null != copyItem)
-            removeView(copyItem);
-        invalidate();
-    }
 
     /**
      * 添加自定义MenuItem标题
