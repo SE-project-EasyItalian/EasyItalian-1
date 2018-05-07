@@ -20,7 +20,7 @@ import java.util.List;
 import layout.com.anew.easyItalian.MainActivity;
 import layout.com.anew.easyItalian.R;
 
-public class ReadActivity extends Activity {
+public class ReadActivityJava extends Activity {
 
 
     private List<Article> articleList=new ArrayList<>();
@@ -29,7 +29,7 @@ public class ReadActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(ReadActivity.this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ReadActivityJava.this);
 
 
         //初始化数据
@@ -39,7 +39,7 @@ public class ReadActivity extends Activity {
         //将articleTist里的文章展示出来
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
-        ArticleAdapter adapter=new ArticleAdapter(ReadActivity.this,articleList);
+        ArticleAdapter adapter=new ArticleAdapter(ReadActivityJava.this,articleList);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
@@ -49,7 +49,7 @@ public class ReadActivity extends Activity {
             public void onClick(View v) {
                 finish();
                 Intent intent = new Intent();
-                intent.setClass(ReadActivity.this, MainActivity.class);
+                intent.setClass(ReadActivityJava.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -77,17 +77,26 @@ public class ReadActivity extends Activity {
                     "entrambe le festività di Natale e di Capodanno."+i;
             String id="id"+i;
             Article article=new Article(id,title,level,text,"image1");*/
+          //  String uid = "9900000";
+        int uid = 9900000;
+        Article article = getArticle(String.valueOf(uid));
+          //  int a = 99;
 
-            Article article = getArticle("9900000");
+            //String.valueOf(a);
             //将article放入链表中
-            articleList.add(article);
-            Article article1 = getArticle("9900001");
+         //   articleList.add(article);
+          //  Article article1 = getArticle("9900001");
         //将article放入链表中
-            articleList.add(article1);
-            Article article2 = getArticle("9900002");
+           // articleList.add(article1);
+            //Article article2 = getArticle("9900002");
         //将article放入链表中
-            articleList.add(article2);
+           // articleList.add(article2);
 
+            while(article.getTitle()!="Error"){
+                articleList.add(article);
+                uid++;
+                article = getArticle(String.valueOf(uid));
+            }
 
         //}
     }
@@ -103,20 +112,30 @@ public class ReadActivity extends Activity {
 
         AVQuery<AVObject> query = new AVQuery<>("Articles");
         Article thisArticle;
-        try {
-            String thisTitle = query.whereEqualTo("UID",uid).getFirst().fetch().get("title").toString();
-            String thisLevel = query.whereEqualTo("UID",uid).getFirst().fetch().get("level").toString();
-            String thisImageUrl = "http://avisy.ddns.net:3322/" + query.whereEqualTo("UID",uid).getFirst().fetch().get("imageUrl").toString();
-            String thisText = query.whereEqualTo("UID",uid).getFirst().fetch().get("text").toString();
-            thisArticle = new Article(uid,thisTitle,thisLevel,thisText,thisImageUrl);
-            return thisArticle;
-        }catch (AVException e){
-            Log.d("error","AVException=",e);
+        if (query.whereEqualTo("UID",uid) !=null) {
+            try {
+                AVObject a = query.whereEqualTo("UID",uid).getFirst();
+                try{
+                    String thisTitle = a.fetch().get("title").toString();
+                    String thisLevel = a.fetch().get("level").toString();
+                    String thisImageUrl = "http://avisy.ddns.net:3322/" + a.fetch().get("imageUrl").toString();
+                    String thisText = a.fetch().get("text").toString();
+                    thisArticle = new Article(uid, thisTitle, thisLevel, thisText, thisImageUrl);
+                    return thisArticle;
+                }catch (AVException e) {
+                    Log.d("error","AVException",e);
+                    thisArticle = new Article("9900000", "Error", "0", "Error", "Error");
+                    return thisArticle;
+                }
+            } catch (AVException e) {
+                Log.d("error", "AVException=", e);
+                thisArticle = new Article("9900000", "Error", "0", "Error", "Error");
+                return thisArticle;
+            }
+        }else {
+               thisArticle = new Article("9900000","Error","0","Error","Error");
+              return thisArticle;
         }
-
-        thisArticle = new Article("9900000","Error","0","Error","Error");
-        return thisArticle;
-
     }
 
 }

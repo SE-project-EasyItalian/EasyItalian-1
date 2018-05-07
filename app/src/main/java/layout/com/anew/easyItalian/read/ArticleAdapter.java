@@ -61,7 +61,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         holder.title.setText(article.getTitle());
         holder.level.setText(article.getLevel());
         holder.text.setText(article.getText());
-        Picasso.get().load(article.getimageUrl()).resize(88,95).into(holder.image);
+        Picasso.get().load(article.getimageUrl()).fit().into(holder.image);
     }
 
 

@@ -241,10 +241,10 @@ public class TouchSelectWordText extends AppCompatTextView {
     //showActionMenu
     private void showActionMenu(int offsetY, layout.com.anew.easyItalian.TouchSelectWordTextView.ActionMenu actionMenu) {
         mActionMenuPopupWindow = new PopupWindow(actionMenu, WindowManager.LayoutParams.WRAP_CONTENT,
-                Utils.dp2px(getContext(), 45), true);
+                Utils.dp2px(getContext(), 35), true);
         mActionMenuPopupWindow.setFocusable(true);
         mActionMenuPopupWindow.setOutsideTouchable(false);
-        mActionMenuPopupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+     //   mActionMenuPopupWindow.setBackgroundDrawable(new ColorDrawable(0xff000000));
         //TODO fix it
         mActionMenuPopupWindow.showAtLocation(this, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, offsetY);
 

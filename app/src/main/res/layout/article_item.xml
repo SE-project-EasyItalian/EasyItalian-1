@@ -3,69 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="368dp"
-        android:layout_height="143dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="270dp"
+        android:layout_height="75dp"
+
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="4dp"
+        android:maxLines="5"
+        android:text="Text"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/level" />
 
-        <TextView
-            android:id="@+id/level"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:gravity="center_vertical|left"
-            android:text="level"
-            android:textSize="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical|left"
+        android:text="level"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="88dp"
-            android:layout_height="95dp"
-            android:layout_gravity="right|center_vertical"
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="left"
+        android:text="title"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            android:layout_marginBottom="3dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            app:srcCompat="@drawable/avoscloud_feedback_actionbar_background" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="88dp"
+        android:layout_height="95dp"
+        android:layout_gravity="end|center_vertical"
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="270dp"
-            android:layout_height="75dp"
-
-            android:layout_marginEnd="2dp"
-            android:layout_marginTop="4dp"
-            android:maxLines="5"
-            android:text="Text"
-            android:textSize="15dp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/level" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="352dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="left"
-            android:text="title"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/avoscloud_feedback_actionbar_background" />
 
 
 </android.support.constraint.ConstraintLayout>
