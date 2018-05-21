@@ -16,6 +16,9 @@ import com.avos.avoscloud.AVQuery
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
 import java.util.ArrayList
+import android.view.ViewGroup
+
+
 
 
 class ReadActivity : Activity() {
@@ -38,6 +41,7 @@ class ReadActivity : Activity() {
         recyclerView.layoutManager = layoutManager
         val adapter = ArticleAdapter(this@ReadActivity, articleList)
         recyclerView.adapter = adapter
+
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         val back = findViewById<Button>(R.id.backForRead)
@@ -129,3 +133,4 @@ class ReadActivity : Activity() {
     }
 
 }
+

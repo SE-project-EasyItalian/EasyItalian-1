@@ -20,11 +20,14 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 
 
@@ -104,7 +107,7 @@ public class TouchSelectWordText extends AppCompatTextView {
             return false;
         }
         int action = event.getAction();
-        if (action == MotionEvent.ACTION_DOWN) {
+        if (action == MotionEvent.ACTION_DOWN ) {
             clear();
             Layout layout = getLayout();
             int x = (int) event.getX();
@@ -130,11 +133,13 @@ public class TouchSelectWordText extends AppCompatTextView {
                 // show word and its translation on Menu item
                 showActionMenu(mPopWindowOffsetY, mActionMenu);
 
-            }
-
+                }
         }
+
         return false;
+
     }
+
 
 
     // getTranslation functions
