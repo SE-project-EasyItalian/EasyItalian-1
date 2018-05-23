@@ -216,4 +216,17 @@ class DaoOpt private constructor(){
         return builder?.where(WordDao.Properties.Grasp.eq(id))?.list()
     }
 
+    fun queryForWord(context: Context?, word: String): MutableList<Word>? {
+        val builder = GreenDaoManager.getInstance(context!!)?.getDaoSession(context)?.wordDao?.queryBuilder()
+        /**
+         * 返回当前id的数据集合,当然where(这里面可以有多组，做为条件);
+         * 这里build.list()；与where(WordDao.Properties.Id.eq(id)).list()结果是一样的；
+         * 在QueryBuilder类中list()方法return build().list();
+
+         */
+        // Query<word> build = builder.where(WordDao.Properties.Id.eq(id)).build();
+        // List<word> list = build.list();
+        return builder?.where(WordDao.Properties.Word.eq(word))?.list()
+    }
+
 }

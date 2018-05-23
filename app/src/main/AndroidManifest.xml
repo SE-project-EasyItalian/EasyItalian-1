@@ -33,19 +33,22 @@
             android:name=".PersonalInfo"
             android:label="personal_info" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".recite.WordDetailsActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".recite.WordDetailsActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".WordsInList" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".recite.ReciteWordAcitivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".recite.ReciteWordAcitivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".recite.FinishedPage"
             android:label="@string/title_activity_finished" />
         <activity android:name=".read.ReadActivity" />
-        <activity android:name=".read.ArticlePageActivity"/>
+        <activity android:name=".read.ArticlePageActivity" />
+        <activity android:name=".SearchWordPage"></activity>
     </application>
 
 </manifest>

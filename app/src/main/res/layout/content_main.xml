@@ -45,4 +45,10 @@
         app:srcCompat="@drawable/ic_search_black" />
 
 
+    <com.lapism.searchview.widget.SearchBar
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
 </android.support.constraint.ConstraintLayout>
