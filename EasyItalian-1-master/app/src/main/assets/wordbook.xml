@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<wordbook>
+    <items>
+        <word>pomodoro</word>
+        <pos>s.m.</pos>
+        <tran> </tran>
+        <trans><![CDATA[番茄, 西红柿]]></trans>
+        <example><![CDATA[avere un naso rosso come un pomodoro 喝醉了酒
+diventare rosso come un pomodoro 脸涨得通红
+pomodoro di mare [动] 海葵]]></example>
+        <tags> </tags>
+        <progress>2</progress>
+    </items>
+
+    <items>
+        <word>volere</word>
+        <pos>v.tr.</pos>
+        <tran>pres. io vòglio, tu vuòi, egli vuòle,
+noi vogliamo, voi voléte, essi vògliono; fut. io vorrò, ecc.;
+pass. rem. io vòlli, tu volésti, egli vòlle, noi volémmo,
+voi voléste, essi vòllero; cong. pres. io vòglia, tu vòglia, ecc.;
+cond. io vorrèi, ecc.; p.pr. volènte; ger. volèndo;
+imp. vògli; p.p. voluto
+作为独立动词,其助动词为avere；后跟动词不定式,
+在复合时态时,助动词一般根据后面动词不定式确定</tran>
+        <trans><![CDATA[要,想要,希望,愿意,渴望]]></trans>
+        <example><![CDATA[Non voglio aiuti da nessuno. 我们不要别人的帮助。]]></example>
+        <tags> </tags>
+        <progress>2</progress>
+    </items>
+
+    <items>
+        <word>vino</word>
+        <pos>s.m.</pos>
+        <tran> </tran>
+        <trans><![CDATA[酒；葡萄酒;果子酒,露酒]]></trans>
+        <example><![CDATA[vino bianco (rosso) 白 (红) 酒；白 (红) 葡萄酒
+vino forte (generoso) 烈酒
+vino leggero 淡酒]]></example>
+        <tags> </tags>
+        <progress>2</progress>
+    </items>
+
+    <items>
+        <word>ragazzo</word>
+        <pos>s.m.</pos>
+        <tran> </tran>
+        <trans><![CDATA[男孩；青年,小伙子;未婚夫，男友]]></trans>
+        <example><![CDATA[E’ uscita con il suo ragazzo. 她和男朋友出去了。]]></example>
+        <tags> </tags>
+        <progress>2</progress>
+    </items>
+
+    <items>
+        <word>lavoro</word>
+        <pos>s.m.</pos>
+        <tran> </tran>
+        <trans><![CDATA[工作, 劳动, 活儿; 职业;劳动成果; 作品]]></trans>
+        <example><![CDATA[lavoro politico政治工作
+metodo di lavoro 工作方法]]></example>
+        <tags> </tags>
+        <progress>2</progress>
+    </items>
+
+    <items>
+        <word>preferire</word>
+        <pos>v.tr.</pos>
+        <tran>io preferisco, tu preferisci, ecc.</tran>
+        <trans><![CDATA[宁可, 宁愿, 更喜欢]]></trans>
+        <example><![CDATA[Preferisco andare a piedi.我宁愿走着去。
+Preferì morire piuttosto che arrendersi.他宁死不屈。
+Preferisce la carne o il pesce?您喜欢肉还是鱼？
+Nel pomeriggio preferirei riposare.下午我要休息。]]></example>
+        <tags> </tags>
+        <progress>2</progress>
+    </items>
+
+    <items>
+        <word>appetito</word>
+        <pos>s.m.</pos>
+        <tran> </tran>
+        <trans><![CDATA[欲望,渴望;食欲,胃口]]></trans>
+        <example><![CDATA[avere (sentirsi) appetito 有胃口
+non avere appetito 没有食欲,不想吃饭
+Buon appetito! 祝好胃口！ (西方人的习惯,饭前的客气话)
+L’appetito vien mangiando. [谚] 胃口越吃越大； 得寸进尺。]]></example>
+        <tags> </tags>
+        <progress>2</progress>
+    </items>
+
+    <items>
+        <word>prendere</word>
+        <pos>v.tr.</pos>
+        <tran>pres. io prèndo, ecc.; pass. rem. io prési, tu prendésti, ecc.; p.p. préso</tran>
+        <trans><![CDATA[拿, 取; 抓, 啄;携带, 带;(去某处) 接, 取;乘坐]]></trans>
+        <example><![CDATA[prendere un pacco 拿包裹
+prendere la valigia 提箱子
+prendere il bambino per mano 手挽着孩子
+prendere qlcu. tra le braccia拥抱某人
+prendere il treno (l’aereo, ecc.) 乘火车 (飞机等)
+Sono andati a prendere i bagagli alla stazione.他们去车站取行李了。]]></example>
+        <tags> </tags>
+        <progress>2</progress>
+    </items>
+
+    <items>
+        <word>tavolo</word>
+        <pos>s.m.</pos>
+        <tran> </tran>
+        <trans><![CDATA[桌子,台子]]></trans>
+        <example><![CDATA[tavolo di lavora 工作台
+tavolo da disegno画桌
+tavolo d’ufficio办公桌]]></example>
+        <tags> </tags>
+        <progress>2</progress>
+    </items>
+
+
+</wordbook>
