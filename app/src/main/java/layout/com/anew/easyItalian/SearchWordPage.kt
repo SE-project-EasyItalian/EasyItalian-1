@@ -7,6 +7,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
@@ -25,8 +26,8 @@ class SearchWordPage : Activity() {
         val listdata = ins.getStringArrayListExtra("data")
         word.word=listdata[0]
         word.transform=listdata[1]
-        word.translation=listdata[2]
-        word.example=listdata[3]
+        word.translation=" "
+        word.example=" "
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

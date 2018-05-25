@@ -7,14 +7,20 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
+import com.avos.avoscloud.AVException
+import com.avos.avoscloud.AVObject
+import com.avos.avoscloud.AVQuery
+import com.avos.avoscloud.SaveCallback
 import com.example.youngkaaa.ycircleview.CircleView
 import com.lapism.searchview.Search
 import com.lapism.searchview.widget.SearchLayout
+import kotlinx.android.synthetic.main.activity_article_page.*
 
 
 import kotlinx.android.synthetic.main.content_main.*
@@ -28,6 +34,7 @@ import java.io.InputStream
 import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
+import javax.xml.parsers.DocumentBuilderFactory
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -42,7 +49,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
 
 
         // find parent view to make profile clickable on first call
@@ -63,13 +69,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawer_layout.closeDrawer(GravityCompat.START) // close side bar
         }
 
-
         //search_new_word & learn_button & read_button
-
         searchWordButton.setOnClickListener(){
            Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
-
-
         }
 
 
@@ -131,6 +133,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             return result
         }
+        fun getDetails(word :String):String{
+            var result=""
+            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads().detectDiskWrites().detectNetwork()
+                    .penaltyLog().build())
+            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+                    .penaltyLog().penaltyDeath().build())
+            val query = AVQuery<AVObject>("Words")
+            if (query.whereEqualTo("word",word).first!=null){
+                result = query.whereEqualTo("word",word).first["details"].toString()
+            }else  {
+
+                result=getTranslation(word)
+            }
+
+
+            return result
+        }
 
 
         searchBar.setOnMicClickListener(){
@@ -166,9 +187,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     word?.setWord(text)
                     //word?.setTranslation(getTranslation(text))
                     //val data = arrayListOf(word?.word,word?.transform,word?.translation,word?.example)
-                    val translation=getTranslation(text)
+              //      val translation=getTranslation(text)
+                    val translation=getDetails(text)
                     Toast.makeText(this,translation,Toast.LENGTH_SHORT).show()
-                    val data = arrayListOf(word?.word,"","翻译："+translation,"")
+                    val data = arrayListOf(word?.word,translation)
                     val changeToSearchWordPage = Intent()
                     changeToSearchWordPage.setClass(this, SearchWordPage::class.java)
                     changeToSearchWordPage.putStringArrayListExtra("data",data)
@@ -265,5 +287,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun putData() {
+
+        val dbf = DocumentBuilderFactory.newInstance()
+        val db = dbf.newDocumentBuilder()
+
+        val doc = db.parse(assets.open("word_hole.xml"))
+        val wordList = doc.getElementsByTagName("items")
+
+        for(i in 38170..wordList.length-2) {
+            val elem = wordList.item(i)
+            val theWord = elem.childNodes.item(1).textContent
+            val theDetails = elem.childNodes.item(3).textContent
+            val testObject = AVObject("Words")
+            testObject.put("wordID",i)
+            testObject.put("word",theWord)
+            testObject.put("details",theDetails)
+            testObject.saveInBackground(object : SaveCallback() {
+                override fun done(e: AVException?) {
+                    if (e == null) {
+                        Log.d("saved", "success!")
+                    }
+                }
+            })
+        }
+
+
     }
 }
