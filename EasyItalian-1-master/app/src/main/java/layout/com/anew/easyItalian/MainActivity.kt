@@ -21,9 +21,8 @@ import com.example.youngkaaa.ycircleview.CircleView
 
 
 import kotlinx.android.synthetic.main.content_main.*
-import layout.com.anew.easyItalian.WordSearch.DaoOptForSearch
-import layout.com.anew.easyItalian.WordSearch.SearchWordPage
-import layout.com.anew.easyItalian.WordSearch.WordSearch
+import layout.com.anew.easyItalian.SearchWord.SearchWordPage
+import layout.com.anew.easyItalian.WordList.WordsGraphedPage
 import layout.com.anew.easyItalian.read.ReadActivity
 import layout.com.anew.easyItalian.recite.DaoOpt
 import layout.com.anew.easyItalian.recite.ReciteWordAcitivity
@@ -152,7 +151,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return result
         }
 
-/*
+
         searchBar.setOnMicClickListener(){
             //searchBar.setMicIcon(R.drawable.ic_search_black)
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
@@ -199,65 +198,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         }
 
-*/
 
 
-        searchBar.setOnMicClickListener(){
-            //searchBar.setMicIcon(R.drawable.ic_search_black)
-            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads().detectDiskWrites().detectNetwork()
-                    .penaltyLog().build())
-            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
-                    .penaltyLog().penaltyDeath().build())
 
-            var text=searchBar.getText().toString()
-            //Toast.makeText(this,"search"+text,Toast.LENGTH_SHORT).show()
-            searchBar.setQuery(text,true)
-
-            if(text.length!=0){
-
-            //    val my = DaoOptForSearch.getInstance()
-           //   val mList=my.queryForWord(this,text)
-                val searchWord = getWordDetailZero(text)
-                //if(mList?.size!=0){
-                if (searchWord.word!="null") {
-                    val errorWord = WordSearch()
-                    errorWord.word = "error"
-                    errorWord.wordDetail = "error"
-                    //   val word : WordSearch?=mList?.get(0) ?: errorWord
-                      val data = arrayListOf(searchWord.word,searchWord.wordDetail)
-                    // Toast.makeText(this,"from database"+word?.wordDetail,Toast.LENGTH_LONG).show()
-
-                    val changeToSearchWordPage = Intent()
-                    changeToSearchWordPage.setClass(this, SearchWordPage::class.java)
-                    changeToSearchWordPage.putStringArrayListExtra("data", data)
-                    startActivity(changeToSearchWordPage)
-                }
-              // }
-               else{
-                    Toast.makeText(this,"null",Toast.LENGTH_LONG).show()
-                }
-      /*
-      *
-      *
-      *           else{
-                    val word : Word?= Word()
-                    word?.setWord(text)
-                    //word?.setTranslation(getTranslation(text))
-                    //val data = arrayListOf(word?.word,word?.transform,word?.translation,word?.example)
-                    //      val translation=getTranslation(text)
-                    val translation=getDetails(text)
-                    Toast.makeText(this,"from google",Toast.LENGTH_SHORT).show()
-                    val data = arrayListOf(word?.word,translation)
-                    val changeToSearchWordPage = Intent()
-                    changeToSearchWordPage.setClass(this, SearchWordPage::class.java)
-                    changeToSearchWordPage.putStringArrayListExtra("data",data)
-                    startActivity(changeToSearchWordPage)
-                }*/
-            }
-
-        }
 
 
 
@@ -310,21 +253,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_new_word -> {
                 val changeToNewWords = Intent()
-                changeToNewWords.setClass(this, WordsInList::class.java)
+                changeToNewWords.setClass(this, WordsGraphedPage::class.java)
                 startActivity(changeToNewWords)
                     Toast.makeText(this,"call 生词本 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_finished_word-> {
                 // new word ? from lyj
                 val changeToNewWords = Intent()
-                changeToNewWords.setClass(this, WordsInList::class.java)
+                changeToNewWords.setClass(this, WordsGraphedPage::class.java)
                 startActivity(changeToNewWords)
                 Toast.makeText(this,"call 已完成单词 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_coming_word -> {
                 // same as above
                val changeToNewWords = Intent()
-               changeToNewWords.setClass(this, WordsInList::class.java)
+               changeToNewWords.setClass(this, WordsGraphedPage::class.java)
                startActivity(changeToNewWords)
                 Toast.makeText(this,"call 未背单词 activity",Toast.LENGTH_SHORT).show()
             }
@@ -370,32 +313,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
 
-    }
-    private fun getWordDetailZero(word:String): WordSearch {
-        val dbf = DocumentBuilderFactory.newInstance()
-        val db = dbf.newDocumentBuilder()
-
-
-        val doc = db.parse(assets.open("word_hole.xml"))
-        val wordList = doc.getElementsByTagName("items")
-
-        val thisWord = WordSearch()
-
-
-        for(num in 0..wordList.length-1) {
-
-            val elem = wordList.item(num)
-            if (elem.childNodes.item(1).textContent==word){
-                thisWord.word = elem.childNodes.item(1).textContent
-                thisWord.wordDetail = elem.childNodes.item(3).textContent
-                return thisWord
-                //thisWord.transform = elem.childNodes.item(3).textContent
-                //thisWord.translation = elem.childNodes.item(5).textContent
-                //thisWord.example = elem.childNodes.item(7).textContent
-            }
-        }
-        thisWord.word="null"
-        thisWord.wordDetail="null"
-        return thisWord
     }
 }

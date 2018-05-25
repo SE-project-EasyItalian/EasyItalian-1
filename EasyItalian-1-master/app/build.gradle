@@ -6,6 +6,9 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 
+
+def dbflow_version = "4.2.4"
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -64,6 +67,13 @@ dependencies {
     implementation('cn.leancloud.android:avoscloud-search:v4.6.4@aar')
 
     implementation 'com.lapism:searchview:27.1.1.0.0'
+
+
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+
+
 }
 repositories {
     maven {
