@@ -64,6 +64,8 @@ dependencies {
     implementation('cn.leancloud.android:avoscloud-search:v4.6.4@aar')
 
     implementation 'com.lapism:searchview:27.1.1.0.0'
+
+    implementation 'com.alibaba:fastjson:1.1.68.android' //fastjson
 }
 repositories {
     maven {
