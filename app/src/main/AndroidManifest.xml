@@ -51,7 +51,7 @@
         <activity android:name=".read.ReadActivity" />
         <activity android:name=".read.ArticlePageActivity" />
         <activity android:name=".SearchWordPage" />
-        <activity android:name=".SetWordList"></activity>
+        <activity android:name=".SetWordList"/>
     </application>
 
 </manifest>

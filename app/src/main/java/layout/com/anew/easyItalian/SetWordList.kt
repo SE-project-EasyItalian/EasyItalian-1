@@ -1,6 +1,6 @@
 package layout.com.anew.easyItalian
 
-import android.support.v7.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import layout.com.anew.easyItalian.recite.DaoOpt
@@ -8,6 +8,8 @@ import layout.com.anew.easyItalian.recite.Word
 import java.io.FileInputStream
 import javax.xml.parsers.DocumentBuilderFactory
 import android.os.StrictMode
+import com.avos.avoscloud.AVObject
+import com.avos.avoscloud.AVQuery
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
@@ -16,26 +18,66 @@ import java.net.URL
 
 
 // TODO process expectation
-class SetWordList : AppCompatActivity() {
+class SetWordList : Activity() {
+    private val wordLists = ArrayList<Wordlist>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_word_list)
 
-
         // TODO use leancloud show all available wordLists in a listView and set onClick listener to set wordList
-        downloadWordList("for_test.xml")
-        createDatabase("for_test.xml")
+        //   downloadWordList("for_test.xml")
+        //    createDatabase("for_test.xml")
+        initWordlist()
+
 
     }
 
-    private fun downloadWordList(wordlist: String){
-        val dbf = DocumentBuilderFactory.newInstance()
-        val db = dbf.newDocumentBuilder()
+    private fun initWordlist(){
+        var i = 1
+        var wordlist = getWordlist(i)
+        while (wordlist.wordlistID!="-1"){
+            wordLists.add(wordlist)
+            i+=1
+            wordlist = getWordlist(i)
+        }
+    }
+
+    private fun getWordlist(i:Int): Wordlist{
+        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads().detectDiskWrites().detectNetwork()
+                .penaltyLog().build())
+        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+                .penaltyLog().penaltyDeath().build())
+        val query = AVQuery<AVObject>("wordlist")
+      if (query.whereEqualTo("wordlistID", i) != null){
+            val a = query.whereEqualTo("wordlistID",i).first
+            if (a!=null){
+                val wordlist = Wordlist()
+                wordlist.wordlistID = a.get("wordlistID").toString()
+                wordlist.wordlistName = a.get("wordlistName").toString()
+                wordlist.wordlistDesc = a.get("wordlistDesc").toString()
+                wordlist.url=a.get("url").toString()
+                return wordlist
+            }else{
+                val wordlist = Wordlist()
+                wordlist.wordlistID = "-1"
+                return wordlist
+            }
+        }else{
+          val wordlist = Wordlist()
+          wordlist.wordlistID = "-1"
+          return wordlist
+      }
+    }
+
+    private fun downloadWordList(wordlist: Wordlist){
+
         //open xml file
 
         // TODO classify files on my server
-        val path = "http://avisy.ddns.net:3322/"+wordlist
+        val path = wordlist.url
         try {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads().detectDiskWrites().detectNetwork()
@@ -57,7 +99,7 @@ class SetWordList : AppCompatActivity() {
                 val input = connection.inputStream
                 //写入本地
                 val mFile = File(this.getExternalFilesDir("wordlist").path)
-                val outputStream = FileOutputStream(mFile.path+ "/" + wordlist)
+                val outputStream = FileOutputStream(mFile.path+ "/" + wordlist.wordlistName)
                 var index: Int
                 val bytes = ByteArray(1024)
                 val downloadFile = outputStream
