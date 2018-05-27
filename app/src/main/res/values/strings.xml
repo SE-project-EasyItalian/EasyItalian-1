@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">EasyItalian</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="example_id">  Laura</string>
+    <string name="button_learn">背单词</string>
+    <string name="button_read">读美文</string>
+    <string name="des_search_new_word">Search New Word</string>
+    <string name="personal_info">个人中心</string>
+    <string name="new_word_list">未学习</string>
+    <string name="already_finished">已经掌握</string>
+    <string name="coming_word">复习中</string>
+    <string name="about">关于</string>
+    <!-- strings from lyj -->
+    <string name="jump_page">jump_page</string>
+    <string name="recite_words">recite_words</string>
+    <string name="recite_words_title">背单词</string>
+    <string name="continue_to_learn">继续学习</string>
+    <string name="setting">设置</string>
+    <string name="new_words">New Words</string>
+    <string name="back">返回</string>
+    <string name="skip">Skip</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_finished">Finished</string>
+    <string name="title_activity_read">ReadActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>
