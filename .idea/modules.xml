@@ -3,11 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EasyItalian-1.iml" filepath="$PROJECT_DIR$/EasyItalian-1.iml" />
-      <module fileurl="file://D:\Android2018\Ei\EasyItalian-1-7ead657594037cc08f68b54a271b19cfdc4e3be8\EasyItalian-1.iml" filepath="D:\Android2018\Ei\EasyItalian-1-7ead657594037cc08f68b54a271b19cfdc4e3be8\EasyItalian-1.iml" />
-      <module fileurl="file://D:\Android2018\EasyItalian-1\EasyItalian-1-7ead657594037cc08f68b54a271b19cfdc4e3be8.iml" filepath="D:\Android2018\EasyItalian-1\EasyItalian-1-7ead657594037cc08f68b54a271b19cfdc4e3be8.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\Android2018\Ei\EasyItalian-1-7ead657594037cc08f68b54a271b19cfdc4e3be8\app\app.iml" filepath="D:\Android2018\Ei\EasyItalian-1-7ead657594037cc08f68b54a271b19cfdc4e3be8\app\app.iml" />
-      <module fileurl="file://D:\Android2018\EasyItalian-1\app\app.iml" filepath="D:\Android2018\EasyItalian-1\app\app.iml" />
     </modules>
   </component>
 </project>
