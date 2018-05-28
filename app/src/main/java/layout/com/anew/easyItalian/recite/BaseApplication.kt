@@ -11,7 +11,6 @@ import layout.com.anew.easyItalian.gen.DaoMaster
 class BaseApplication : Application(){
 
     private var daoSession: DaoSession? = null
-
     override fun onCreate() {
         super.onCreate()
         //配置数据库

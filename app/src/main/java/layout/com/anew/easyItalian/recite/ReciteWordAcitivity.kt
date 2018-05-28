@@ -12,6 +12,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_recite_word.*
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
+import layout.com.anew.easyItalian.SetWordList
 import java.lang.Math.ceil
 
 import java.util.*
@@ -24,21 +25,24 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 // TODO separate the readFromXml function to personal info page
 class ReciteWordAcitivity : Activity() {
+    private var setFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recite_word)
 
      //   createDatabase() this should be put in personalInfo page
-        val my = DaoOpt.getInstance()
-        if (my.queryAll(this)?.size==0) {
-
-            // n is the total number of words
-            val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("testWords.xml")).getElementsByTagName("items").length
-            createDatabase(n)
+        setFlag = checkDatabase()
+        if (setFlag)
+            createNew()
+        else {
+            finish()
+            val intent = Intent()
+            intent.setClass(this,SetWordList::class.java)
+            startActivity(intent)
         }
 
-        createNew()
+
 
         backForRecite.setOnClickListener {
             finish()
@@ -107,7 +111,10 @@ class ReciteWordAcitivity : Activity() {
         Toast.makeText(this,"Create Database Successfully "+ n ,Toast.LENGTH_SHORT).show()
     }
 
-
+    private fun checkDatabase():Boolean{
+        val my = DaoOpt.getInstance()
+        return my.queryAll(this)?.size != 0
+    }
 
 
     // the following part is for algorithm sm-2(fixed version)
@@ -199,7 +206,7 @@ class ReciteWordAcitivity : Activity() {
     // call this onClick correct answer or "continue" button in word Details page
 
     // n could be a global variable to record the number of the words(that showed repeat record)
-        private fun createNew(){
+    private fun createNew(){
 
         // setContentView(R.layout.activity_recite_word_new)
         // firstly search database for NextAppearTime property if exist one take that one
@@ -240,9 +247,11 @@ class ReciteWordAcitivity : Activity() {
                 }
                 else {
                     thisWordId=0
+                    finish()
                     val intent =Intent(this, FinishedPage::class.java)
                     startActivity(intent)
                     Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
+                    my.deleteAllData(this)
                 }
             }
         }
@@ -339,7 +348,6 @@ class ReciteWordAcitivity : Activity() {
 
 
     }
-
 
 
     //tts start

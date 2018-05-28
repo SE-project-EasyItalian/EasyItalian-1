@@ -1,6 +1,8 @@
 package layout.com.anew.easyItalian
 
 import android.app.Activity
+import android.app.IntentService
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import layout.com.anew.easyItalian.recite.DaoOpt
@@ -9,6 +11,7 @@ import java.io.FileInputStream
 import javax.xml.parsers.DocumentBuilderFactory
 import android.os.StrictMode
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.afollestad.materialdialogs.DialogAction
@@ -17,6 +20,8 @@ import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import kotlinx.android.synthetic.main.activity_set_word_list.*
 import kotlinx.android.synthetic.main.article_item.*
+import layout.com.anew.easyItalian.recite.BaseApplication
+import layout.com.anew.easyItalian.recite.ReciteWordAcitivity
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
@@ -46,13 +51,48 @@ class SetWordList : Activity() {
     inner class itemClick: ItemClick{
         override fun OnItemClick(v: View, position: Int) {
             val wordlist = wordLists[position]
+            val positiveText:String
+            val mFile = File(getExternalFilesDir("wordlist").path+ "/" + wordlist.wordlistName)
+            val flag = mFile.exists()
+            if (flag) positiveText = "设置"  else positiveText="下载"
             MaterialDialog.Builder(this@SetWordList)
                          .title(wordlist.wordlistName)
                          .content(wordlist.wordlistDesc)
-                         .negativeText("Cancel")
-                         .positiveText("Download").onPositive {
+                         .negativeText("取消")
+                         .positiveText(positiveText).onPositive {
                             dialog: MaterialDialog, which: DialogAction ->
-                            Toast.makeText(this@SetWordList,"下载",Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@SetWordList,positiveText,Toast.LENGTH_LONG).show()
+                            try {
+                                if(flag)    createDatabase(wordlist)
+                                else {downloadWordList(wordlist)
+                                    createDatabase(wordlist)}
+                                val my = DaoOpt.getInstance()
+                                if (getWordFromXml(wordlist,0).word==my.queryForId(this@SetWordList,0L)?.get(0)?.word){
+                                    MaterialDialog.Builder(this@SetWordList)
+                                            .title(wordlist.wordlistName)
+                                            .content(wordlist.wordlistDesc+"\n设置成功\n是否进入学习?")
+                                            .negativeText("否")
+                                            .positiveText("是")
+                                            .onPositive{
+                                                dialog1: MaterialDialog, which1: DialogAction ->
+                                                finish()
+                                                val intent =Intent()
+                                                intent.setClass(this@SetWordList,ReciteWordAcitivity::class.java)
+                                                startActivity(intent)
+                                            }.onNegative{
+                                                dialog1: MaterialDialog, which1: DialogAction ->
+                                                finish()
+                                                val intent =Intent()
+                                                intent.setClass(this@SetWordList,MainActivity::class.java)
+                                                startActivity(intent)
+                                            }.show()
+                                }else{
+                                    Toast.makeText(this@SetWordList,"Error",Toast.LENGTH_SHORT).show()
+                                }
+                            }catch (e:Exception) {
+                                Toast.makeText(this@SetWordList,"Error",Toast.LENGTH_SHORT).show()
+                                e.printStackTrace()
+                            }
                             }
                          .show()
         }
@@ -98,12 +138,12 @@ class SetWordList : Activity() {
       }
     }
 
-    private fun downloadWordList(wordlist: Wordlist){
+    private fun downloadWordList(wordList: Wordlist){
 
         //open xml file
-
         // TODO classify files on my server
-        val path = wordlist.url
+        val path = wordList.url
+        val wordlist = wordList.wordlistName+".xml"
         try {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads().detectDiskWrites().detectNetwork()
@@ -125,7 +165,7 @@ class SetWordList : Activity() {
                 val input = connection.inputStream
                 //写入本地
                 val mFile = File(this.getExternalFilesDir("wordlist").path)
-                val outputStream = FileOutputStream(mFile.path+ "/" + wordlist.wordlistName)
+                val outputStream = FileOutputStream(mFile.path+ "/" + wordlist)
                 var index: Int
                 val bytes = ByteArray(1024)
                 val downloadFile = outputStream
@@ -149,7 +189,8 @@ class SetWordList : Activity() {
 
     }
 
-    private fun getWordFromXml(wordlist:String,num:Int): Word {
+    private fun getWordFromXml(wordList:Wordlist,num:Int): Word {
+        val wordlist = wordList.wordlistName+".xml"
         val dbf = DocumentBuilderFactory.newInstance()
         val db = dbf.newDocumentBuilder()
         //open xml file
@@ -184,20 +225,20 @@ class SetWordList : Activity() {
         return thisWord
     }
 
-    private fun createDatabase(wordlist:String){
-
+    private fun createDatabase(wordList :Wordlist){
+        val wordlist = wordList.wordlistName+".xml"
         val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().
-                parse(assets.open(wordlist)).getElementsByTagName("items").length
+                parse( FileInputStream(getExternalFilesDir("wordlist").path+ "/" + wordlist)).getElementsByTagName("items").length
         //this function get words from xml and turn save to database
         val my = DaoOpt.getInstance()
         // my.deleteAllData(this)
-       my.deleteAllData(this)
+        my.deleteAllData(this)
         // use zeroWord.appearTime-10000 show the current number n
         val zeroWord = Word(-1, "zero", "zero", "zero", "zero", 0, -1, -1, -1.0, -1, -1, true)
         my.insertData(this,zeroWord)
 
         for (i in 0..n-1){
-            val insertWord = getWordFromXml(wordlist,i)
+            val insertWord = getWordFromXml(wordList,i)
             my.insertData(this,insertWord)
         }
         Toast.makeText(this,"Create Database Successfully "+ n , Toast.LENGTH_SHORT).show()
