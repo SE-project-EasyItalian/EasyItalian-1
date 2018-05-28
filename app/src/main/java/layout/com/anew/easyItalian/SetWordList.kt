@@ -8,8 +8,15 @@ import layout.com.anew.easyItalian.recite.Word
 import java.io.FileInputStream
 import javax.xml.parsers.DocumentBuilderFactory
 import android.os.StrictMode
+import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import android.widget.TextView
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
+import kotlinx.android.synthetic.main.activity_set_word_list.*
+import kotlinx.android.synthetic.main.article_item.*
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
@@ -29,9 +36,28 @@ class SetWordList : Activity() {
         //   downloadWordList("for_test.xml")
         //    createDatabase("for_test.xml")
         initWordlist()
-
+        val layoutManager = LinearLayoutManager(this@SetWordList)
+        recyclerView1.layoutManager = layoutManager
+         recyclerView1!!.adapter = WordListAdapter(this,wordLists,itemClick())
 
     }
+
+    // implement download and set wordList in the following part
+    inner class itemClick: ItemClick{
+        override fun OnItemClick(v: View, position: Int) {
+            val wordlist = wordLists[position]
+            MaterialDialog.Builder(this@SetWordList)
+                         .title(wordlist.wordlistName)
+                         .content(wordlist.wordlistDesc)
+                         .negativeText("Cancel")
+                         .positiveText("Download").onPositive {
+                            dialog: MaterialDialog, which: DialogAction ->
+                            Toast.makeText(this@SetWordList,"下载",Toast.LENGTH_LONG).show()
+                            }
+                         .show()
+        }
+    }
+
 
     private fun initWordlist(){
         var i = 1

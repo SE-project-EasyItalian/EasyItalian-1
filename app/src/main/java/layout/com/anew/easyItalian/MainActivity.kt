@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return result
         }
         fun getDetails(word :String):String{
-            var result=""
+            val result:String
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads().detectDiskWrites().detectNetwork()
                     .penaltyLog().build())
@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
                     .penaltyLog().penaltyDeath().build())
 
-            var text=searchBar.getText().toString()
+            val text=searchBar.getText().toString()
             //Toast.makeText(this,"search"+text,Toast.LENGTH_SHORT).show()
             searchBar.setQuery(text,true)
 
