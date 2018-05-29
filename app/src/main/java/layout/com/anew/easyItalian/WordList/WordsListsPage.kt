@@ -4,20 +4,18 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
 import layout.com.anew.easyItalian.recite.DaoOpt
 import layout.com.anew.easyItalian.recite.Word
+import layout.com.anew.easyItalian.recite.WordDetailsActivity
 
 class WordsListsPage : Activity() {
 
 
-
+    private var word=Word()
     private val data = ArrayList<String>()
     //private var data= MutableList<String>()
     //private var data= mutableListOf("")
@@ -31,8 +29,29 @@ class WordsListsPage : Activity() {
 
             "1"->showNewWordsList()
             "2"->showFinishedWordsList()
-            "3"->showComingWordsList()
+            "3"->showFinishedWordsList()
             else->{}
+        }
+
+
+
+        val listView = findViewById<View>(R.id.new_words) as ListView
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+
+            when(choice){
+
+                "1"->doNewWordFunc(position)
+                "2"->{
+                    val text =listView.getItemAtPosition(position).toString()
+                    doWordfunc(text)
+                }
+                "3"->showComingWordsList()
+                else->{}
+            }
+
+
+
+
         }
         //wordGraphed.insertData("Ciao")
         //wordGraphed.insertData( "Buongiorno")
@@ -53,15 +72,45 @@ class WordsListsPage : Activity() {
         }
     }
 
-/*
+    private fun doWordfunc(text: String) {
+        Toast.makeText(this, "finished : "+text, Toast.LENGTH_SHORT).show()
+        val my = DaoOpt.getInstance()
+        word=my.queryForWord(this,text)!!.elementAt(0)
+        val detailData = arrayListOf(word.word,word.transform,word.translation,word.example)
+        val showDetailsActivity = Intent()
+        showDetailsActivity.setClass(this, WordListDetailPage::class.java)
+        showDetailsActivity.putStringArrayListExtra("detailData",detailData)
+        //finish()
+        startActivity(showDetailsActivity)
 
-    fun insertNewWord(word:WordNew){
-        //var wordNew: WordNew = WordNew()
-        var wordNew=WordNew()
-        wordNew.insertData(word)
-        wordNew.save()
     }
-    */
+
+    private fun doNewWordFunc(i: Int) {
+
+        var wordNewList= SQLite.select().from(WordNew::class.java).queryList()
+        Toast.makeText(this, "new : "+wordNewList[i].word, Toast.LENGTH_SHORT).show()
+
+        word.word=wordNewList.elementAt(i).word
+        word.transform=wordNewList.elementAt(i).transform
+        word.translation=wordNewList.elementAt(i).translation
+        word.example=wordNewList.elementAt(i).example
+        val detailData = arrayListOf(word.word,word.transform,word.translation,word.example)
+        val showDetailsActivity = Intent()
+        showDetailsActivity.setClass(this, WordListDetailPage::class.java)
+        showDetailsActivity.putStringArrayListExtra("detailData",detailData)
+        //finish()
+        startActivity(showDetailsActivity)
+    }
+
+    /*
+
+        fun insertNewWord(word:WordNew){
+            //var wordNew: WordNew = WordNew()
+            var wordNew=WordNew()
+            wordNew.insertData(word)
+            wordNew.save()
+        }
+        */
     fun showNewWordsList(){
         var word= WordNew()
         //word.id=0;
@@ -77,7 +126,7 @@ class WordsListsPage : Activity() {
         //Toast.makeText(this, wordNewList[0].word, Toast.LENGTH_SHORT).show()
         for (wordNew in wordNewList){
             //Toast.makeText(this, wordNew.id.toString()+wordNew.word, Toast.LENGTH_SHORT).show()
-            data.add(wordNew.id.toString()+wordNew.word)
+            data.add(wordNew.word)
         }
         if(data.size==0){
             Toast.makeText(this, "尚未加入单词至生词表", Toast.LENGTH_SHORT).show()
@@ -90,12 +139,14 @@ class WordsListsPage : Activity() {
     }
 
     fun showFinishedWordsList(){
+        //val title = findViewById<Button>(R.id.titleinList)
+        //title.setText("已经掌握")
         val my = DaoOpt.getInstance()
         val listFinshed:MutableList<Word>?=my.queryForGrasp(this,true)
 
         for (wordFinished in listFinshed.orEmpty()){
             //Toast.makeText(this, wordFinished.id.toString()+wordFinished.word, Toast.LENGTH_SHORT).show()
-            data.add(wordFinished.id.toString()+wordFinished.word)
+            data.add(wordFinished.word)
         }
         data.removeAt(0)
         if(data.size==0){
@@ -107,12 +158,14 @@ class WordsListsPage : Activity() {
         listView.adapter = adapter
     }
     fun showComingWordsList(){
+        //val title = findViewById<Button>(R.id.titleinList)
+        //title.setText("尚未学习")
         val my = DaoOpt.getInstance()
         val listComing:MutableList<Word>?=my.queryForGrasp(this,false)
 
         for (wordFinished in listComing.orEmpty()){
             //Toast.makeText(this, wordFinished.id.toString()+wordFinished.word, Toast.LENGTH_SHORT).show()
-            data.add(wordFinished.id.toString()+wordFinished.word)
+            data.add(wordFinished.word)
         }
         if(data.size==0){
             Toast.makeText(this, "该表为空", Toast.LENGTH_SHORT).show()
@@ -121,5 +174,19 @@ class WordsListsPage : Activity() {
         //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         val listView = findViewById<View>(R.id.new_words) as ListView
         listView.adapter = adapter
+    }
+
+    fun getWordDetail(word:WordNew){
+
+        val detailData: Array<String>
+        if(word.transform!=" " && word.example!=" ") {
+            detailData = arrayOf(word.translation, word.transform, word.example)
+        }else if (word.transform!=" " && word.example==" "){
+            detailData = arrayOf(word.translation, word.transform)
+        }else if (word.transform==" "&& word.example!=" "){
+            detailData = arrayOf(word.translation, word.example)
+        }else{
+            detailData = arrayOf(word.translation)
+        }
     }
 }
