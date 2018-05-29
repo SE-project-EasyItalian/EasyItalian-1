@@ -29,7 +29,7 @@ class WordsListsPage : Activity() {
 
             "1"->showNewWordsList()
             "2"->showFinishedWordsList()
-            "3"->showFinishedWordsList()
+            "3"->showComingWordsList()
             else->{}
         }
 
@@ -45,7 +45,10 @@ class WordsListsPage : Activity() {
                     val text =listView.getItemAtPosition(position).toString()
                     doWordfunc(text)
                 }
-                "3"->showComingWordsList()
+                "3"->{
+                    val text =listView.getItemAtPosition(position).toString()
+                    doWordfunc(text)
+                }
                 else->{}
             }
 
