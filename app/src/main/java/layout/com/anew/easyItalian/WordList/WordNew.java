@@ -17,14 +17,24 @@ public class WordNew extends BaseModel {
 
     @Column
     public String word;
+    @Column
+    public String transform;
+    @Column
+    public String translation;
+    @Column
+    public String example;
 
 
     public WordNew(){
 
     }
 
-    public  void insertData(String word){
-        this.word=word;
+    public  void insertData(WordNew word){
+        this.word=word.word;
+        this.transform=word.transform;
+        this.translation=word.translation;
+        this.example=word.example;
+
     }
 
     public long getId() {

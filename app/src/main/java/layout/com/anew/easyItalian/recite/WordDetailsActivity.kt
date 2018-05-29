@@ -6,13 +6,16 @@ import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.TextView
+import android.view.View
+import android.widget.*
+import com.raizlabs.android.dbflow.sql.language.SQLite
+
 import kotlinx.android.synthetic.main.activity_word_imformation.*
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
+import layout.com.anew.easyItalian.WordList.WordNew
+
+
 
 class WordDetailsActivity() : Activity() {
     val word = Word()
@@ -46,7 +49,7 @@ class WordDetailsActivity() : Activity() {
         }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
-        val listView = findViewById<ListView>(R.id.wordDetails)
+        val listView = findViewById<View>(R.id.wordDetails) as ListView
         listView.adapter = adapter
 
         voice.setOnClickListener{
@@ -68,7 +71,45 @@ class WordDetailsActivity() : Activity() {
             startActivity(intent)
         }
 
+        addToNewWordList.setOnClickListener(){
+
+            //have bug now in DBFlow, will fix it in the future
+
+            var judge = 1
+            var wordNewList= SQLite.select().from(WordNew::class.java).queryList()
+            for (wordNew in wordNewList){
+                if(wordNew.word.equals(word.word)){
+                    judge=0
+                    break
+                }
+            }
+            if(judge==1){
+                var wordN= WordNew()
+                wordN.word=word?.word
+                wordN.transform=word?.transform
+                wordN.translation=word?.translation
+                wordN.example=word?.example
+
+
+                //add to new WordsList
+                var wordNew= WordNew()
+                wordNew.insertData(wordN)
+                wordNew.save()
+                Toast.makeText(this,"add "+word.word,Toast.LENGTH_SHORT).show()
+            }
+           else{
+
+                Toast.makeText(this,"have already ",Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
     }
+
+
+
+
+
     //tts start
     private fun buildSpeechUrl(words: String): String {
 

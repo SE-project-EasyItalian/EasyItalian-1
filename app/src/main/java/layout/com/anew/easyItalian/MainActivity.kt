@@ -21,7 +21,7 @@ import com.example.youngkaaa.ycircleview.CircleView
 
 
 import kotlinx.android.synthetic.main.content_main.*
-import layout.com.anew.easyItalian.WordList.WordsNewPage
+import layout.com.anew.easyItalian.WordList.WordsListsPage
 import layout.com.anew.easyItalian.read.ReadActivity
 import layout.com.anew.easyItalian.recite.DaoOpt
 import layout.com.anew.easyItalian.recite.ReciteWordAcitivity
@@ -252,27 +252,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-
         when (item.itemId) {
             R.id.nav_new_word -> {
+
+                val choice=arrayListOf("1")
                 val changeToNewWords = Intent()
-                changeToNewWords.setClass(this, WordsNewPage::class.java)
+                changeToNewWords.setClass(this, WordsListsPage::class.java)
+                changeToNewWords.putStringArrayListExtra("choice",choice);
                 startActivity(changeToNewWords)
-                    Toast.makeText(this,"call 生词本 activity",Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this,"call 生词本 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_finished_word-> {
                 // new word ? from lyj
-                val changeToNewWords = Intent()
-                changeToNewWords.setClass(this, WordsNewPage::class.java)
-                startActivity(changeToNewWords)
-                Toast.makeText(this,"call 已完成单词 activity",Toast.LENGTH_SHORT).show()
+                val choice=arrayListOf("2")
+                val changeToFinishedWords = Intent()
+                changeToFinishedWords.setClass(this, WordsListsPage::class.java)
+                changeToFinishedWords.putStringArrayListExtra("choice",choice)
+                startActivity(changeToFinishedWords)
+                //Toast.makeText(this,"call 已完成单词 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_coming_word -> {
                 // same as above
-               val changeToNewWords = Intent()
-               changeToNewWords.setClass(this, WordsNewPage::class.java)
-               startActivity(changeToNewWords)
-                Toast.makeText(this,"call 未背单词 activity",Toast.LENGTH_SHORT).show()
+                val choice=arrayListOf("3")
+               val changeToComingWords = Intent()
+               changeToComingWords.setClass(this, WordsListsPage::class.java)
+                changeToComingWords.putStringArrayListExtra("choice",choice)
+               startActivity(changeToComingWords)
+                //Toast.makeText(this,"call 未背单词 activity",Toast.LENGTH_SHORT).show()
             }
             R.id.nav_setting -> {
                 // setting from lyj

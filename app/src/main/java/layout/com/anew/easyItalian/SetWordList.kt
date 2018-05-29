@@ -10,6 +10,7 @@ import layout.com.anew.easyItalian.recite.Word
 import java.io.FileInputStream
 import javax.xml.parsers.DocumentBuilderFactory
 import android.os.StrictMode
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
@@ -44,6 +45,8 @@ class SetWordList : Activity() {
         val layoutManager = LinearLayoutManager(this@SetWordList)
         recyclerView1.layoutManager = layoutManager
          recyclerView1!!.adapter = WordListAdapter(this,wordLists,itemClick())
+        recyclerView1.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
 
     }
 

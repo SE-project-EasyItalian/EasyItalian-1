@@ -10,7 +10,6 @@ import android.widget.ListView
 import android.widget.Toast
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
-import com.tencent.qc.stat.common.User
 import com.raizlabs.android.dbflow.sql.language.SQLite
 
 
@@ -29,7 +28,7 @@ class WordsGraphedPage : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_words)
+        setContentView(R.layout.activity_wods_lists)
 
 
 

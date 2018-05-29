@@ -38,7 +38,7 @@
         <activity
             android:name=".recite.WordDetailsActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".WordList.WordsNewPage" />
+        <activity android:name=".WordList.WordsListsPage" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
