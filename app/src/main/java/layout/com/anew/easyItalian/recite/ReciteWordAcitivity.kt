@@ -344,6 +344,7 @@ class ReciteWordAcitivity : Activity() {
         showDetailsActivity.setClass(this, WordDetailsActivity::class.java)
         // pass the word info to WordDetailsActivity
         showDetailsActivity.putStringArrayListExtra("data",data)
+        finish()
         startActivity(showDetailsActivity)
 
 

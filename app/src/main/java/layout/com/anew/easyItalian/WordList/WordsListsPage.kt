@@ -79,6 +79,9 @@ class WordsListsPage : Activity() {
             //Toast.makeText(this, wordNew.id.toString()+wordNew.word, Toast.LENGTH_SHORT).show()
             data.add(wordNew.id.toString()+wordNew.word)
         }
+        if(data.size==0){
+            Toast.makeText(this, "尚未加入单词至生词表", Toast.LENGTH_SHORT).show()
+        }
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         val listView = findViewById<View>(R.id.new_words) as ListView
@@ -91,10 +94,14 @@ class WordsListsPage : Activity() {
         val listFinshed:MutableList<Word>?=my.queryForGrasp(this,true)
 
         for (wordFinished in listFinshed.orEmpty()){
-            Toast.makeText(this, wordFinished.id.toString()+wordFinished.word, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, wordFinished.id.toString()+wordFinished.word, Toast.LENGTH_SHORT).show()
             data.add(wordFinished.id.toString()+wordFinished.word)
         }
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
+        data.removeAt(0)
+        if(data.size==0){
+            Toast.makeText(this, "该表为空", Toast.LENGTH_SHORT).show()
+    }
+    val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         val listView = findViewById<View>(R.id.new_words) as ListView
         listView.adapter = adapter
@@ -104,8 +111,11 @@ class WordsListsPage : Activity() {
         val listComing:MutableList<Word>?=my.queryForGrasp(this,false)
 
         for (wordFinished in listComing.orEmpty()){
-            Toast.makeText(this, wordFinished.id.toString()+wordFinished.word, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, wordFinished.id.toString()+wordFinished.word, Toast.LENGTH_SHORT).show()
             data.add(wordFinished.id.toString()+wordFinished.word)
+        }
+        if(data.size==0){
+            Toast.makeText(this, "该表为空", Toast.LENGTH_SHORT).show()
         }
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)

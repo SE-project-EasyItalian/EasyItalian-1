@@ -8,9 +8,9 @@
     <string name="button_read">读美文</string>
     <string name="des_search_new_word">Search New Word</string>
     <string name="personal_info">个人中心</string>
-    <string name="new_word_list">未学习</string>
+    <string name="new_word_list">生词本</string>
     <string name="already_finished">已经掌握</string>
-    <string name="coming_word">复习中</string>
+    <string name="coming_word">尚未学习</string>
     <string name="about">关于</string>
     <!-- strings from lyj -->
     <string name="jump_page">jump_page</string>
