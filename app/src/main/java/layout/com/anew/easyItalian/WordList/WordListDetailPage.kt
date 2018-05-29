@@ -1,5 +1,6 @@
 package layout.com.anew.easyItalian.WordList
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +14,7 @@ import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
 import layout.com.anew.easyItalian.recite.Word
 
-class WordListDetailPage : AppCompatActivity() {
+class WordListDetailPage : Activity() {
 
     private var word = Word()
     // getWord accepts the StringArrayList from ReciteWord or another Activity

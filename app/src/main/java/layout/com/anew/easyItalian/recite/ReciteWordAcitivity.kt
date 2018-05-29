@@ -1,29 +1,21 @@
 package layout.com.anew.easyItalian.recite
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_recite_word.*
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
-import layout.com.anew.easyItalian.SetWordList
 import java.lang.Math.ceil
 
 import java.util.*
-import javax.xml.parsers.DocumentBuilderFactory
-//import kotlin.math.ceil
 
 
-// stage now : build the vocabulary database
-//          and improve the recite word algorithm
 
-// TODO separate the readFromXml function to personal info page
+
 class ReciteWordAcitivity : Activity() {
     private var setFlag = false
 
@@ -31,18 +23,15 @@ class ReciteWordAcitivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recite_word)
 
-     //   createDatabase() this should be put in personalInfo page
         setFlag = checkDatabase()
         if (setFlag)
             createNew()
         else {
             finish()
             val intent = Intent()
-            intent.setClass(this,SetWordList::class.java)
+            intent.setClass(this, SetWordList::class.java)
             startActivity(intent)
         }
-
-
 
         backForRecite.setOnClickListener {
             finish()
@@ -53,69 +42,10 @@ class ReciteWordAcitivity : Activity() {
 
 
 
-    //  getWordFromXml and createDatabase should be in wordlist Page
-    //  exactly get the total items from xml to database
-    //  database should conclude all items from xml and a zero word for global num and an error word for showing error
-    private fun getWordFromXml(num:Int): Word {
-        val dbf = DocumentBuilderFactory.newInstance()
-        val db = dbf.newDocumentBuilder()
-        //TODO get xml from server
-         //   val conn = URL("192.168.1.171/wordbook.xml").openConnection() as HttpURLConnection
-         //  conn.connectTimeout=5000
-         // conn.requestMethod="GET"
-        //val inputStream = conn.inputStream
-        //val doc = db.parse(inputStream)
-
-        val doc = db.parse(assets.open("testWords.xml"))
-        val wordList = doc.getElementsByTagName("items")
-        val thisWord = Word()
-        thisWord.id = num.toLong()
-        thisWord.appearTime=0
-        thisWord.correctTime=0
-        thisWord.incorrectTime=0
-        thisWord.nextAppearTime=0
-        thisWord.eFactor=2.0
-        thisWord.grasp = false
-
-        if(num<wordList.length) {
-            val elem = wordList.item(num)
-            thisWord.word = elem.childNodes.item(1).textContent
-            thisWord.transform = elem.childNodes.item(3).textContent
-            thisWord.translation = elem.childNodes.item(5).textContent
-            thisWord.example = elem.childNodes.item(7).textContent
-        }
-        else{
-            thisWord.word = "None"
-            thisWord.translation = "none"
-            thisWord.transform = "None"
-            thisWord.example = "None"
-        }
-        return thisWord
-    }
-    private fun createDatabase(n : Int){
-        //this function get words from xml and turn save to database
-        val my = DaoOpt.getInstance()
-       // my.deleteAllData(this)
-
-        // use zeroWord.appearTime-10000 show the current number n
-        val zeroWord = Word(-1, "zero", "zero", "zero", "zero", 0, -1, -1, -1.0, -1, -1, true)
-        my.insertData(this,zeroWord)
-
-
-     //   val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(assets.open("testWords.xml")).getElementsByTagName("items").length - 2
-
-        for (i in 0..n-2){
-            val insertWord = getWordFromXml(i)
-            my.insertData(this,insertWord)
-        }
-        Toast.makeText(this,"Create Database Successfully "+ n ,Toast.LENGTH_SHORT).show()
-    }
-
     private fun checkDatabase():Boolean{
         val my = DaoOpt.getInstance()
         return my.queryAll(this)?.size != 0
     }
-
 
     // the following part is for algorithm sm-2(fixed version)
     // experimental build
@@ -208,7 +138,6 @@ class ReciteWordAcitivity : Activity() {
     // n could be a global variable to record the number of the words(that showed repeat record)
     private fun createNew(){
 
-        // setContentView(R.layout.activity_recite_word_new)
         // firstly search database for NextAppearTime property if exist one take that one
         // if no matches, take a new one in random(from those NextAppearTime ==0
         // after take a word firstly (above line's condition) update its NextAppearTime = n
@@ -246,23 +175,40 @@ class ReciteWordAcitivity : Activity() {
                     thisWordId=my.queryForGrasp(this,false)?.get(0)?.id ?:0
                 }
                 else {
-                    thisWordId=0
                     finish()
+                    thisWordId=0
                     val intent =Intent(this, FinishedPage::class.java)
                     startActivity(intent)
-                    Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
                     my.deleteAllData(this)
                 }
             }
         }
 
         val errorWord = Word(-10086, "Error", "Error", "Error", "Error", -1, -1, -1, -1.0, -1, -1, true)
-        val thisWord = my.queryForId(this,thisWordId)?.get(0) ?:errorWord
+        val thisWord:Word
+        if( my.queryForId(this,thisWordId)?.size!=0){
 
+            thisWord = my.queryForId(this,thisWordId)?.get(0) ?:errorWord}
+        else {
+            val intent =Intent(this, FinishedPage::class.java)
+            startActivity(intent)
+          //  Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
+            my.deleteAllData(this)
+             thisWord = errorWord}
+
+        if (thisWord==errorWord){
+            val intent =Intent(this, FinishedPage::class.java)
+            startActivity(intent)
+            //Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
+            my.deleteAllData(this)
+        }
         // get word 2
         val wordId2 : Long
         val rand = Random()
         var randNum :Int
+        var bound = my.getNumberOfItems(this)-5
+        if (bound<=0) bound=1
         if(my.queryForNotZeroIncorrectTimes(this,thisWordId)?.size!=0)
         {
             randNum = rand.nextInt(my.queryForNotZeroIncorrectTimes(this,thisWordId)?.size ?:1 -1)
@@ -270,18 +216,25 @@ class ReciteWordAcitivity : Activity() {
             //Toast.makeText(this,"!!!!",Toast.LENGTH_SHORT).show()
             wordId2 = my.queryForNotZeroIncorrectTimes(this,thisWordId)?.get(randNum)?.id ?:1
         }else{
-            randNum = rand.nextInt(my.getNumberOfItems(this)-5)
+            randNum = rand.nextInt(bound)
+            if (my.queryForIdNotEqual(this, mutableListOf(thisWordId,-1))?.size!=0)
             wordId2 = my.queryForIdNotEqual(this, mutableListOf(thisWordId,-1))?.get(randNum)?.id ?:1
+            else wordId2=1
         }
 
         //word 3
-        randNum = rand.nextInt(my.getNumberOfItems(this)-5)
-        val wordId3 = my.queryForIdNotEqual(this, mutableListOf(thisWordId,wordId2,-1))?.get(randNum)?.id ?:1
+        randNum = rand.nextInt(bound)
+        val wordId3 :Long
+        if (my.queryForIdNotEqual(this, mutableListOf(thisWordId,wordId2,-1))?.size!=0)
+        { wordId3 = my.queryForIdNotEqual(this, mutableListOf(thisWordId,wordId2,-1))?.get(randNum)?.id ?:1}
+        else {wordId3 = 1}
 
         //word 4
-        randNum = rand.nextInt(my.getNumberOfItems(this)-5)
-        val wordId4 = my.queryForIdNotEqual(this, mutableListOf(thisWordId,wordId2,wordId3,-1))?.get(randNum)?.id ?:1
-
+        randNum = rand.nextInt(bound)
+        val wordId4 :Long
+        if (my.queryForIdNotEqual(this, mutableListOf(thisWordId,wordId2,wordId3,-1))?.size!=0)
+         wordId4 = my.queryForIdNotEqual(this, mutableListOf(thisWordId,wordId2,wordId3,-1))?.get(randNum)?.id ?:1
+        else wordId4=1
         //create page
 
         // set word on show and record the current num to database
@@ -297,13 +250,21 @@ class ReciteWordAcitivity : Activity() {
             updateWordData(thisWord,1)
             zeroWord.appearTime+=1
             my.saveData(this,zeroWord)
-            createNew()
+            if (my.queryForGrasp(this,false)?.size!=0)
+                createNew()
+            else{
+                val intent =Intent(this, FinishedPage::class.java)
+                startActivity(intent)
+             //   Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
+                my.deleteAllData(this)
+            }
         }
         val otherWords = mutableListOf(wordId2,wordId3,wordId4)
         for(i in 0..3){
             if(i!=randNum){
-                buttonMap[i]?.setText(my.queryForId(this,otherWords[0])?.get(0)?.translation)
-                buttonMap[i]?.setOnClickListener({
+                if (my.queryForId(this,otherWords[0])?.size!=0) {
+                    buttonMap[i]?.setText(my.queryForId(this,otherWords[0])?.get(0)?.translation)
+                    buttonMap[i]?.setOnClickListener({
                  //   Toast.makeText(this, "答错了！Call showDetails and create a new page", Toast.LENGTH_LONG).show()
                     updateWordData(thisWord,-1)
                     zeroWord.appearTime+=1
@@ -311,7 +272,13 @@ class ReciteWordAcitivity : Activity() {
                     //show details
                     showDetails(thisWord)
                 })
-                otherWords.removeAt(0)
+                otherWords.removeAt(0)}
+                else{
+                    val intent =Intent(this, FinishedPage::class.java)
+                    startActivity(intent)
+                  //  Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
+                    my.deleteAllData(this)
+                }
             }
         }
 
@@ -321,7 +288,14 @@ class ReciteWordAcitivity : Activity() {
             updateWordData(thisWord,2)
             zeroWord.appearTime+=1
             my.saveData(this,zeroWord)
-            createNew()
+            if (my.queryForGrasp(this,false)?.size!=0)
+                createNew()
+            else{
+                val intent =Intent(this, FinishedPage::class.java)
+                startActivity(intent)
+              //  Toast.makeText(this,"完成学习！",Toast.LENGTH_SHORT).show()
+                my.deleteAllData(this)
+            }
         }
         //set showDetails button
         showDetails.setOnClickListener {
@@ -350,8 +324,8 @@ class ReciteWordAcitivity : Activity() {
 
     }
 
-
     //tts start
+    //TODO MediaPlayer finalized without being released Problem
     private fun buildSpeechUrl(words: String): String {
 
         //tts from VoiceRss

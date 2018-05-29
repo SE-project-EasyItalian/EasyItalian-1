@@ -1,28 +1,22 @@
-package layout.com.anew.easyItalian
+package layout.com.anew.easyItalian.recite
 
 import android.app.Activity
-import android.app.IntentService
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import layout.com.anew.easyItalian.recite.DaoOpt
-import layout.com.anew.easyItalian.recite.Word
 import java.io.FileInputStream
 import javax.xml.parsers.DocumentBuilderFactory
 import android.os.StrictMode
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
-import android.widget.TextView
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import kotlinx.android.synthetic.main.activity_set_word_list.*
-import kotlinx.android.synthetic.main.article_item.*
-import layout.com.anew.easyItalian.recite.BaseApplication
-import layout.com.anew.easyItalian.recite.ReciteWordAcitivity
+import layout.com.anew.easyItalian.MainActivity
+import layout.com.anew.easyItalian.R
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
@@ -38,24 +32,27 @@ class SetWordList : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_word_list)
 
-        // TODO use leancloud show all available wordLists in a listView and set onClick listener to set wordList
-        //   downloadWordList("for_test.xml")
-        //    createDatabase("for_test.xml")
         initWordlist()
+
         val layoutManager = LinearLayoutManager(this@SetWordList)
         recyclerView1.layoutManager = layoutManager
-         recyclerView1!!.adapter = WordListAdapter(this,wordLists,itemClick())
+         recyclerView1!!.adapter = WordListAdapter(this, wordLists, itemClick())
         recyclerView1.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
+        backForWordList.setOnClickListener{
+            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
     // implement download and set wordList in the following part
-    inner class itemClick: ItemClick{
+    inner class itemClick: ItemClick {
         override fun OnItemClick(v: View, position: Int) {
             val wordlist = wordLists[position]
             val positiveText:String
-            val mFile = File(getExternalFilesDir("wordlist").path+ "/" + wordlist.wordlistName)
+            val mFile = File(getExternalFilesDir("wordlist").path+ "/" + wordlist.wordlistName+".xml")
             val flag = mFile.exists()
             if (flag) positiveText = "设置"  else positiveText="下载"
             MaterialDialog.Builder(this@SetWordList)
@@ -86,7 +83,7 @@ class SetWordList : Activity() {
                                                 dialog1: MaterialDialog, which1: DialogAction ->
                                                 finish()
                                                 val intent =Intent()
-                                                intent.setClass(this@SetWordList,MainActivity::class.java)
+                                                intent.setClass(this@SetWordList, MainActivity::class.java)
                                                 startActivity(intent)
                                             }.show()
                                 }else{
@@ -112,7 +109,7 @@ class SetWordList : Activity() {
         }
     }
 
-    private fun getWordlist(i:Int): Wordlist{
+    private fun getWordlist(i:Int): Wordlist {
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads().detectDiskWrites().detectNetwork()
                 .penaltyLog().build())
@@ -144,7 +141,6 @@ class SetWordList : Activity() {
     private fun downloadWordList(wordList: Wordlist){
 
         //open xml file
-        // TODO classify files on my server
         val path = wordList.url
         val wordlist = wordList.wordlistName+".xml"
         try {
@@ -192,8 +188,8 @@ class SetWordList : Activity() {
 
     }
 
-    private fun getWordFromXml(wordList:Wordlist,num:Int): Word {
-        val wordlist = wordList.wordlistName+".xml"
+    private fun getWordFromXml(pWordList: Wordlist, num:Int): Word {
+        val wordlist = pWordList.wordlistName+".xml"
         val dbf = DocumentBuilderFactory.newInstance()
         val db = dbf.newDocumentBuilder()
         //open xml file
@@ -208,7 +204,7 @@ class SetWordList : Activity() {
         thisWord.appearTime=0
         thisWord.correctTime=0
         thisWord.incorrectTime=0
-        thisWord.nextAppearTime=0
+        thisWord.nextAppearTime=-1
         thisWord.eFactor=2.0
         thisWord.grasp = false
 
@@ -228,7 +224,7 @@ class SetWordList : Activity() {
         return thisWord
     }
 
-    private fun createDatabase(wordList :Wordlist){
+    private fun createDatabase(wordList : Wordlist){
         val wordlist = wordList.wordlistName+".xml"
         val n = DocumentBuilderFactory.newInstance().newDocumentBuilder().
                 parse( FileInputStream(getExternalFilesDir("wordlist").path+ "/" + wordlist)).getElementsByTagName("items").length
@@ -237,7 +233,7 @@ class SetWordList : Activity() {
         // my.deleteAllData(this)
         my.deleteAllData(this)
         // use zeroWord.appearTime-10000 show the current number n
-        val zeroWord = Word(-1, "zero", "zero", "zero", "zero", 0, -1, -1, -1.0, -1, -1, true)
+        val zeroWord = Word(-1, wordList.wordlistName, "zero", "zero", "zero", 0, -1, -1, -1.0, -1, -1, true)
         my.insertData(this,zeroWord)
 
         for (i in 0..n-1){

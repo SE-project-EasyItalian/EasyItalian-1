@@ -69,10 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //search_new_word & learn_button & read_button
         searchWordButton.setOnClickListener(){
 
-            val intent = Intent()
-            intent.setClass(this,SetWordList::class.java)
-            startActivity(intent)
-            // Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
+             Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
         }
 
 

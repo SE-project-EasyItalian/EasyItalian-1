@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.*
+import layout.com.anew.easyItalian.recite.SetWordList
 
 
 class PersonalInfo : Activity(){
@@ -24,7 +25,11 @@ class PersonalInfo : Activity(){
             when(position){
                 0 -> Toast.makeText(this,"call 头像 activity",Toast.LENGTH_SHORT).show()
                 1 -> Toast.makeText(this,"call 昵称 activity",Toast.LENGTH_SHORT).show()
-                2 -> Toast.makeText(this,"call 词书 activity",Toast.LENGTH_SHORT).show()
+                2 -> {
+                    val intent = Intent()
+                    intent.setClass(this, SetWordList::class.java)
+                    startActivity(intent)
+                }
             }
         }
         val button_back = findViewById<Button>(R.id.back_)

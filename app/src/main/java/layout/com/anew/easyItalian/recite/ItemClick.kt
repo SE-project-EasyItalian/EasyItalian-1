@@ -1,4 +1,4 @@
-package layout.com.anew.easyItalian
+package layout.com.anew.easyItalian.recite
 
 import android.view.View
 

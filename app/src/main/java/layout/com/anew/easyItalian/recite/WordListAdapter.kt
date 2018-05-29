@@ -1,4 +1,4 @@
-package layout.com.anew.easyItalian
+package layout.com.anew.easyItalian.recite
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.afollestad.materialdialogs.DialogAction
-import com.afollestad.materialdialogs.MaterialDialog
-
+import layout.com.anew.easyItalian.R
 
 
 class WordListAdapter: RecyclerView.Adapter<WordListAdapter.RecyclerHolder>{
@@ -17,9 +15,9 @@ class WordListAdapter: RecyclerView.Adapter<WordListAdapter.RecyclerHolder>{
 
     private var mContext: Context? =null
     private var mList: List<Wordlist>? = null
-    private var item :ItemClick? = null
+    private var item : ItemClick? = null
 
-    constructor( context: Context,list: ArrayList<Wordlist>,item:ItemClick) {
+    constructor(context: Context, list: ArrayList<Wordlist>, item: ItemClick) {
         this.mList = list;
         this.mContext = context;
         this.item=item;

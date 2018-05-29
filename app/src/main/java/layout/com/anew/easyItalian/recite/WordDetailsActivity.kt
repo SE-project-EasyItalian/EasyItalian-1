@@ -61,6 +61,7 @@ class WordDetailsActivity() : Activity() {
         // the buttons' listener has problem
         val button = findViewById<Button>(R.id.continue_study)
         button.setOnClickListener {
+            finish()
             val intent = Intent(this, ReciteWordAcitivity::class.java)
             startActivity(intent)
         }
