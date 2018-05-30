@@ -36,7 +36,7 @@ class WordListDetailPage : Activity() {
         getWord()
         wordForDetails.setText(word.word)
 
-        Toast.makeText(this, "WordListDetailPage", Toast.LENGTH_SHORT).show()
+     //   Toast.makeText(this, "WordListDetailPage", Toast.LENGTH_SHORT).show()
         val data: Array<String>
 
 

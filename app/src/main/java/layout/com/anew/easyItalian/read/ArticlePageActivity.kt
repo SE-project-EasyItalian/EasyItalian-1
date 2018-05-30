@@ -70,7 +70,7 @@ class ArticlePageActivity() : Activity() {
         // directly use url when saving into leancloud
         val picNum = query.whereEqualTo("UID",uid).first["imageUrl"].toString()
         val imUrm = "http://avisy.ddns.net:3322/"+picNum
-        Picasso.get().load(imUrm).fit().into(image)
+        Picasso.get().load(imUrm).into(image)
         val mytext = query.whereEqualTo("UID",uid).first["text"].toString()
         text.setText(mytext)
     }

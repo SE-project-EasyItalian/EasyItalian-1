@@ -181,7 +181,7 @@ class SetWordList : Activity() {
                 input.close()
                 Toast.makeText(this,"Download Complicated.",Toast.LENGTH_SHORT).show()
             }else{
-                Toast.makeText(this,"Connect filed",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Connection filed",Toast.LENGTH_SHORT).show()
             }
 
         } catch (e: Exception) {
@@ -238,12 +238,11 @@ class SetWordList : Activity() {
         // use zeroWord.appearTime-10000 show the current number n
         val zeroWord = Word(-1, wordList.wordlistName, "zero", "zero", "zero", 0, -1, -1, -1.0, -1, -1, true)
         my.insertData(this,zeroWord)
-
         for (i in 0..n-1){
             val insertWord = getWordFromXml(wordList,i)
             my.insertData(this,insertWord)
         }
-        Toast.makeText(this,"Create Database Successfully "+ n , Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"Create Database Successfully " , Toast.LENGTH_SHORT).show()
     }
 
 

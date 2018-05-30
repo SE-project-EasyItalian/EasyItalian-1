@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.raizlabs.android.dbflow.sql.language.SQLite
+import kotlinx.android.synthetic.main.activity_wods_lists.*
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
 import layout.com.anew.easyItalian.recite.DaoOpt
@@ -22,7 +23,6 @@ class WordsListsPage : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wods_lists)
-
         val ins = intent
         val choice = ins.getStringArrayListExtra("choice")[0]
         when(choice){
@@ -115,6 +115,7 @@ class WordsListsPage : Activity() {
         }
         */
     fun showNewWordsList(){
+        toolbar2.title="   生词本"
         var word= WordNew()
         //word.id=0;
         //word.word="text"
@@ -124,6 +125,7 @@ class WordsListsPage : Activity() {
         //insertNewWord(word)
         //insertNewWord("ciao2")
        // insertNewWord("ciao3")
+
         var wordNewList= SQLite.select().from(WordNew::class.java).queryList()
         //var n=wordGraphedList.size
         //Toast.makeText(this, wordNewList[0].word, Toast.LENGTH_SHORT).show()
@@ -144,6 +146,7 @@ class WordsListsPage : Activity() {
     fun showFinishedWordsList(){
         //val title = findViewById<Button>(R.id.titleinList)
         //title.setText("已经掌握")
+        toolbar2.title="   已掌握单词"
         val my = DaoOpt.getInstance()
         val listFinshed:MutableList<Word>?=my.queryForGrasp(this,true)
 
@@ -161,6 +164,7 @@ class WordsListsPage : Activity() {
         listView.adapter = adapter
     }
     fun showComingWordsList(){
+        toolbar2.title="   尚未学习单词"
         //val title = findViewById<Button>(R.id.titleinList)
         //title.setText("尚未学习")
         val my = DaoOpt.getInstance()
