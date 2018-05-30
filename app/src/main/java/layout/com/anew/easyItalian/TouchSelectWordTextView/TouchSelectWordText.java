@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -26,27 +25,28 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-import android.widget.Toast;
-
 import org.json.JSONArray;
 
 
 public class TouchSelectWordText extends AppCompatTextView {
 
-    private final String TWO_CHINESE_BLANK = "  ";
     private BreakIterator iterator;
     private float dxLfet, dxRight, height;
-    private final int DX = 5;
     private int mViewWidth;
     private int textHeight;
     private int mLineY;
-    private boolean select = true;
-
     //add popupWindow
     private CustomActionMenuCallBack mCustomActionMenuCallBack;
     private PopupWindow mActionMenuPopupWindow; // 点击弹出菜单
-    //add end
-    private SparseArray<List<WordTouchBean>> wordlist = new SparseArray<List<WordTouchBean>>();
+    private float mTouchDownX = 0;
+    private float mTouchDownY = 0;
+    private boolean isLongPress = false; // 是否发触了长按事件
+    private ActionMenu mActionMenu = null;
+    private OnClickListener mOnClickListener;
+    //and end
+
+
+    private SparseArray<List<WordTouchBean>> wordlist = new SparseArray<>();
 
     public TouchSelectWordText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -57,10 +57,7 @@ public class TouchSelectWordText extends AppCompatTextView {
         this(context, attrs, 0);
     }
 
-    public TouchSelectWordText(Context context, boolean select) {
-        this(context, null);
-        this.select = select;
-    }
+
 
     public TouchSelectWordText(Context context) {
         this(context, null);
@@ -75,31 +72,11 @@ public class TouchSelectWordText extends AppCompatTextView {
         height = 0;
     }
 
-    /**
-     * 开启选词
-     */
-    public void openSelect() {
-        select = true;
-    }
 
-    /**
-     * 关闭选词
-     */
-    public void closeSelect() {
-        select = false;
-    }
-
-    /**
-     * 判断是否开启选词
-     *
-     * @return false为关闭，否则为开启
-     */
-    public boolean isOpenSelect() {
-        return select;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    /*
+    *
+    * @Override
+    public boolean onTouchEventLess(MotionEvent event) {
         super.performClick();
         hideActionMenu();
         if (!select) {
@@ -108,39 +85,144 @@ public class TouchSelectWordText extends AppCompatTextView {
         }
         int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN ) {
-            clear();
-            Layout layout = getLayout();
-            int x = (int) event.getX();
-            int y = (int) event.getY();
-            if (layout != null) {
-                int line = layout.getLineForVertical(y);
-                height = textHeight * line;
-                // int offset = layout.getOffsetForHorizontal(line, x);
-                String wordText = " ";
-                for (WordTouchBean word : wordlist.get(line)) {
-                    if (word.getStart() < x && x < word.getEnd()) {
-                        dxLfet = word.getStart();
-                        dxRight = word.getEnd();
-                        wordText = word.getWordText();
-                        break;
-                    }
-                }
-                //call popupWindow
-                float mTouchDownRawY = event.getRawY();
-                int mPopWindowOffsetY = calculatorActionMenuYPosition((int) mTouchDownRawY, (int) event.getRawY());
-                ActionMenu mActionMenu = createActionMenu(wordText);
-
-                // show word and its translation on Menu item
-                showActionMenu(mPopWindowOffsetY, mActionMenu);
-
-                }
+            showAction(event);
         }
-
         return false;
+    }*/
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int TRIGGER_LONGPRESS_TIME_THRESHOLD = 300;    // 触发长按事件的时间阈值
+        int TRIGGER_LONGPRESS_DISTANCE_THRESHOLD = 10; // 触发长按事件的位移阈值
+        super.performClick();
+        int action = event.getAction();
+        Layout layout = getLayout();
+        int currentLine; // 当前所在行
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                Log.d("SelectableTextView", "ACTION_DOWN");
+
+                // 每次按下时，创建ActionMenu菜单，创建不成功，屏蔽长按事件
+                if (null == mActionMenu) {
+                    int x = (int) event.getX();
+                    int y = (int) event.getY();
+                    int line = layout.getLineForVertical(y);
+                    height = textHeight * line;
+                    String wordText = " ";
+                    for (WordTouchBean word : wordlist.get(line)) {
+                        if (word.getStart() < x && x < word.getEnd()) {
+                            dxLfet = word.getStart();
+                            dxRight = word.getEnd();
+                            wordText = word.getWordText();
+                            break;
+                        }
+                    }
+                    mActionMenu = createActionMenu(wordText);
+                }
+                mTouchDownX = event.getX();
+                mTouchDownY = event.getY();
+                isLongPress = false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d("SelectableTextView", "ACTION_MOVE");
+                // 先判断是否禁用了ActionMenu功能，以及ActionMenu是否创建失败，
+                // 二者只要满足了一个条件，退出长按事件
+                    // 手指移动过程中的字符偏移
+                    currentLine = layout.getLineForVertical(getScrollY() + (int) event.getY());
+                    int mWordOffset_move = layout.getOffsetForHorizontal(currentLine, (int) event.getX());
+                    // 判断是否触发长按事件
+                    if (event.getEventTime() - event.getDownTime() >= TRIGGER_LONGPRESS_TIME_THRESHOLD
+                            && Math.abs(event.getX() - mTouchDownX) < TRIGGER_LONGPRESS_DISTANCE_THRESHOLD
+                            && Math.abs(event.getY() - mTouchDownY) < TRIGGER_LONGPRESS_DISTANCE_THRESHOLD) {
+
+                        Log.d("SelectableTextView", "ACTION_MOVE 长按");
+                        isLongPress = true;
+                        // 每次触发长按时，震动提示一次
+                     //   if (!isVibrator) {
+                      //      mVibrator.vibrate(30);
+                      //      isVibrator = true;
+                     //   }
+                    }
+                    if (isLongPress) {
+
+                        Log.d("SelectableTextView","LongPress");
+                        // 通知父布局不要拦截触摸事件
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                        showAction(event);
+                    }
+
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d("SelectableTextView", "ACTION_UP");
+                // 处理长按事件
+                if (isLongPress) {
+                    clear();
+                    int x = (int) event.getX();
+                    int y = (int) event.getY();
+                    if (layout != null) {
+                        int line = layout.getLineForVertical(y);
+                        height = textHeight * line;
+                        // int offset = layout.getOffsetForHorizontal(line, x);
+                        String wordText = " ";
+                        for (WordTouchBean word : wordlist.get(line)) {
+                            if (word.getStart() < x && x < word.getEnd()) {
+                                dxLfet = word.getStart();
+                                dxRight = word.getEnd();
+                                wordText = word.getWordText();
+                                break;
+                            }
+                        }
+
+                    float mTouchDownRawY = event.getRawY();
+                    int mPopWindowOffsetY = calculatorActionMenuYPosition((int) mTouchDownRawY, (int) event.getRawY());
+                    ActionMenu mActionMenu = createActionMenu(wordText);
+                    // show word and its translation on Menu item
+                    showActionMenu(mPopWindowOffsetY, mActionMenu);}
+                    isLongPress = false;
+
+                } else if (event.getEventTime() - event.getDownTime() < TRIGGER_LONGPRESS_TIME_THRESHOLD) {
+                    // 由于onTouchEvent最终返回了true,onClick事件会被屏蔽掉，因此在这里处理onClick事件
+                    clear();
+                    hideActionMenu();
+                    if (null != mOnClickListener)
+                        mOnClickListener.onClick(this);
+                }
+                // 通知父布局继续拦截触摸事件
+                getParent().requestDisallowInterceptTouchEvent(false);
+                break;
+        }
+        return true;
     }
 
+    private void showAction(MotionEvent event){
+        clear();
+        Layout layout = getLayout();
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        if (layout != null) {
+            int line = layout.getLineForVertical(y);
+            height = textHeight * line;
+            // int offset = layout.getOffsetForHorizontal(line, x);
+            String wordText = " ";
+            for (WordTouchBean word : wordlist.get(line)) {
+                if (word.getStart() < x && x < word.getEnd()) {
+                    dxLfet = word.getStart();
+                    dxRight = word.getEnd();
+                    wordText = word.getWordText();
+                    break;
+                }
+            }
+            //call popupWindow
+            float mTouchDownRawY = event.getRawY();
+            int mPopWindowOffsetY = calculatorActionMenuYPosition((int) mTouchDownRawY, (int) event.getRawY());
+            ActionMenu mActionMenu = createActionMenu(wordText);
 
+            // show word and its translation on Menu item
+            showActionMenu(mPopWindowOffsetY, mActionMenu);
+
+        }
+    }
 
     // getTranslation functions
     private String getTranslation(String word){
@@ -186,7 +268,7 @@ public class TouchSelectWordText extends AppCompatTextView {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             byte[] buffer = new byte[1024];
-            int len = 0;
+            int len;
             while ((len = is.read(buffer)) != -1) {
                 out.write(buffer, 0, len);
             }
@@ -245,12 +327,12 @@ public class TouchSelectWordText extends AppCompatTextView {
 
     //showActionMenu
     private void showActionMenu(int offsetY, layout.com.anew.easyItalian.TouchSelectWordTextView.ActionMenu actionMenu) {
+        hideActionMenu();
         mActionMenuPopupWindow = new PopupWindow(actionMenu, WindowManager.LayoutParams.WRAP_CONTENT,
                 Utils.dp2px(getContext(), 35), true);
         mActionMenuPopupWindow.setFocusable(true);
         mActionMenuPopupWindow.setOutsideTouchable(false);
      //   mActionMenuPopupWindow.setBackgroundDrawable(new ColorDrawable(0xff000000));
-        //TODO fix it
         mActionMenuPopupWindow.showAtLocation(this, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, offsetY);
 
 
@@ -272,6 +354,7 @@ public class TouchSelectWordText extends AppCompatTextView {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        int DX = 5;
         super.dispatchDraw(canvas);
         Paint paint = new Paint();
         paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.MULTIPLY));
@@ -326,6 +409,7 @@ public class TouchSelectWordText extends AppCompatTextView {
     private void drawScaledText(Canvas canvas, int lineStart, String line, float lineWidth,
                                 int indexLine, boolean isScale) {
         float x = 0;
+        String TWO_CHINESE_BLANK = "  ";
         if (isFirstLineOfParagraph(lineStart, line)) {
             canvas.drawText(TWO_CHINESE_BLANK, x, mLineY, getPaint());
             float bw = StaticLayout.getDesiredWidth(TWO_CHINESE_BLANK, getPaint());
@@ -345,7 +429,7 @@ public class TouchSelectWordText extends AppCompatTextView {
         float d = isScale ? (mViewWidth - lineWidth) / gapCount : 0;
         iterator.setText(line);
         int start = iterator.first();
-        List<WordTouchBean> words = new ArrayList<WordTouchBean>();
+        List<WordTouchBean> words = new ArrayList<>();
         for (int end = iterator.next(); end != BreakIterator.DONE; start = end, end = iterator.next()) {
             String possibleWord = line.substring(start, end);
             for (; i < start; i++) {

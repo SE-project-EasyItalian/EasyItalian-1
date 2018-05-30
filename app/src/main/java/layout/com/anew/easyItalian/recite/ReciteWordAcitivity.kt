@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.activity_recite_word.*
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
 import java.lang.Math.ceil
-
 import java.util.*
 
 
@@ -18,7 +17,6 @@ import java.util.*
 
 class ReciteWordAcitivity : Activity() {
     private var setFlag = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recite_word)
@@ -99,8 +97,6 @@ class ReciteWordAcitivity : Activity() {
             word.eFactor=newEFactor(word)
             word.interval=newInterval(word,1)
         }else if(feedInfo==0){
-            // unchanged ??!!??
-            // maybe have to add feedInfo to newEFactor function
             word.eFactor=newEFactor(word)
             word.interval=newInterval(word,1)
         } else if (feedInfo==-1) {
@@ -134,8 +130,7 @@ class ReciteWordAcitivity : Activity() {
 
     // create new recite page function
     // call this onClick correct answer or "continue" button in word Details page
-
-    // n could be a global variable to record the number of the words(that showed repeat record)
+    // n could be a "global variable" to record the number of the words(that showed repeat record)
     private fun createNew(){
 
         // firstly search database for NextAppearTime property if exist one take that one
@@ -355,5 +350,6 @@ class ReciteWordAcitivity : Activity() {
         mediaPlayer.setOnPreparedListener {  mediaPlayer.start()}
         mediaPlayer.prepareAsync()
     }
+
     //tts end
 }

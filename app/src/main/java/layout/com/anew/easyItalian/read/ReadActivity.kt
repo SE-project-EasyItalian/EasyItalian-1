@@ -7,18 +7,13 @@ import android.os.StrictMode
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.view.View
 import android.widget.Button
-import com.avos.avoscloud.AVException
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
 import java.util.ArrayList
-import android.view.ViewGroup
-
-
+import android.widget.Toast
 
 
 class ReadActivity : Activity() {
@@ -33,8 +28,12 @@ class ReadActivity : Activity() {
 
 
         //初始化数据
-        initArticle()
-
+        try {
+            initArticle()
+        }catch (e :Exception){
+            Toast.makeText(this,"Connection Error",Toast.LENGTH_SHORT).show()
+            finish()
+        }
 
         //将articleTist里的文章展示出来
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -55,48 +54,14 @@ class ReadActivity : Activity() {
 
     //初始化数据
     private fun initArticle() {
-        //    for(int i=0;i<2;i++){
-        /*
-            *
-            *
-            * String title="Amo la mia mamma e il mio papa  ";
-            String level="4星";
-            String text="Per la maggior parte del mondo cristiano, il culmine della" +
-                    " festività natalizia è il cenone di Natale. è il momento in cui le " +
-                    "famiglie si riuniscono per festeggiare la vigilia di Natale che" +
-                    " normalmente si celebra dopo la Messa di mezzanotte. In Francia " +
-                    "questo pasto viene chiamato \"le reveillon\". Il cenone natalizio " +
-                    "varia secondo le tradizioni culinarie, il menu consiste in anatra, " +
-                    "paste fatte con farina di grano saraceno con panna acida, tacchino con " +
-                    "castagne, mentre per i parigini, ostriche e Foie Gras. Una torta che " +
-                    "porta il nome di \"La Bouche de Noel\" con la forma di un tronco d'albero" +
-                    " viene consumata durante la reveillon. Lo Champagne, il vino frizzante " +
-                    "prodotto nelle regione denominata Champagne, viene bevuto per celebrare " +
-                    "entrambe le festività di Natale e di Capodanno."+i;
-            String id="id"+i;
-            Article article=new Article(id,title,level,text,"image1");*/
-        //  String uid = "9900000";
+
         var uid = 9900000
         var article = getArticle(uid.toString())
-        //  int a = 99;
-       // articleList.add(article)
-        //String.valueOf(a);
-        //将article放入链表中
-        //   articleList.add(article);
-        //  Article article1 = getArticle("9900001");
-        //将article放入链表中
-        // articleList.add(article1);
-        //Article article2 = getArticle("9900002");
-        //将article放入链表中
-        // articleList.add(article2);
-
         while (article.title !== "Error") {
             articleList.add(article)
             uid++
             article = getArticle(uid.toString())
         }
-
-        //}
     }
 
     private fun getArticle(uid: String): Article {
@@ -106,7 +71,6 @@ class ReadActivity : Activity() {
         StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
                 .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
                 .penaltyLog().penaltyDeath().build())
-
 
         val query = AVQuery<AVObject>("Articles")
         val thisArticle: Article

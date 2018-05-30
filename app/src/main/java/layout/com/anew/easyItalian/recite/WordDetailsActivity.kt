@@ -53,7 +53,6 @@ class WordDetailsActivity() : Activity() {
         listView.adapter = adapter
 
         voice.setOnClickListener{
-            //call tts
             callTTS()
         }
 
@@ -77,7 +76,7 @@ class WordDetailsActivity() : Activity() {
             //have bug now in DBFlow, will fix it in the future
 
             var judge = 1
-            var wordNewList= SQLite.select().from(WordNew::class.java).queryList()
+            val wordNewList= SQLite.select().from(WordNew::class.java).queryList()
             for (wordNew in wordNewList){
                 if(wordNew.word.equals(word.word)){
                     judge=0
@@ -85,15 +84,15 @@ class WordDetailsActivity() : Activity() {
                 }
             }
             if(judge==1){
-                var wordN= WordNew()
-                wordN.word=word?.word
-                wordN.transform=word?.transform
-                wordN.translation=word?.translation
-                wordN.example=word?.example
+                val wordN= WordNew()
+                wordN.word=word.word
+                wordN.transform=word.transform
+                wordN.translation=word.translation
+                wordN.example=word.example
 
 
                 //add to new WordsList
-                var wordNew= WordNew()
+                val wordNew= WordNew()
                 wordNew.insertData(wordN)
                 wordNew.save()
                 Toast.makeText(this,"add "+word.word,Toast.LENGTH_SHORT).show()

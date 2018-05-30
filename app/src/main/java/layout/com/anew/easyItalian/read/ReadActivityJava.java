@@ -35,7 +35,6 @@ public class ReadActivityJava extends Activity {
         //初始化数据
         initArticle();
 
-
         //将articleTist里的文章展示出来
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
@@ -92,7 +91,7 @@ public class ReadActivityJava extends Activity {
         //将article放入链表中
            // articleList.add(article2);
 
-            while(article.getTitle()!="Error"){
+            while(!article.getTitle().equals("Error")){
                 articleList.add(article);
                 uid++;
                 article = getArticle(String.valueOf(uid));

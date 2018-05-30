@@ -24,15 +24,18 @@ import java.net.URL
 
 
 
-// TODO process expectation
 class SetWordList : Activity() {
     private val wordLists = ArrayList<Wordlist>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_word_list)
-
-        initWordlist()
+        try {
+            initWordlist()
+        }catch (e :Exception){
+            Toast.makeText(this,"Connection Error",Toast.LENGTH_SHORT).show()
+            finish()
+        }
 
         val layoutManager = LinearLayoutManager(this@SetWordList)
         recyclerView1.layoutManager = layoutManager
@@ -117,7 +120,7 @@ class SetWordList : Activity() {
                 .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
                 .penaltyLog().penaltyDeath().build())
         val query = AVQuery<AVObject>("wordlist")
-      if (query.whereEqualTo("wordlistID", i) != null){
+        if (query.whereEqualTo("wordlistID", i) != null){
             val a = query.whereEqualTo("wordlistID",i).first
             if (a!=null){
                 val wordlist = Wordlist()
