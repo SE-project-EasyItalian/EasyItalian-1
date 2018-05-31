@@ -181,18 +181,7 @@ class PersonalInfo : Activity(){
             1->
                 try{
                     if (resultCode == AppCompatActivity.RESULT_OK) {
-                        //cropPhoto(data?.getData())//裁剪图片
-                        var bitmap :Bitmap?  = null
-                        //判断手机系统版本号
-                        if (Build.VERSION.SDK_INT >= 19) {
-                            //4.4及以上系统使用这个方法处理图片
-                            bitmap = ImgUtil.handleImageOnKitKat(this, data);        //ImgUtil是自己实现的一个工具类
-                        } else {
-                            //4.4以下系统使用这个方法处理图片
-                            bitmap = ImgUtil.handleImageBeforeKitKat(this, data);
-                        }
-
-                        setPicToView(bitmap!!)
+                        cropPhoto(data?.getData())//裁剪图片
                     }
 
                 }catch (e : IOException){
@@ -217,8 +206,26 @@ class PersonalInfo : Activity(){
             3->
                 if (data != null) {
 
+
+                    var bitmap :Bitmap?  = null
+
+                    /*
+                    //判断手机系统版本号
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        //4.4及以上系统使用这个方法处理图片
+                        bitmap = ImgUtil.handleImageOnKitKat(this, data);        //ImgUtil是自己实现的一个工具类
+                    } else {
+                        //4.4以下系统使用这个方法处理图片
+                        bitmap = ImgUtil.handleImageBeforeKitKat(this, data);
+                    }
+
+*/
+
+                    bitmap=data.getParcelableExtra("data")
+                    setPicToView(bitmap!!)
+
                     //bug
-                    setImageToView(data)
+                    //setImageToView(data)
                     //setPicToView(head);//保存在SD卡中
                     //上传服务器代码
 
@@ -263,6 +270,8 @@ class PersonalInfo : Activity(){
 
     //保存图片
     fun setPicToView(mBitmap : Bitmap) {
+
+
         var sdStatus = Environment.getExternalStorageState();
         if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd卡是否可用
             return;
@@ -276,6 +285,8 @@ class PersonalInfo : Activity(){
 
         try {
             b= FileOutputStream(mFile.toString()+"/$FILENAMEOFPIC"+"2")
+            //
+
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件（compress：压缩）
 
         } catch ( e: FileNotFoundException) {
@@ -290,6 +301,7 @@ class PersonalInfo : Activity(){
             }
 
         }
+        Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show()
     }
 
     //裁剪图片
@@ -309,21 +321,7 @@ class PersonalInfo : Activity(){
         startActivityForResult(intent, 3);
     }
 
-    //展示图片
-    protected fun setImageToView(data: Intent) {
-        Toast.makeText(this,"展示" , Toast.LENGTH_LONG).show()
-        val extras = data.extras
-        if (extras != null) {
-            var photo = extras.getParcelable<Bitmap>("data") as Bitmap
-            //photo = Utils.toRoundBitmap(photo, tempUri) // 这个时候的图片已经被处理成圆形的了
-            //toRoundBitmap(photo)
-            //
-            //show.setImageBitmap(photo)
-            //toRoundBitmap(photo)
-            setPicToView(photo)
 
-        }
-    }
 
     /**
      * 转换图片成圆形
