@@ -24,6 +24,11 @@ import android.widget.TextView
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Intent
+import android.widget.Toast
+import com.avos.avoscloud.AVException
+import com.avos.avoscloud.AVUser
+import com.avos.avoscloud.LogInCallback
+import com.avos.avoscloud.SignUpCallback
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -52,11 +57,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         })
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
-        button_for_skip.setOnClickListener{
-            email.setText("Laura@it.it")
-            password.setText("123456")
-            attemptLogin()
+
+        signUp.setOnClickListener{
+            val intent = Intent(this@LoginActivity,RegisterActivity::class.java)
+            startActivity(intent)
         }
+
     }
 
     private fun populateAutoComplete() {
@@ -156,7 +162,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private fun isPasswordValid(password: String): Boolean {
         //TODO: Replace this with your own logic
-        return password.length > 4
+        return password.length > 6
     }
 
     /**
@@ -249,11 +255,25 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      */
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
+       inner class logInCallBack: LogInCallback<AVUser>() {
+
+           override fun done(avUser: AVUser?, e: AVException?) {
+               if (e == null) {
+                   this@LoginActivity.finish();
+                   val intent =Intent(this@LoginActivity,MainActivity::class.java)
+                   startActivity(intent);
+               } else {
+                   showProgress(false);
+                   Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show();
+               }           }
+
+        }
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
             try {
                 // Simulate network access.
+                AVUser.logInInBackground(mEmail, mPassword,logInCallBack() );
                 Thread.sleep(2000)
             } catch (e: InterruptedException) {
                 return false
