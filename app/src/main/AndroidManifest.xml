@@ -38,8 +38,9 @@
         <activity
             android:name=".recite.WordDetailsActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".WordList.WordsListsPage"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".WordList.WordsListsPage"
+            android:launchMode="singleTask" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
@@ -53,7 +54,8 @@
         <activity android:name=".read.ArticlePageActivity" />
         <activity android:name=".SearchWordPage" />
         <activity android:name=".recite.SetWordList" />
-        <activity android:name=".WordList.WordListDetailPage"></activity>
+        <activity android:name=".WordList.WordListDetailPage" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
