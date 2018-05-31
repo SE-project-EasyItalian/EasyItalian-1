@@ -12,7 +12,6 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
-import android.widget.TextView
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import com.example.youngkaaa.ycircleview.CircleView
@@ -27,9 +26,6 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import com.avos.avoscloud.AVUser
-
-
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -38,11 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
       //  val login = Intent(this,LoginActivity::class.java)
      //   startActivity(login)
-        val currentUser = AVUser.getCurrentUser()
-        if (currentUser == null) {
-           val intent=Intent(this,LoginActivity::class.java)
-            startActivity(intent)
-        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
@@ -51,9 +43,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
         val profile = headerView.findViewById<CircleView>(R.id.profile_picture) as CircleView
-        val userName = headerView.findViewById<TextView>(R.id.textView)
-        if (currentUser!=null)
-            userName.setText(AVUser.getCurrentUser().username)
+
         profile.setOnClickListener(){
        //     Toast.makeText(this,"call 个人资料 activity",Toast.LENGTH_SHORT).show()
             val changeToPersonalInfoActivity = Intent()
@@ -64,8 +54,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //search_new_word & learn_button & read_button
         searchWordButton.setOnClickListener(){
-            AVUser.logOut()// 清除缓存用户对象
-            val currentUser = AVUser.getCurrentUser()
              Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
         }
 
