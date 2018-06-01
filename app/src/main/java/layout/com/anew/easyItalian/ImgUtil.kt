@@ -1,7 +1,5 @@
 package layout.com.anew.easyItalian
 
-import android.graphics.BitmapFactory
-import android.graphics.Bitmap
 import android.text.TextUtils
 import android.provider.MediaStore
 import android.content.Intent
@@ -9,17 +7,21 @@ import android.content.ContentUris
 import android.provider.DocumentsContract
 import android.annotation.TargetApi
 import android.content.Context
+import android.graphics.*
 import android.net.Uri
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+
 
 
 /**
  * Created by liaoyujun on 2018/5/31.
  */
 object ImgUtil {
+    //4.4及以上系统使用这个方法处理图片获取uri
+    //根据相册返回的intent将intent转成bitmap
+    //从intent转成uri uri转成路径 路径转成bitmap
 
-    //4.4及以上系统使用这个方法处理图片
     @TargetApi(19)
     fun handleImageOnKitKat(context: Context, data: Intent?): Bitmap? {
         var imagePath: String? = null
@@ -43,13 +45,15 @@ object ImgUtil {
         return getImage(imagePath)
     }
 
-    //4.4以下系统使用这个方法处理图片
+    //4.4以下系统使用这个方法处理图片获取uri
     fun handleImageBeforeKitKat(context: Context, data: Intent?): Bitmap? {
         val uri = data!!.data
         val imagePath = getImagePath(context, uri, null)
         return getImage(imagePath)
     }
 
+
+  //根据图片的uri返回路径
     fun getImagePath(context: Context, uri: Uri?, selection: String?): String? {
         var path: String? = null
         //通过Uri和selection来获取真实的图片路径
@@ -61,22 +65,6 @@ object ImgUtil {
             cursor!!.close()
         }
         return path
-    }
-
-    //对bitmap进行质量压缩
-    fun compressImage(image: Bitmap): Bitmap {
-        val baos = ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
-        var options = 100
-        //size from length
-        //may have bug
-        while (baos.toByteArray().size / 1024 > 100) {    //循环判断如果压缩后图片是否大于100kb,大于继续压缩
-            baos.reset()//重置baos即清空baos
-            image.compress(Bitmap.CompressFormat.JPEG, options, baos)//这里压缩options%，把压缩后的数据存放到baos中
-            options -= 10//每次都减少10
-        }
-        val isBm = ByteArrayInputStream(baos.toByteArray())//把压缩后的数据baos存放到ByteArrayInputStream中
-        return BitmapFactory.decodeStream(isBm, null, null)
     }
 
     //传入图片路径，返回压缩后的bitmap
@@ -109,4 +97,81 @@ object ImgUtil {
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts)
         return compressImage(bitmap)//压缩好比例大小后再进行质量压缩
     }
+
+    //对bitmap进行质量压缩 在getImage中调用
+    fun compressImage(image: Bitmap): Bitmap {
+        val baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        var options = 100
+        //size from length
+        //may have bug
+        while (baos.toByteArray().size / 1024 > 100) {    //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+            baos.reset()//重置baos即清空baos
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos)//这里压缩options%，把压缩后的数据存放到baos中
+            options -= 10//每次都减少10
+        }
+        val isBm = ByteArrayInputStream(baos.toByteArray())//把压缩后的数据baos存放到ByteArrayInputStream中
+        return BitmapFactory.decodeStream(isBm, null, null)
+    }
+
+
+    //根据intent返回路径
+    /*
+    fun getUriPPPP(context: Context, data: Intent?):Uri{
+
+    }
+
+    fun toRoundBitmap(bitmap: Bitmap): Bitmap {
+        var width = bitmap.width
+        var height = bitmap.height
+        val roundPx: Float
+        val left: Float
+        val top: Float
+        val right: Float
+        val bottom: Float
+        val dst_left: Float
+        val dst_top: Float
+        val dst_right: Float
+        val dst_bottom: Float
+        if (width <= height) {
+            roundPx = (width / 2).toFloat()
+            top = 0f
+            bottom = width.toFloat()
+            left = 0f
+            right = width.toFloat()
+            height = width
+            dst_left = 0f
+            dst_top = 0f
+            dst_right = width.toFloat()
+            dst_bottom = width.toFloat()
+        } else {
+            roundPx = (height / 2).toFloat()
+            val clip = ((width - height) / 2).toFloat()
+            left = clip
+            right = width - clip
+            top = 0f
+            bottom = height.toFloat()
+            width = height
+            dst_left = 0f
+            dst_top = 0f
+            dst_right = height.toFloat()
+            dst_bottom = height.toFloat()
+        }
+        val output = Bitmap.createBitmap(width,
+                height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(output)
+        val color = -0xbdbdbe
+        val paint = Paint()
+        val src = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
+        val dst = Rect(dst_left.toInt(), dst_top.toInt(), dst_right.toInt(), dst_bottom.toInt())
+        val rectF = RectF(dst)
+        paint.setAntiAlias(true)
+        canvas.drawARGB(0, 0, 0, 0)
+        paint.setColor(color)
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint)
+        paint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
+        canvas.drawBitmap(bitmap, src, dst, paint)
+        return output
+    }
+*/
 }
