@@ -61,9 +61,9 @@
         <activity android:name=".SearchWordPage" />
         <activity android:name=".recite.SetWordList" />
         <activity android:name=".WordList.WordListDetailPage" />
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".RegisterActivity"
+            android:label="@string/title_activity_register" />
 
-        </activity>
 
 
 

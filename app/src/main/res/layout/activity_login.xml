@@ -69,13 +69,16 @@
                     <Button
                         android:id="@+id/email_sign_in_button"
                         style="?android:textAppearanceSmall"
-                        android:layout_width="276dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_weight="1"
+                        android:background="@drawable/buttonshape"
                         android:text="@string/action_sign_in"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/signUp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +86,8 @@
                         android:id="@+id/signUp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/buttonshape"
                         android:text="SignUp"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
