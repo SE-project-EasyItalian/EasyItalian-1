@@ -59,7 +59,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
             val headerView = navigationView.getHeaderView(0)
             val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
-            Picasso.get().load(myProfile).into(profile)
+            if (myProfile!="laura")
+                Picasso.get().load(myProfile).into(profile)
         } catch (e:Exception){
             val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
             val headerView = navigationView.getHeaderView(0)
