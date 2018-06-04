@@ -3,6 +3,17 @@ package layout.com.anew.easyItalian
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.PendingIntent.getActivity
+import android.database.Cursor
+import android.os.Message
+import kotlinx.android.synthetic.main.activity_chooce_profile_from_dialog.*
+import android.support.annotation.NonNull
+import android.support.design.widget.NavigationView
+import android.util.Log
+import kotlinx.android.synthetic.main.activity_article_page.view.*
+import kotlinx.android.synthetic.main.nav_header_main.*
+import layout.com.anew.easyItalian.ImgUtil.getImagePath
+
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,7 +29,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -141,9 +151,17 @@ class PersonalInfo : Activity(){
     }
 
     fun chooseAlbum(){
+        try{
+        ActivityCompat.requestPermissions(this,
+                arrayOf( Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                2)
         val intent1 = Intent(Intent.ACTION_PICK, null)//返回被选中项的URI
         intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")//得到所有图片的URI
         startActivityForResult(intent1, 1)
+        }catch (e:Exception){
+            Toast.makeText(this, "无法读取内部存储", Toast.LENGTH_LONG).show()
+            e.printStackTrace()
+        }
     }
 
     //保存传入的bitmap图片
