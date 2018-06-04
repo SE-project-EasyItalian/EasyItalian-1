@@ -13,7 +13,6 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
@@ -80,9 +79,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
 
 
-        val userName = headerView.findViewById<TextView>(R.id.textView)
+        val nickName = headerView.findViewById<TextView>(R.id.textView)
         if(currentUser!=null){
-            userName.setText(AVUser.getCurrentUser().username)
+            nickName.setText(currentUser.fetch().get("nickName").toString() )
 
         }
         profile.setOnClickListener(){

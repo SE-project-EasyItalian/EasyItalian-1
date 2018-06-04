@@ -3,42 +3,36 @@ package layout.com.anew.easyItalian
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.PendingIntent.getActivity
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.Message
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_chooce_profile_from_dialog.*
-
+import com.afollestad.materialdialogs.MaterialDialog
 import layout.com.anew.easyItalian.recite.SetWordList
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import android.support.annotation.NonNull
-import android.support.design.widget.NavigationView
-import android.util.Log
 import com.avos.avoscloud.AVException
 import com.avos.avoscloud.AVFile
 import com.avos.avoscloud.AVUser
 import com.avos.avoscloud.SaveCallback
-import kotlinx.android.synthetic.main.activity_article_page.view.*
-import kotlinx.android.synthetic.main.nav_header_main.*
-import layout.com.anew.easyItalian.ImgUtil.getImagePath
+
 
 
 
@@ -61,13 +55,8 @@ class PersonalInfo : Activity(){
             _, _, position, _ ->
             //set click listener
             when(position){
-                0 -> {
-                    //val intent = Intent(this, ChooseDialog::class.java)
-                    //startActivity(intent)
-                    showImagePickDialog(this)
-                    Toast.makeText(this,"call 头像 activity",Toast.LENGTH_SHORT).show()
-                }
-                1 -> Toast.makeText(this,"call 昵称 activity",Toast.LENGTH_SHORT).show()
+                0 -> { showImagePickDialog(this) }
+                1 ->{ setNickname() }
                 2 -> {
                     val intent = Intent()
                     intent.setClass(this, SetWordList::class.java)
@@ -81,8 +70,6 @@ class PersonalInfo : Activity(){
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
-
     }
 
     fun showImagePickDialog(activity: Activity) {
@@ -115,8 +102,6 @@ class PersonalInfo : Activity(){
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 
 
 
@@ -301,6 +286,19 @@ class PersonalInfo : Activity(){
         }
     }
 
+    //set nickname
+    private fun setNickname(){
+        val currentUser = AVUser.getCurrentUser()
+        var nickName=currentUser.fetch().get("nickName").toString()
+        MaterialDialog.Builder(this).title("请输入昵称").widgetColor(Color.BLUE).inputType(InputType.TYPE_CLASS_TEXT).input("输入",  currentUser.fetch().get("nickName").toString() , object :MaterialDialog.InputCallback {
+
+            override fun onInput(dialog: MaterialDialog, input: CharSequence?) {
+                currentUser.put("nickName",input)
+                currentUser.saveInBackground()
+            }
+
+        }).negativeText("取消").positiveText("确认").show()
+    }
 
 
 }
