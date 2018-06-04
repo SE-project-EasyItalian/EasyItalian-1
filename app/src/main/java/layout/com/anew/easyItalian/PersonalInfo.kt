@@ -1,6 +1,5 @@
 package layout.com.anew.easyItalian
 
-
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
@@ -32,7 +31,11 @@ import java.io.FileOutputStream
 import java.io.IOException
 import android.support.annotation.NonNull
 import android.support.design.widget.NavigationView
+import android.util.Log
+import com.avos.avoscloud.AVException
+import com.avos.avoscloud.AVFile
 import com.avos.avoscloud.AVUser
+import com.avos.avoscloud.SaveCallback
 import kotlinx.android.synthetic.main.activity_article_page.view.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import layout.com.anew.easyItalian.ImgUtil.getImagePath
@@ -184,12 +187,6 @@ class PersonalInfo : Activity(){
             }
 
         }
-        val currentUser = AVUser.getCurrentUser()
-        if (currentUser != null) {
-            currentUser.put("profile",FILENAMEOFPIC2)
-            currentUser.saveInBackground()
-        }
-        Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show()
 
     }
 
@@ -278,8 +275,16 @@ class PersonalInfo : Activity(){
                     bitmap=data.getParcelableExtra("data")
                     //setPicToView(bitmap!!)//保存在SD卡中
                     //上传服务器代码
+                    Toast.makeText(this@PersonalInfo, "保存成功", Toast.LENGTH_LONG).show()
 
-
+                    val currentUser = AVUser.getCurrentUser()
+                    val file = AVFile.withAbsoluteLocalPath(currentUser.username+"_profile.jpg",  this.getExternalFilesDir("profile").absolutePath+"/$FILENAMEOFPIC3");
+                    file.saveInBackground(object :SaveCallback() {
+                        override fun done(p0: AVException?) {
+                            currentUser.put("profile",file.getUrl())
+                            currentUser.saveInBackground()
+                        }
+                    })
                 }
         }
     }

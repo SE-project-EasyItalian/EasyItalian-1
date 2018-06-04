@@ -59,14 +59,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
             val headerView = navigationView.getHeaderView(0)
             val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
-            Picasso.get().load(File(getExternalFilesDir("profile"),myProfile.toString())).into(profile)
-        }
-        catch (e:Exception){
+            Picasso.get().load(myProfile).into(profile)
+        } catch (e:Exception){
             val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
             val headerView = navigationView.getHeaderView(0)
             val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
-            Picasso.get().load(R.mipmap.laura).into(profile)
-            Log.d("Profile","error")
+            if (File(getExternalFilesDir("profile"),"head3.jpg").exists()){
+                Picasso.get().load(File(getExternalFilesDir("profile"),"head3.jpg")).into(profile)
+                Log.d("Profile","Connection Error, Use local profile")
+            }else
+                Picasso.get().load(R.mipmap.laura).into(profile)
+            Log.d("Profile","Can't find local profile")
         }
 
         // find parent view to make profile clickable on first call
