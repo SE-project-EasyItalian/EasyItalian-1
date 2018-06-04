@@ -7,16 +7,19 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import com.avos.avoscloud.AVUser
-import com.example.youngkaaa.ycircleview.CircleView
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.content_main.*
 import layout.com.anew.easyItalian.WordList.WordsListsPage
 import layout.com.anew.easyItalian.read.ReadActivity
@@ -25,6 +28,7 @@ import layout.com.anew.easyItalian.recite.ReciteWordAcitivity
 import layout.com.anew.easyItalian.recite.Word
 import org.json.JSONArray
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
@@ -44,12 +48,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        try {
+            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads().detectDiskWrites().detectNetwork()
+                    .penaltyLog().build())
+            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+                    .penaltyLog().penaltyDeath().build())
+            val myProfile =   currentUser.fetch().get("profile").toString()
+            val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+            val headerView = navigationView.getHeaderView(0)
+            val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
+            Picasso.get().load(File(getExternalFilesDir("profile"),myProfile.toString())).into(profile)
+        }
+        catch (e:Exception){
+            val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+            val headerView = navigationView.getHeaderView(0)
+            val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
+            Picasso.get().load(R.mipmap.laura).into(profile)
+            Log.d("Profile","error")
+        }
 
         // find parent view to make profile clickable on first call
         // CHOICE make the profile to a circle
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
-        val profile = headerView.findViewById<CircleView>(R.id.profile_picture) as CircleView
+        val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
+
+
         val userName = headerView.findViewById<TextView>(R.id.textView)
         if(currentUser!=null){
             userName.setText(AVUser.getCurrentUser().username)

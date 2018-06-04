@@ -167,4 +167,5 @@ public class ActionMenu extends LinearLayout {
         this.mActionMenuBgColor = mMenuBgColor;
         setActionMenuBackGround(this.mActionMenuBgColor);
     }
+
 }

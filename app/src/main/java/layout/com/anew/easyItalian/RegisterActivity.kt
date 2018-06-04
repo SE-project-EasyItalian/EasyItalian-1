@@ -36,7 +36,6 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
         button_for_sign_up.setOnClickListener {
-            val user = AVUser();// 新建 AVUser 对象实例
             val username =userName.text.toString()
             val email = eMail.text.toString()
             val password = passWord.text.toString()
@@ -45,12 +44,13 @@ class RegisterActivity : AppCompatActivity() {
             if(!isEmailValid(email)) valid=false
             if (!isPasswordValid(password,passwordR)) valid=false
             if (valid){
+                val user = AVUser();// 新建 AVUser 对象实例
                 user.setUsername(username);// 设置用户名
                 user.setPassword(password);// 设置密码
                 user.setEmail(email);//设置邮箱
                 user.signUpInBackground(signUpCallBack())
             }else{
-                Toast.makeText(this,"Input error!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,isPasswordValid(password,passwordR).toString(), Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -60,7 +60,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun isPasswordValid(password: String,passwordR: String): Boolean {
-        return password.length > 6 && password==passwordR
+       return password.length >= 6 && password.equals(passwordR)
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private fun showProgress(show: Boolean) {

@@ -4,6 +4,7 @@ package layout.com.anew.easyItalian
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.PendingIntent.getActivity
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,6 +15,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Message
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
@@ -29,6 +31,10 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import android.support.annotation.NonNull
+import android.support.design.widget.NavigationView
+import com.avos.avoscloud.AVUser
+import kotlinx.android.synthetic.main.activity_article_page.view.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import layout.com.anew.easyItalian.ImgUtil.getImagePath
 
 
@@ -72,6 +78,8 @@ class PersonalInfo : Activity(){
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+
     }
 
     fun showImagePickDialog(activity: Activity) {
@@ -176,7 +184,13 @@ class PersonalInfo : Activity(){
             }
 
         }
+        val currentUser = AVUser.getCurrentUser()
+        if (currentUser != null) {
+            currentUser.put("profile",FILENAMEOFPIC2)
+            currentUser.saveInBackground()
+        }
         Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show()
+
     }
 
     //裁剪图片
@@ -264,6 +278,8 @@ class PersonalInfo : Activity(){
                     bitmap=data.getParcelableExtra("data")
                     //setPicToView(bitmap!!)//保存在SD卡中
                     //上传服务器代码
+
+
                 }
         }
     }
@@ -283,4 +299,3 @@ class PersonalInfo : Activity(){
 
 
 }
-
