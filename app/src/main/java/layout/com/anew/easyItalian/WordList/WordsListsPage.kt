@@ -117,15 +117,6 @@ class WordsListsPage : Activity() {
     fun showNewWordsList(){
         toolbar2.title="   生词本"
         var word= WordNew()
-        //word.id=0;
-        //word.word="text"
-       // word.transform=""
-       // word.translation=""
-        //word.example=""
-        //insertNewWord(word)
-        //insertNewWord("ciao2")
-       // insertNewWord("ciao3")
-
         var wordNewList= SQLite.select().from(WordNew::class.java).queryList()
         //var n=wordGraphedList.size
         //Toast.makeText(this, wordNewList[0].word, Toast.LENGTH_SHORT).show()
@@ -144,8 +135,6 @@ class WordsListsPage : Activity() {
     }
 
     fun showFinishedWordsList(){
-        //val title = findViewById<Button>(R.id.titleinList)
-        //title.setText("已经掌握")
         toolbar2.title="   已掌握单词"
         val my = DaoOpt.getInstance()
         val listFinshed:MutableList<Word>?=my.queryForGrasp(this,true)
@@ -154,10 +143,14 @@ class WordsListsPage : Activity() {
             //Toast.makeText(this, wordFinished.id.toString()+wordFinished.word, Toast.LENGTH_SHORT).show()
             data.add(wordFinished.word)
         }
-        data.removeAt(0)
-        if(data.size==0){
-            Toast.makeText(this, "该表为空", Toast.LENGTH_SHORT).show()
-    }
+
+        if(data.size>=1)
+            data.removeAt(0)
+
+        if(data.size==0)
+            Toast.makeText(this, "该表为空 ", Toast.LENGTH_SHORT).show()
+
+
     val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         val listView = findViewById<View>(R.id.new_words) as ListView

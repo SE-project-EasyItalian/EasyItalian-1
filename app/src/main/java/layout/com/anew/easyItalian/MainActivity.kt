@@ -8,15 +8,19 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
+import android.widget.SearchView
 import android.widget.TextView
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import com.avos.avoscloud.AVUser
+import com.lapism.searchview.Search
+import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.content_main.*
@@ -98,51 +102,68 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
              Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
         }
 
-        searchBar.setOnMicClickListener(){
-            //searchBar.setMicIcon(R.drawable.ic_search_black)
-            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads().detectDiskWrites().detectNetwork()
-                    .penaltyLog().build())
-            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
-                    .penaltyLog().penaltyDeath().build())
-            val text=searchBar.getText().toString()
-            //Toast.makeText(this,"search"+text,Toast.LENGTH_SHORT).show()
-            searchBar.setQuery(text,true)
-            if(text.length!=0){
 
-                val my = DaoOpt.getInstance()
-                val mList=my.queryForWord(this,text)
+        searchBar.setOnQueryTextListener(object:Search.OnQueryTextListener{
 
-                if(mList?.size!=0){
-                    val word : Word?=mList?.get(0)
-                    val data = arrayListOf(word?.word,word?.transform,word?.translation,word?.example)
-                    Toast.makeText(this,"search"+word?.word,Toast.LENGTH_SHORT).show()
+            override fun onQueryTextSubmit(query:CharSequence):Boolean{
 
-                    val changeToSearchWordPage = Intent()
-                    changeToSearchWordPage.setClass(this, SearchWordPage::class.java)
-                    changeToSearchWordPage.putStringArrayListExtra("data",data)
-                    startActivity(changeToSearchWordPage)
-                }
-                else{
-                    val word : Word?= Word()
-                    word?.setWord(text)
-                    //word?.setTranslation(getTranslation(text))
-                    //val data = arrayListOf(word?.word,word?.transform,word?.translation,word?.example)
-              //      val translation=getTranslation(text)
-                    val translation=getDetails(text)
-                    Toast.makeText(this,translation,Toast.LENGTH_SHORT).show()
-                    val data = arrayListOf(word?.word,translation)
-                    val changeToSearchWordPage = Intent()
-                    changeToSearchWordPage.setClass(this, SearchWordPage::class.java)
-                    changeToSearchWordPage.putStringArrayListExtra("data",data)
-                    startActivity(changeToSearchWordPage)
-                }
+                    //searchBar.setMicIcon(R.drawable.ic_search_black)
+                    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                            .detectDiskReads().detectDiskWrites().detectNetwork()
+                            .penaltyLog().build())
+                    StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                            .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+                            .penaltyLog().penaltyDeath().build())
+                    val text=searchBar.getText().toString()
+                    //Toast.makeText(this,"search"+text,Toast.LENGTH_SHORT).show()
+                    //searchBar.setQuery(text,true)
+                    if(text.length!=0){
+
+                        val my = DaoOpt.getInstance()
+                        val mList=my.queryForWord(this@MainActivity,text)
+
+                        if(mList?.size!=0){
+                            val word : Word?=mList?.get(0)
+                            val data = arrayListOf(word?.word,word?.transform,word?.translation,word?.example)
+                            Toast.makeText(this@MainActivity,"search"+word?.word,Toast.LENGTH_SHORT).show()
+
+                            val changeToSearchWordPage = Intent()
+                            changeToSearchWordPage.setClass(this@MainActivity, SearchWordPage::class.java)
+                            changeToSearchWordPage.putStringArrayListExtra("data",data)
+                            startActivity(changeToSearchWordPage)
+                        }
+                        else{
+                            val word : Word?= Word()
+                            word?.setWord(text)
+                            //word?.setTranslation(getTranslation(text))
+                            //val data = arrayListOf(word?.word,word?.transform,word?.translation,word?.example)
+                            //      val translation=getTranslation(text)
+                            val translation=getDetails(text)
+                            Toast.makeText(this@MainActivity,translation,Toast.LENGTH_SHORT).show()
+                            val data = arrayListOf(word?.word,translation)
+                            val changeToSearchWordPage = Intent()
+                            changeToSearchWordPage.setClass(this@MainActivity, SearchWordPage::class.java)
+                            changeToSearchWordPage.putStringArrayListExtra("data",data)
+                            startActivity(changeToSearchWordPage)
+                        }
+                    }
+                //Toast.makeText(this@MainActivity,"1"+searchBar.getText().toString(),Toast.LENGTH_SHORT).show()
+                return false
             }
+            override fun onQueryTextChange(newText: CharSequence):Unit{
+                //Toast.makeText(this@MainActivity,"2",Toast.LENGTH_SHORT).show()
 
+            }
+        })
+
+
+
+        searchBar.setOnMicClickListener(){
+
+            if(searchBar.isOpen) {
+                searchBar.close()
+            }
         }
-
-
 
 
         buttonForLearn.setOnClickListener(){
@@ -287,5 +308,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         return result
     }
+
+
 
 }
