@@ -38,8 +38,8 @@
         android:layout_height="37dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:theme="@style/Base.Theme.AppCompat.Light.Dialog"
         android:contentDescription="@string/des_search_new_word"
+        android:theme="@style/Base.Theme.AppCompat.Light.Dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_search_black" />
@@ -47,8 +47,16 @@
 
     <com.lapism.searchview.widget.SearchBar
         android:id="@+id/searchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="55dp"
+        app:layout_constraintBottom_toTopOf="@+id/search_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>

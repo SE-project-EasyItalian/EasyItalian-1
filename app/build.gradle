@@ -83,6 +83,8 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.zhihu.android:matisse:0.4.3'
 
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
 }
 repositories {
     maven {
