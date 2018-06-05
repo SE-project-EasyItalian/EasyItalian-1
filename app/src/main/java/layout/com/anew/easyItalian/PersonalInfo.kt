@@ -3,17 +3,6 @@ package layout.com.anew.easyItalian
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.PendingIntent.getActivity
-import android.database.Cursor
-import android.os.Message
-import kotlinx.android.synthetic.main.activity_chooce_profile_from_dialog.*
-import android.support.annotation.NonNull
-import android.support.design.widget.NavigationView
-import android.util.Log
-import kotlinx.android.synthetic.main.activity_article_page.view.*
-import kotlinx.android.synthetic.main.nav_header_main.*
-import layout.com.anew.easyItalian.ImgUtil.getImagePath
-
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -21,9 +10,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
+import android.os.*
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
@@ -316,7 +303,7 @@ class PersonalInfo : Activity(){
             }
 
         }).negativeText("取消").positiveText("确认").show()
-    }
 
+    }
 
 }

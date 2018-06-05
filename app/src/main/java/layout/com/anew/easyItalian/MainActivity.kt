@@ -1,26 +1,22 @@
 package layout.com.anew.easyItalian
 
 import android.content.Intent
-import android.os.Bundle
-import android.os.StrictMode
+import android.os.*
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
-import android.widget.SearchView
 import android.widget.TextView
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import com.avos.avoscloud.AVUser
 import com.lapism.searchview.Search
-import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.content_main.*
@@ -39,6 +35,8 @@ import java.net.URL
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
       //  val login = Intent(this,LoginActivity::class.java)
@@ -51,6 +49,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
         try {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads().detectDiskWrites().detectNetwork()
@@ -82,13 +81,54 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val headerView = navigationView.getHeaderView(0)
         val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
 
-
         val nickName = headerView.findViewById<TextView>(R.id.textView)
         if(currentUser!=null){
             nickName.setText(currentUser.fetch().get("nickName").toString() )
+        }
+
+
+        val mHandler:Handler= object : Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message?) {
+                super.handleMessage(msg)
+                when (msg?.what) {
+                    1 -> {
+                        try {
+                            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                                    .detectDiskReads().detectDiskWrites().detectNetwork()
+                                    .penaltyLog().build())
+                            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                                    .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
+                                    .penaltyLog().penaltyDeath().build())
+                            val myProfile =  AVUser.getCurrentUser().fetch().get("profile").toString()
+                            if (myProfile!="laura")
+                                Picasso.get().load(myProfile).into(profile)
+                        } catch (e:Exception){
+                            if (File(getExternalFilesDir("profile"),"head3.jpg").exists()){
+                                Picasso.get().load(File(getExternalFilesDir("profile"),"head3.jpg")).into(profile)
+                                Log.d("Profile","Connection Error, Use local profile")
+                            }else
+                                Picasso.get().load(R.mipmap.laura).into(profile)
+                            Log.d("Profile","Can't find local profile")
+                        }
+
+                        if(AVUser.getCurrentUser()!=null){
+                            nickName.setText(AVUser.getCurrentUser().fetch().get("nickName").toString() )
+                            nickName.requestFocus()
+                        }
+                        sendEmptyMessageDelayed(1, 1000);
+                    }
+                    else -> {
+                        val mBundle = msg?.data
+                    }
+                }
+            }
 
         }
-        profile.setOnClickListener(){
+        mHandler.sendEmptyMessage(1)
+        mHandler.sendEmptyMessageDelayed(1, 1000)
+
+
+    profile.setOnClickListener(){
        //     Toast.makeText(this,"call 个人资料 activity",Toast.LENGTH_SHORT).show()
             val changeToPersonalInfoActivity = Intent()
             changeToPersonalInfoActivity.setClass(this,PersonalInfo::class.java)
@@ -312,3 +352,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 }
+

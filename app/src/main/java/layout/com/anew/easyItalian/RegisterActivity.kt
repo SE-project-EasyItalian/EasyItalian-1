@@ -25,9 +25,9 @@ class RegisterActivity : AppCompatActivity() {
             override fun done(e: AVException?) {
                 if (e == null) {
                     // 注册成功，把用户对象赋值给当前用户 AVUser.getCurrentUser()
-                    val intent= Intent(this@RegisterActivity, MainActivity::class.java)
-                    startActivity( intent)
                     this@RegisterActivity.finish();
+                    val intent= Intent(this@RegisterActivity,MainActivity::class.java)
+                    startActivity(intent)
                 } else {
                     // 失败的原因可能有多种，常见的是用户名已经存在。
                     showProgress(false);
@@ -55,7 +55,9 @@ class RegisterActivity : AppCompatActivity() {
             }
 
         }
+
     }
+
     private fun isEmailValid(email: String): Boolean {
         return email.contains("@")
     }

@@ -20,7 +20,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
-
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Intent
@@ -28,7 +27,6 @@ import android.widget.Toast
 import com.avos.avoscloud.AVException
 import com.avos.avoscloud.AVUser
 import com.avos.avoscloud.LogInCallback
-import com.avos.avoscloud.SignUpCallback
 
 import kotlinx.android.synthetic.main.activity_login.*
 
