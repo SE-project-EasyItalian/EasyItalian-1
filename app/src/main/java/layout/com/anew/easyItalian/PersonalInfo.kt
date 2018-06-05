@@ -52,7 +52,11 @@ class PersonalInfo : Activity(){
             _, _, position, _ ->
             //set click listener
             when(position){
-                0 -> { showImagePickDialog(this) }
+                0 -> { showImagePickDialog(this)
+                    // use handler to refresh ui
+                //    val mApp = application as BaseApplication
+                  //  mApp.mHandler!!.sendEmptyMessageDelayed(1,2000)
+                }
                 1 ->{ setNickname() }
                 2 -> {
                     val intent = Intent()
@@ -63,12 +67,21 @@ class PersonalInfo : Activity(){
         }
         val button_back = findViewById<View>(R.id.back_) as Button
         button_back.setOnClickListener(){
+            // use handler to refresh ui
+            val mApp = application as BaseApplication
+            mApp.mHandler!!.sendEmptyMessage(1)
             finish()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // use handler to refresh ui
+        val mApp = application as BaseApplication
+        mApp.mHandler!!.sendEmptyMessage(1)
+    }
     fun showImagePickDialog(activity: Activity) {
         val title = "选择获取图片方式"
         val items = arrayOf("拍照", "相册")
@@ -135,6 +148,7 @@ class PersonalInfo : Activity(){
         } catch (e: Exception) {
             Toast.makeText(this, "相机无法启动，请先开启相机权限", Toast.LENGTH_LONG).show()
         }
+
     }
 
     fun chooseAlbum(){
@@ -273,8 +287,10 @@ class PersonalInfo : Activity(){
                         override fun done(p0: AVException?) {
                             currentUser.put("profile",file.getUrl())
                             currentUser.saveInBackground()
+
                         }
                     })
+
                 }
         }
     }
@@ -300,6 +316,9 @@ class PersonalInfo : Activity(){
             override fun onInput(dialog: MaterialDialog, input: CharSequence?) {
                 currentUser.put("nickName",input)
                 currentUser.saveInBackground()
+                // use handler to refresh ui
+                val mApp = application as BaseApplication
+                mApp.mHandler!!.sendEmptyMessage(1)
             }
 
         }).negativeText("取消").positiveText("确认").show()

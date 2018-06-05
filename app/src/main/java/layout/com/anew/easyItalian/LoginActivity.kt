@@ -257,13 +257,17 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
            override fun done(avUser: AVUser?, e: AVException?) {
                if (e == null) {
+                   // use handler to refresh ui
+                   val mApp = application as BaseApplication
+                   mApp.mHandler!!.sendEmptyMessage(1)
                    this@LoginActivity.finish();
                    val intent =Intent(this@LoginActivity,MainActivity::class.java)
                    startActivity(intent);
                } else {
                    showProgress(false);
                    Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show();
-               }           }
+               }
+           }
 
         }
         override fun doInBackground(vararg params: Void): Boolean? {

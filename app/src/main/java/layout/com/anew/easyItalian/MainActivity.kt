@@ -63,6 +63,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
             if (myProfile!="laura")
                 Picasso.get().load(myProfile).into(profile)
+            val nickName = headerView.findViewById<TextView>(R.id.textView)
+            if(currentUser!=null){
+                nickName.setText(currentUser.fetch().get("nickName").toString() )
+            }
         } catch (e:Exception){
             val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
             val headerView = navigationView.getHeaderView(0)
@@ -75,19 +79,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Log.d("Profile","Can't find local profile")
         }
 
-        // find parent view to make profile clickable on first call
-        // CHOICE make the profile to a circle
-        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
-        val headerView = navigationView.getHeaderView(0)
-        val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
 
-        val nickName = headerView.findViewById<TextView>(R.id.textView)
-        if(currentUser!=null){
-            nickName.setText(currentUser.fetch().get("nickName").toString() )
-        }
-
-
-        val mHandler:Handler= object : Handler(Looper.getMainLooper()) {
+       val amHandler:Handler= object : Handler(Looper.getMainLooper()) {
             override fun handleMessage(msg: Message?) {
                 super.handleMessage(msg)
                 when (msg?.what) {
@@ -99,23 +92,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
                                     .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
                                     .penaltyLog().penaltyDeath().build())
+                            val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+                            val headerView = navigationView.getHeaderView(0)
+                            val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
                             val myProfile =  AVUser.getCurrentUser().fetch().get("profile").toString()
                             if (myProfile!="laura")
                                 Picasso.get().load(myProfile).into(profile)
+                            if(AVUser.getCurrentUser()!=null){
+                                val nickName = headerView.findViewById<TextView>(R.id.textView)
+                                nickName.setText(AVUser.getCurrentUser().fetch().get("nickName").toString() )
+                            }
                         } catch (e:Exception){
+
                             if (File(getExternalFilesDir("profile"),"head3.jpg").exists()){
+                                val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+                                val headerView = navigationView.getHeaderView(0)
+                                val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
                                 Picasso.get().load(File(getExternalFilesDir("profile"),"head3.jpg")).into(profile)
                                 Log.d("Profile","Connection Error, Use local profile")
                             }else
+                            {
+                                val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+                                val headerView = navigationView.getHeaderView(0)
+                                val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
                                 Picasso.get().load(R.mipmap.laura).into(profile)
+                            }
                             Log.d("Profile","Can't find local profile")
                         }
-
-                        if(AVUser.getCurrentUser()!=null){
-                            nickName.setText(AVUser.getCurrentUser().fetch().get("nickName").toString() )
-                            nickName.requestFocus()
-                        }
-                        sendEmptyMessageDelayed(1, 1000);
                     }
                     else -> {
                         val mBundle = msg?.data
@@ -124,10 +127,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
         }
-        mHandler.sendEmptyMessage(1)
-        mHandler.sendEmptyMessageDelayed(1, 1000)
+        amHandler.sendEmptyMessage(1)
+
+        val mApp = application as BaseApplication
+        mApp.setHandler(amHandler)
 
 
+
+        // find parent view to make profile clickable on first call
+        // CHOICE make the profile to a circle
+        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+        val headerView = navigationView.getHeaderView(0)
+        val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
     profile.setOnClickListener(){
        //     Toast.makeText(this,"call 个人资料 activity",Toast.LENGTH_SHORT).show()
             val changeToPersonalInfoActivity = Intent()
@@ -138,7 +149,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //search_new_word & learn_button & read_button
         searchWordButton.setOnClickListener(){
-            AVUser.logOut()// 清除缓存用户对象
+         //   AVUser.logOut()// 清除缓存用户对象
+            // use handler to refresh ui
+            val mApp = application as BaseApplication
+            mApp.mHandler!!.sendEmptyMessage(1)
              Toast.makeText(this,"call 查单词 activity",Toast.LENGTH_SHORT).show()
         }
 
