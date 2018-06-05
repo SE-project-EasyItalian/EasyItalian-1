@@ -148,7 +148,7 @@ class WordsListsPage : Activity() {
             data.removeAt(0)
 
         if(data.size==0)
-            Toast.makeText(this, "该表为空", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "该表为空 ", Toast.LENGTH_SHORT).show()
 
 
     val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
