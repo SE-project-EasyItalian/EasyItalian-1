@@ -7,7 +7,7 @@
     android:background="@drawable/background_uno">
 
 
-<android.support.v7.widget.Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarForRead"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
 
     <ScrollView
         style="@android:style/Widget.Holo.ScrollView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:clipToPadding="true"
         android:fillViewport="true"
@@ -58,8 +58,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:paddingTop="8dp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
