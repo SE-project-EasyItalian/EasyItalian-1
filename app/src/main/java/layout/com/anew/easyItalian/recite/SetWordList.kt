@@ -1,8 +1,10 @@
 package layout.com.anew.easyItalian.recite
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
 import android.widget.Toast
 import java.io.FileInputStream
 import javax.xml.parsers.DocumentBuilderFactory
@@ -21,6 +23,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
+
 
 
 
@@ -66,32 +69,117 @@ class SetWordList : Activity() {
                             dialog: MaterialDialog, which: DialogAction ->
                             Toast.makeText(this@SetWordList,positiveText,Toast.LENGTH_LONG).show()
                             try {
-                                if(flag)    createDatabase(wordlist)
-                                else {downloadWordList(wordlist)
-                                    createDatabase(wordlist)}
-                                val my = DaoOpt.getInstance()
-                                if (getWordFromXml(wordlist,0).word==my.queryForId(this@SetWordList,0L)?.get(0)?.word){
-                                    MaterialDialog.Builder(this@SetWordList)
-                                            .title(wordlist.wordlistName)
-                                            .content(wordlist.wordlistDesc+"\n"+getString(R.string.set_successfully)+"\n"+getString(R.string.ask_for_recite))
-                                            .negativeText(getString(R.string.no))
-                                            .positiveText(getString(R.string.yes))
-                                            .onPositive{
-                                                dialog1: MaterialDialog, which1: DialogAction ->
-                                                finish()
-                                                val intent =Intent()
-                                                intent.setClass(this@SetWordList,ReciteWordAcitivity::class.java)
-                                                startActivity(intent)
-                                            }.onNegative{
-                                                dialog1: MaterialDialog, which1: DialogAction ->
-                                                finish()
-                                                val intent =Intent()
-                                                intent.setClass(this@SetWordList, MainActivity::class.java)
-                                                startActivity(intent)
-                                            }.show()
-                                }else{
-                                    Toast.makeText(this@SetWordList,"Error",Toast.LENGTH_SHORT).show()
+                                if(flag)  {
+                                    val showMinMax = true
+                                    val mDialog = MaterialDialog.Builder(this@SetWordList)
+                                            .title(R.string.progress_dialog_setting)
+                                            .content(R.string.please_wait)
+                                            .progress(false, 100, showMinMax)
+                                            .show()
+                                    object : Thread() {
+                                        override fun run() {
+                                            Looper.prepare();
+                                            createDatabase(wordlist)
+                                            while (mDialog.currentProgress != mDialog.maxProgress) {
+                                                // If the progress dialog is cancelled (the user closes it before it's done), break the loop
+                                                if (mDialog.isCancelled) {
+                                                    break
+                                                }
+                                                // Wait 50 milliseconds to simulate doing work that requires progress
+                                                try {
+                                                    Thread.sleep(50)
+                                                } catch (e: InterruptedException) {
+                                                    break
+                                                }
+                                                // Increment the dialog's progress by 1 after sleeping for 50ms
+                                                mDialog.incrementProgress(1)
+                                            }
+                                            mDialog.cancel()
+                                            val my = DaoOpt.getInstance()
+                                            if (getWordFromXml(wordlist,0).word==my.queryForId(this@SetWordList,0L)?.get(0)?.word){
+                                                MaterialDialog.Builder(this@SetWordList)
+                                                        .title(wordlist.wordlistName)
+                                                        .content(wordlist.wordlistDesc+"\n"+getString(R.string.set_successfully)+"\n"+getString(R.string.ask_for_recite))
+                                                        .negativeText(getString(R.string.no))
+                                                        .positiveText(getString(R.string.yes))
+                                                        .onPositive{
+                                                            dialog1: MaterialDialog, which1: DialogAction ->
+                                                            finish()
+                                                            val intent =Intent()
+                                                            intent.setClass(this@SetWordList,ReciteWordAcitivity::class.java)
+                                                            startActivity(intent)
+                                                        }.onNegative{
+                                                            dialog1: MaterialDialog, which1: DialogAction ->
+                                                            finish()
+                                                            val intent =Intent()
+                                                            intent.setClass(this@SetWordList, MainActivity::class.java)
+                                                            startActivity(intent)
+                                                        }.show()
+                                            }else{
+                                                Toast.makeText(this@SetWordList,"Error",Toast.LENGTH_SHORT).show()
+                                            }
+                                            Looper.loop()
+                                        }
+                                    }.start()
+                                    //createDatabase(wordlist)
                                 }
+                                else {
+
+                                    val showMinMax = true
+                                    val mDialog = MaterialDialog.Builder(this@SetWordList)
+                                            .title(R.string.progress_dialog)
+                                            .content(R.string.please_wait)
+                                            .progress(false, 100, showMinMax)
+                                            .show()
+
+                                    object : Thread() {
+                                        override fun run() {
+                                            Looper.prepare();
+                                            downloadWordList(wordlist)
+                                            createDatabase(wordlist)
+                                            while (mDialog.currentProgress != mDialog.maxProgress) {
+                                                // If the progress dialog is cancelled (the user closes it before it's done), break the loop
+                                                if (mDialog.isCancelled) {
+                                                    break
+                                                }
+                                                // Wait 50 milliseconds to simulate doing work that requires progress
+                                                try {
+                                                    Thread.sleep(50)
+                                                } catch (e: InterruptedException) {
+                                                    break
+                                                }
+                                                // Increment the dialog's progress by 1 after sleeping for 50ms
+                                                mDialog.incrementProgress(1)
+                                            }
+                                            mDialog.cancel()
+                                            val my = DaoOpt.getInstance()
+                                            if (getWordFromXml(wordlist,0).word==my.queryForId(this@SetWordList,0L)?.get(0)?.word){
+                                                MaterialDialog.Builder(this@SetWordList)
+                                                        .title(wordlist.wordlistName)
+                                                        .content(wordlist.wordlistDesc+"\n"+getString(R.string.set_successfully)+"\n"+getString(R.string.ask_for_recite))
+                                                        .negativeText(getString(R.string.no))
+                                                        .positiveText(getString(R.string.yes))
+                                                        .onPositive{
+                                                            dialog1: MaterialDialog, which1: DialogAction ->
+                                                            finish()
+                                                            val intent =Intent()
+                                                            intent.setClass(this@SetWordList,ReciteWordAcitivity::class.java)
+                                                            startActivity(intent)
+                                                        }.onNegative{
+                                                            dialog1: MaterialDialog, which1: DialogAction ->
+                                                            finish()
+                                                            val intent =Intent()
+                                                            intent.setClass(this@SetWordList, MainActivity::class.java)
+                                                            startActivity(intent)
+                                                        }.show()
+                                            }else{
+                                                Toast.makeText(this@SetWordList,"Error",Toast.LENGTH_SHORT).show()
+                                            }
+                                            Looper.loop()
+                                        }
+                                    }.start()
+                                }
+
                             }catch (e:Exception) {
                                 Toast.makeText(this@SetWordList,"Error",Toast.LENGTH_SHORT).show()
                                 e.printStackTrace()
@@ -189,6 +277,8 @@ class SetWordList : Activity() {
             e.printStackTrace()
         }
 
+
+
     }
 
     private fun getWordFromXml(pWordList: Wordlist, num:Int): Word {
@@ -244,8 +334,6 @@ class SetWordList : Activity() {
         }
         Toast.makeText(this,"Create Database Successfully " , Toast.LENGTH_SHORT).show()
     }
-
-
 
 
 }

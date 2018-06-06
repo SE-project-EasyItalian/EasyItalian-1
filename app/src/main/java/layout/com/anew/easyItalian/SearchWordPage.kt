@@ -37,6 +37,7 @@ class SearchWordPage : Activity() {
 
         getWord()
         wordForDetails.setText(word.word)
+        toolbar2.title="   "+ word.word
         // set list for word details
         val data: Array<String>
         if(word.transform!=" " && word.example!=" ") {

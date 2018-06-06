@@ -5,22 +5,28 @@ import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import android.os.StrictMode
+import android.os.*
+import android.support.design.widget.NavigationView
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
 import java.util.ArrayList
 import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
+import com.avos.avoscloud.AVUser
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_read.*
 import kotlinx.android.synthetic.main.activity_register.*
+import java.io.File
 
 
 class ReadActivity : Activity() {
@@ -32,23 +38,49 @@ class ReadActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read)
         val layoutManager = LinearLayoutManager(this@ReadActivity)
-
+        val amHandler: Handler = object : Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message?) {
+                super.handleMessage(msg)
+                when (msg?.what) {
+                    3 -> {
+                        //将articleTist里的文章展示出来
+                        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+                        recyclerView.layoutManager = layoutManager
+                        val adapter = ArticleAdapter(this@ReadActivity, articleList)
+                        recyclerView.adapter = adapter
+                        recyclerView.addItemDecoration(DividerItemDecoration(this@ReadActivity, DividerItemDecoration.VERTICAL))
+                    }
+                    else -> {
+                        val mBundle = msg?.data
+                    }
+                }
+            }
+        }
 
         //初始化数据
         try {
-            initArticle()
+
+            val showMinMax = true
+            val mDialog = MaterialDialog.Builder(this@ReadActivity)
+                    .title(R.string.progress_dialog_acquiring)
+                    .content(R.string.please_wait)
+                    .progress(true, 0)
+                    .show()
+            object : Thread() {
+                override fun run() {
+                    initArticle()
+                    amHandler.sendEmptyMessage(3)
+                    mDialog.cancel()
+                }
+            }.start()
+          //  initArticle()
         }catch (e :Exception){
             Toast.makeText(this,"Connection Error",Toast.LENGTH_SHORT).show()
             finish()
         }
 
-        //将articleTist里的文章展示出来
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = layoutManager
-        val adapter = ArticleAdapter(this@ReadActivity, articleList)
-        recyclerView.adapter = adapter
 
-        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
 
         val back = findViewById<Button>(R.id.backForRead)
         back.setOnClickListener {
