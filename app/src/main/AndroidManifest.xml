@@ -76,7 +76,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
+        <activity android:name=".SearchView"
+            android:theme="@style/translucent" />
     </application>
 
 </manifest>

@@ -1,11 +1,8 @@
 package layout.com.anew.easyItalian
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.media.AudioManager
 import android.media.MediaPlayer
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -13,7 +10,6 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_word_imformation.*
-import layout.com.anew.easyItalian.recite.ReciteWordAcitivity
 import layout.com.anew.easyItalian.recite.Word
 
 class SearchWordPage : Activity() {
@@ -51,7 +47,7 @@ class SearchWordPage : Activity() {
         }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
-        val listView = findViewById<ListView>(R.id.wordDetails)
+        val listView = findViewById<View>(R.id.wordDetails) as ListView
         listView.adapter = adapter
 
         voice.setOnClickListener{
