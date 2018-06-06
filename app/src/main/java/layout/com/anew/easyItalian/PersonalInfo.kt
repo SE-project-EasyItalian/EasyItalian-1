@@ -165,7 +165,7 @@ class PersonalInfo : Activity(){
         }
     }
 
-    //保存传入的bitmap图片
+    //保存传入的bitmap图片为pic2
     fun setPicToView(mBitmap : Bitmap) {
         var sdStatus = Environment.getExternalStorageState();
         if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd卡是否可用
@@ -194,7 +194,7 @@ class PersonalInfo : Activity(){
 
     }
 
-    //裁剪图片
+    //裁剪图片并保存为pic3
     fun cropPhoto(uri:Uri?) {
         val intent =  Intent("com.android.camera.action.CROP");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -263,7 +263,7 @@ class PersonalInfo : Activity(){
                         //BitmapFactory.decodeFile(path + "head.jpg");//从Sd中找头像，转换成Bitmap
                         var bitmap:Bitmap= BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
                         //bitmap=cropBitmap(bitmap)
-                        setPicToView(bitmap)
+                        //setPicToView(bitmap)
                         cropPhoto(imageUri)//裁剪图片
                         //imageUri为camera获取
                         //Toast.makeText(this@ChooseDialog, "address:"+imageUri.toString() , Toast.LENGTH_LONG).show()
