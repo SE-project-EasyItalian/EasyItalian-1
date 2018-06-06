@@ -115,7 +115,7 @@ class WordsListsPage : Activity() {
         }
         */
     fun showNewWordsList(){
-        toolbar2.title="   生词本"
+        toolbar2.title=getString(R.string.title_new_word_list)
         var word= WordNew()
         var wordNewList= SQLite.select().from(WordNew::class.java).queryList()
         //var n=wordGraphedList.size
@@ -135,7 +135,7 @@ class WordsListsPage : Activity() {
     }
 
     fun showFinishedWordsList(){
-        toolbar2.title="   已掌握单词"
+        toolbar2.title=getString(R.string.title_already_finished)
         val my = DaoOpt.getInstance()
         val listFinshed:MutableList<Word>?=my.queryForGrasp(this,true)
 
@@ -157,7 +157,7 @@ class WordsListsPage : Activity() {
         listView.adapter = adapter
     }
     fun showComingWordsList(){
-        toolbar2.title="   尚未学习单词"
+        toolbar2.title=getString(R.string.title_coming_word)
         //val title = findViewById<Button>(R.id.titleinList)
         //title.setText("尚未学习")
         val my = DaoOpt.getInstance()

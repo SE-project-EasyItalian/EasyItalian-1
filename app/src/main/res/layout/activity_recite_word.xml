@@ -16,7 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="   背单词" />
+        app:title="@string/recite_words_title" />
 
 
     <Button
@@ -113,7 +113,7 @@
         android:layout_width="180dp"
         android:layout_height="60dp"
         android:layout_marginBottom="66dp"
-        android:text="已记住"
+        android:text="@string/grasp_it"
         android:textSize="28sp"
         android:background="@drawable/bluebutton"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -126,7 +126,7 @@
         android:layout_width="180dp"
         android:layout_height="60dp"
         android:layout_marginBottom="66dp"
-        android:text="不认识"
+        android:text="@string/tell_me"
         android:textSize="28sp"
         android:background="@drawable/redbutton"
         app:layout_constraintBottom_toBottomOf="parent"

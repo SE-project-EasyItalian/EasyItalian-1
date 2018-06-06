@@ -88,8 +88,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/buttonshape"
-                        android:text="SignUp"
-                        android:textSize="20sp"
+                        android:text="@string/action_sign_up"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

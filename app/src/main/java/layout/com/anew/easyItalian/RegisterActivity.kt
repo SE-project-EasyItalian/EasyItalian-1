@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
                     // 注册成功，把用户对象赋值给当前用户 AVUser.getCurrentUser()
                     // use handler to refresh ui
                     val mApp = application as BaseApplication
-                    mApp.mHandler!!.sendEmptyMessage(1)
+                    mApp.mHandler?.sendEmptyMessage(1)
                     this@RegisterActivity.finish();
                     val intent= Intent(this@RegisterActivity,MainActivity::class.java)
                     startActivity(intent)

@@ -57,11 +57,11 @@ class SetWordList : Activity() {
             val positiveText:String
             val mFile = File(getExternalFilesDir("wordlist").path+ "/" + wordlist.wordlistName+".xml")
             val flag = mFile.exists()
-            if (flag) positiveText = "设置"  else positiveText="下载"
+            if (flag) positiveText = getString(R.string.set)  else positiveText=getString(R.string.download)
             MaterialDialog.Builder(this@SetWordList)
                          .title(wordlist.wordlistName)
                          .content(wordlist.wordlistDesc)
-                         .negativeText("取消")
+                         .negativeText(getString(R.string.cancel))
                          .positiveText(positiveText).onPositive {
                             dialog: MaterialDialog, which: DialogAction ->
                             Toast.makeText(this@SetWordList,positiveText,Toast.LENGTH_LONG).show()
@@ -73,9 +73,9 @@ class SetWordList : Activity() {
                                 if (getWordFromXml(wordlist,0).word==my.queryForId(this@SetWordList,0L)?.get(0)?.word){
                                     MaterialDialog.Builder(this@SetWordList)
                                             .title(wordlist.wordlistName)
-                                            .content(wordlist.wordlistDesc+"\n设置成功\n是否进入学习?")
-                                            .negativeText("否")
-                                            .positiveText("是")
+                                            .content(wordlist.wordlistDesc+"\n"+getString(R.string.set_successfully)+"\n"+getString(R.string.ask_for_recite))
+                                            .negativeText(getString(R.string.no))
+                                            .positiveText(getString(R.string.yes))
                                             .onPositive{
                                                 dialog1: MaterialDialog, which1: DialogAction ->
                                                 finish()

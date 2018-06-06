@@ -259,7 +259,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                if (e == null) {
                    // use handler to refresh ui
                    val mApp = application as BaseApplication
-                   mApp.mHandler!!.sendEmptyMessage(1)
+                   mApp.mHandler?.sendEmptyMessage(1)
                    this@LoginActivity.finish();
                    val intent =Intent(this@LoginActivity,MainActivity::class.java)
                    startActivity(intent);

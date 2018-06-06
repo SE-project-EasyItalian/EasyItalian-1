@@ -12,7 +12,7 @@
         android:id="@+id/textView4"
         android:layout_width="188dp"
         android:layout_height="105dp"
-        android:text="恭喜你已完学习！"
+        android:text="@string/congratulations"
         android:textSize="44sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

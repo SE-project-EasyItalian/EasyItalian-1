@@ -38,7 +38,7 @@
                     android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="username"
+                    android:hint="@string/username"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:inputType="text"
                     android:maxLines="1"
@@ -73,7 +73,7 @@
                     android:id="@+id/passWordR"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="input password again"
+                    android:hint="@string/prompt_password_again"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/buttonshape"
-                android:text="Sign up" />
+                android:text="@string/action_sign_up" />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

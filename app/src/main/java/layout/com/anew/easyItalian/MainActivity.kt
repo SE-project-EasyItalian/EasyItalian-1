@@ -1,8 +1,10 @@
 package layout.com.anew.easyItalian
 
+import android.Manifest
 import android.content.Intent
 import android.os.*
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -39,6 +41,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        try{
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    2)
+        }catch (e:Exception){
+            Log.d("EasyItalian","permission denied")
+        }
       //  val login = Intent(this,LoginActivity::class.java)
      //   startActivity(login)
         val currentUser = AVUser.getCurrentUser()
@@ -50,6 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        val profileFile = getExternalFilesDir("profile").absolutePath+"/"+currentUser?.objectId+".jpg"
         try {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads().detectDiskWrites().detectNetwork()
@@ -71,8 +81,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
             val headerView = navigationView.getHeaderView(0)
             val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
-            if (File(getExternalFilesDir("profile"),"head3.jpg").exists()){
-                Picasso.get().load(File(getExternalFilesDir("profile"),"head3.jpg")).into(profile)
+            if (File(profileFile).exists()){
+                Picasso.get().load(File(profileFile)).into(profile)
                 Log.d("Profile","Connection Error, Use local profile")
             }else
                 Picasso.get().load(R.mipmap.laura).into(profile)
@@ -104,11 +114,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             }
                         } catch (e:Exception){
 
-                            if (File(getExternalFilesDir("profile"),"head3.jpg").exists()){
+                            if (File(profileFile).exists()){
                                 val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
                                 val headerView = navigationView.getHeaderView(0)
                                 val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
-                                Picasso.get().load(File(getExternalFilesDir("profile"),"head3.jpg")).into(profile)
+                                Picasso.get().load(File(profileFile)).into(profile)
                                 Log.d("Profile","Connection Error, Use local profile")
                             }else
                             {
