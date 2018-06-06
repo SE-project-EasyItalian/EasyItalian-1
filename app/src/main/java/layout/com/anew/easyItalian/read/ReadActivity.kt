@@ -59,8 +59,6 @@ class ReadActivity : Activity() {
 
         //初始化数据
         try {
-
-            val showMinMax = true
             val mDialog = MaterialDialog.Builder(this@ReadActivity)
                     .title(R.string.progress_dialog_acquiring)
                     .content(R.string.please_wait)
@@ -68,9 +66,17 @@ class ReadActivity : Activity() {
                     .show()
             object : Thread() {
                 override fun run() {
-                    initArticle()
-                    amHandler.sendEmptyMessage(3)
-                    mDialog.cancel()
+                    try {
+                        initArticle()
+                        amHandler.sendEmptyMessage(3)
+                        mDialog.cancel()
+                    }catch (e:Exception){
+                        Looper.prepare()
+                        Toast.makeText(this@ReadActivity,"Connection Error",Toast.LENGTH_SHORT).show()
+                        Looper.loop()
+                        finish()
+                    }
+
                 }
             }.start()
           //  initArticle()
