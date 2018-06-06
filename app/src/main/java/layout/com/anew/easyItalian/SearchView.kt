@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.View
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
@@ -42,31 +43,36 @@ class SearchView : Activity() {
                 val text = searchView.text.toString()
                 if (text.length != 0) {
 
-                    val my = DaoOpt.getInstance()
-                    val mList = my.queryForWord(this@SearchView, text)
+                    try {
+                        val my = DaoOpt.getInstance()
+                        val mList = my.queryForWord(this@SearchView, text)
 
-                    if (mList?.size != 0) {
-                        val word: Word? = mList?.get(0)
-                        val data = arrayListOf(word?.word, word?.transform, word?.translation, word?.example)
-                        //Toast.makeText(this@SearchView, "search" + word?.word, Toast.LENGTH_SHORT).show()
+                        if (mList?.size != 0) {
+                            val word: Word? = mList?.get(0)
+                            val data = arrayListOf(word?.word, word?.transform, word?.translation, word?.example)
+                            //Toast.makeText(this@SearchView, "search" + word?.word, Toast.LENGTH_SHORT).show()
 
-                        val changeToSearchWordPage = Intent()
-                        changeToSearchWordPage.setClass(this@SearchView, SearchWordPage::class.java)
-                        changeToSearchWordPage.putStringArrayListExtra("data", data)
-                        startActivity(changeToSearchWordPage)
-                    } else {
-                        val word: Word? = Word()
-                        word?.setWord(text)
-                        //word?.setTranslation(getTranslation(text))
-                        //val data = arrayListOf(word?.word,word?.transform,word?.translation,word?.example)
-                        //      val translation=getTranslation(text)
-                        val translation = getDetails(text)
-                     //   Toast.makeText(this@SearchView, translation, Toast.LENGTH_SHORT).show()
-                        val data = arrayListOf(word?.word, translation)
-                        val changeToSearchWordPage = Intent()
-                        changeToSearchWordPage.setClass(this@SearchView, SearchWordPage::class.java)
-                        changeToSearchWordPage.putStringArrayListExtra("data", data)
-                        startActivity(changeToSearchWordPage)
+                            val changeToSearchWordPage = Intent()
+                            changeToSearchWordPage.setClass(this@SearchView, SearchWordPage::class.java)
+                            changeToSearchWordPage.putStringArrayListExtra("data", data)
+                            startActivity(changeToSearchWordPage)
+                        } else {
+                            val word: Word? = Word()
+                            word?.setWord(text)
+                            //word?.setTranslation(getTranslation(text))
+                            //val data = arrayListOf(word?.word,word?.transform,word?.translation,word?.example)
+                            //      val translation=getTranslation(text)
+                            val translation = getDetails(text)
+                            //   Toast.makeText(this@SearchView, translation, Toast.LENGTH_SHORT).show()
+                            val data = arrayListOf(word?.word, translation)
+                            val changeToSearchWordPage = Intent()
+                            changeToSearchWordPage.setClass(this@SearchView, SearchWordPage::class.java)
+                            changeToSearchWordPage.putStringArrayListExtra("data", data)
+                            startActivity(changeToSearchWordPage)
+                        }
+                    }catch (e:Exception){
+                        Log.d("EasyItalian","Connection failed")
+                        e.printStackTrace()
                     }
                 }
                 return false
