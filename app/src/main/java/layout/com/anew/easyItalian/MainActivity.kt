@@ -216,6 +216,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(changeToSetting)
             }
             R.id.nav_about -> {
+                val changeToAbout = Intent()
+                changeToAbout.setClass(this, AboutPage::class.java)
+                startActivity(changeToAbout)
                 Toast.makeText(this,"call 关于 activity",Toast.LENGTH_SHORT).show()
             }
         }
