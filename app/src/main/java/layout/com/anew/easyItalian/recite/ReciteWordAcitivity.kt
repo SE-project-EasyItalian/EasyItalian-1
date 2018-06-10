@@ -302,8 +302,7 @@ class ReciteWordAcitivity : Activity() {
             showDetails(thisWord)
         }
         //call tts
-        callTTS()
-
+      //  callTTS()
         return
     }
 

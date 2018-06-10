@@ -44,7 +44,10 @@ class SearchView : Activity() {
                 if (text.length != 0) {
 
                     try {
-                        val my = DaoOpt.getInstance()
+                        /*
+                        *
+                        *
+                        * val my = DaoOpt.getInstance()
                         val mList = my.queryForWord(this@SearchView, text)
 
                         if (mList?.size != 0) {
@@ -56,7 +59,7 @@ class SearchView : Activity() {
                             changeToSearchWordPage.setClass(this@SearchView, SearchWordPage::class.java)
                             changeToSearchWordPage.putStringArrayListExtra("data", data)
                             startActivity(changeToSearchWordPage)
-                        } else {
+                        } else {*/
                             val word: Word? = Word()
                             word?.setWord(text)
                             //word?.setTranslation(getTranslation(text))
@@ -69,7 +72,7 @@ class SearchView : Activity() {
                             changeToSearchWordPage.setClass(this@SearchView, SearchWordPage::class.java)
                             changeToSearchWordPage.putStringArrayListExtra("data", data)
                             startActivity(changeToSearchWordPage)
-                        }
+                        //}
                     }catch (e:Exception){
                         Log.d("EasyItalian","Connection failed")
                         e.printStackTrace()
