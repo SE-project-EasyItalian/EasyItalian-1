@@ -1,19 +1,12 @@
 package layout.com.anew.easyItalian.read
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.os.*
-import android.support.design.widget.NavigationView
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import com.avos.avoscloud.AVObject
 import com.avos.avoscloud.AVQuery
 import layout.com.anew.easyItalian.MainActivity
@@ -21,12 +14,7 @@ import layout.com.anew.easyItalian.R
 import java.util.ArrayList
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
-import com.avos.avoscloud.AVUser
-import com.squareup.picasso.Picasso
-import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.activity_read.*
-import kotlinx.android.synthetic.main.activity_register.*
-import java.io.File
+
 
 
 class ReadActivity : Activity() {

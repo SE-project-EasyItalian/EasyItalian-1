@@ -68,6 +68,9 @@
     <string name="progress_dialog_setting">Setting&#8230;</string>
     <string name="progress_dialog_acquiring">Loading&#8230;</string>
     <string name="logout">Log Out</string>
+    <string name="str_nulllist">Null list</string>
+    <string name="finished">You finish it!</string>
+    <string name="finished_str">All done, start a new one?</string>
 
 
 </resources>

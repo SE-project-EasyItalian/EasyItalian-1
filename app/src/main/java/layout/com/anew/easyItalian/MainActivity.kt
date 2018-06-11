@@ -214,15 +214,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(changeToComingWords)
             }
             R.id.nav_setting -> {
-                val changeToSetting = Intent()
-                changeToSetting.setClass(this, SettingActivity::class.java)
-                startActivity(changeToSetting)
+                val changeToPersonalInfoActivity = Intent()
+                changeToPersonalInfoActivity.setClass(this,PersonalInfo::class.java)
+                startActivity(changeToPersonalInfoActivity)
+
             }
             R.id.nav_about -> {
                 val changeToAbout = Intent()
                 changeToAbout.setClass(this, AboutPage::class.java)
                 startActivity(changeToAbout)
-                Toast.makeText(this,"call 关于 activity",Toast.LENGTH_SHORT).show()
+               // Toast.makeText(this,"call 关于 activity",Toast.LENGTH_SHORT).show()
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)

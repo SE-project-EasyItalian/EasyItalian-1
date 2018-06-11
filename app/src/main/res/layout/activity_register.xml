@@ -9,7 +9,8 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="layout.com.anew.easyItalian.RegisterActivity">
+    tools:context="layout.com.anew.easyItalian.RegisterActivity"
+    android:background="@drawable/background_main">
 
     <ProgressBar
         android:id="@+id/register_progress"

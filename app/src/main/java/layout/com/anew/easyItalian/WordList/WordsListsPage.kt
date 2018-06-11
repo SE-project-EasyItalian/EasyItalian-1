@@ -51,22 +51,9 @@ class WordsListsPage : Activity() {
                 }
                 else->{}
             }
-
-
-
-
         }
-        //wordGraphed.insertData("Ciao")
-        //wordGraphed.insertData( "Buongiorno")
-        //wordGraphed.insertData( "Senta")
-        //wordGraphed.insertData("dire")
-        //val save =  wordGraphed.save()
-
-
 
         //Toast.makeText(this,"wordInList Successfully "+save.toString() , Toast.LENGTH_SHORT).show()
-
-
 
         val buttonForBack = findViewById<View>(R.id.back) as Button
         buttonForBack.setOnClickListener {
@@ -76,7 +63,7 @@ class WordsListsPage : Activity() {
     }
 
     private fun doWordfunc(text: String) {
-        Toast.makeText(this, "finished : "+text, Toast.LENGTH_SHORT).show()
+      //  Toast.makeText(this, "finished : "+text, Toast.LENGTH_SHORT).show()
         val my = DaoOpt.getInstance()
         word=my.queryForWord(this,text)!!.elementAt(0)
         val detailData = arrayListOf(word.word,word.transform,word.translation,word.example)
@@ -91,7 +78,7 @@ class WordsListsPage : Activity() {
     private fun doNewWordFunc(i: Int) {
 
         var wordNewList= SQLite.select().from(WordNew::class.java).queryList()
-        Toast.makeText(this, "new : "+wordNewList[i].word, Toast.LENGTH_SHORT).show()
+      //  Toast.makeText(this, "new : "+wordNewList[i].word, Toast.LENGTH_SHORT).show()
 
         word.word=wordNewList.elementAt(i).word
         word.transform=wordNewList.elementAt(i).transform
@@ -105,15 +92,7 @@ class WordsListsPage : Activity() {
         startActivity(showDetailsActivity)
     }
 
-    /*
 
-        fun insertNewWord(word:WordNew){
-            //var wordNew: WordNew = WordNew()
-            var wordNew=WordNew()
-            wordNew.insertData(word)
-            wordNew.save()
-        }
-        */
     fun showNewWordsList(){
         toolbar2.title=getString(R.string.title_new_word_list)
         var word= WordNew()
@@ -125,7 +104,7 @@ class WordsListsPage : Activity() {
             data.add(wordNew.word)
         }
         if(data.size==0){
-            Toast.makeText(this, "尚未加入单词至生词表", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.str_nulllist), Toast.LENGTH_SHORT).show()
         }
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
@@ -148,7 +127,7 @@ class WordsListsPage : Activity() {
             data.removeAt(0)
 
         if(data.size==0)
-            Toast.makeText(this, "该表为空 ", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.str_nulllist), Toast.LENGTH_SHORT).show()
 
 
     val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
@@ -168,7 +147,7 @@ class WordsListsPage : Activity() {
             data.add(wordFinished.word)
         }
         if(data.size==0){
-            Toast.makeText(this, "该表为空", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.str_nulllist), Toast.LENGTH_SHORT).show()
         }
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)

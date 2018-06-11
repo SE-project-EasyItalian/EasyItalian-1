@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.raizlabs.android.dbflow.sql.language.SQLite
-
 import kotlinx.android.synthetic.main.activity_word_imformation.*
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
@@ -99,7 +98,7 @@ class WordDetailsActivity() : Activity() {
             }
            else{
 
-                Toast.makeText(this,"have already ",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"added already ",Toast.LENGTH_SHORT).show()
             }
 
         }

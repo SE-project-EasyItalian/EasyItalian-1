@@ -2,15 +2,12 @@ package layout.com.anew.easyItalian.WordList
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_word_imformation.*
-import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
 import layout.com.anew.easyItalian.recite.Word
 
@@ -38,9 +35,6 @@ class WordListDetailPage : Activity() {
 
      //   Toast.makeText(this, "WordListDetailPage", Toast.LENGTH_SHORT).show()
         val data: Array<String>
-
-
-
 
 
         if(word.transform!=" " && word.example!=" ") {

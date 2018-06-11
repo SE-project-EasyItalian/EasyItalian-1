@@ -12,11 +12,7 @@ import android.widget.Toast
 import com.squareup.picasso.Picasso
 import layout.com.anew.easyItalian.MainActivity
 import layout.com.anew.easyItalian.R
-import org.json.JSONArray
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
+
 
 
 
@@ -66,7 +62,7 @@ class ArticlePageActivity() : Activity() {
         val mylevel =  query.whereEqualTo("UID",uid).first["level"].toString()
         //show level
         // change it
-        Toast.makeText(this,mylevel,Toast.LENGTH_SHORT).show()
+       // Toast.makeText(this,mylevel,Toast.LENGTH_SHORT).show()
         // directly use url when saving into leancloud
         val picNum = query.whereEqualTo("UID",uid).first["imageUrl"].toString()
         val imUrm = "http://avisy.ddns.net:3322/"+picNum

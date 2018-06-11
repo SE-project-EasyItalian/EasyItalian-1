@@ -27,13 +27,13 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/example_id"
-        android:textSize="40sp"
         android:autoSizeMaxTextSize="44sp"
         android:autoSizeMinTextSize="30sp"
         android:autoText="true"
+        android:text="@string/example_id"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
 </LinearLayout>

@@ -5,11 +5,11 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
+import com.raizlabs.android.dbflow.sql.language.SQLite
+import kotlinx.android.synthetic.main.activity_search_word_page.*
 import kotlinx.android.synthetic.main.activity_word_imformation.*
+import layout.com.anew.easyItalian.WordList.WordNew
 import layout.com.anew.easyItalian.recite.Word
 
 class SearchWordPage : Activity() {
@@ -32,8 +32,8 @@ class SearchWordPage : Activity() {
 
 
         getWord()
-        wordForDetails.setText(word.word)
-        toolbar2.title="   "+ word.word
+        wordForDetailsS.setText(word.word)
+        toolbarS.title="   "+ word.word
         // set list for word details
         val data: Array<String>
         if(word.transform!=" " && word.example!=" ") {
@@ -50,7 +50,7 @@ class SearchWordPage : Activity() {
         val listView = findViewById<View>(R.id.wordDetails) as ListView
         listView.adapter = adapter
 
-        voice.setOnClickListener{
+        voiceS.setOnClickListener{
             //call tts
             callTTS()
         }
@@ -63,6 +63,35 @@ class SearchWordPage : Activity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+       addToNewWordListS.setOnClickListener{
+           var judge = 1
+           val wordNewList= SQLite.select().from(WordNew::class.java).queryList()
+           for (wordNew in wordNewList){
+               if(wordNew.word.equals(word.word)){
+                   judge=0
+                   break
+               }
+           }
+           if(judge==1){
+               val wordN= WordNew()
+               wordN.word=word.word
+               wordN.transform=word.transform
+               wordN.translation=word.translation
+               wordN.example=word.example
+
+
+               //add to new WordsList
+               val wordNew= WordNew()
+               wordNew.insertData(wordN)
+               wordNew.save()
+               Toast.makeText(this,"add "+word.word, Toast.LENGTH_SHORT).show()
+           }
+           else{
+
+               Toast.makeText(this,"added already ", Toast.LENGTH_SHORT).show()
+           }
+       }
 
     }
 

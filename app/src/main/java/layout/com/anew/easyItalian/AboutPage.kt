@@ -23,7 +23,7 @@ class AboutPage : MaterialAboutActivity() {
                         .text("version")
                         .subText("1.0.0")
                         .setOnClickAction{
-                            Toast.makeText(this,"version",Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(this,"version",Toast.LENGTH_SHORT).show()
                         }
                         .build())
                 .addItem(MaterialAboutActionItem.Builder()

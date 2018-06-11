@@ -29,7 +29,6 @@ class WordListAdapter: RecyclerView.Adapter<WordListAdapter.RecyclerHolder>{
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
         val wordlist = mList!![position]
         holder.text.text = wordlist.wordlistName
-      //  holder.text.setText(wordlist.wordlistName)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerHolder {
@@ -41,28 +40,6 @@ class WordListAdapter: RecyclerView.Adapter<WordListAdapter.RecyclerHolder>{
             val position = holder.adapterPosition
             item?.OnItemClick(v,position)
         })
-
-     //       val position = holder.adapterPosition
-      //      Toast.makeText(mContext,position,Toast.LENGTH_SHORT).show()
-
-      //  view.setOnClickListener(onClick())
-     //   holder.wordlistView.setOnClickListener{
-
-    //        val position = holder.adapterPosition
-           // mItemClickListener?.onItemClick(position)
-       //     val wordlist = mList[position]
-        //    val id = wordlist.url
-           // Toast.makeText(mContext,id,Toast.LENGTH_LONG).show()
-       //     MaterialDialog.Builder(mContext)
-       //             .title(wordlist.wordlistName)
-       // /            .content(wordlist.wordlistDesc)
-       //             .negativeText("Cancel")
-       //             .positiveText("Download").onPositive {
-       //                 dialog: MaterialDialog, which: DialogAction ->
-        //                Toast.makeText(mContext,"下载",Toast.LENGTH_LONG).show()
-       //                 }
-       //             .show()
-
 
         return holder
     }
@@ -78,15 +55,12 @@ class WordListAdapter: RecyclerView.Adapter<WordListAdapter.RecyclerHolder>{
 
     inner class onClick:View.OnClickListener{
         override fun onClick(v: View) {
-            var position = RecyclerHolder(v).adapterPosition as Int
-          //  var positon: Int = v!!.getTag() as Int? ?:9999
-          //  Toast.makeText(mContext,position.toString(),Toast.LENGTH_LONG).show();
+            val position = RecyclerHolder(v).adapterPosition
             if(item==null){
-                Toast.makeText(mContext,"哈哈哈",Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext,"???",Toast.LENGTH_LONG).show();
             }
             item!!.OnItemClick(v,position);
         }
-
     }
 }
 
