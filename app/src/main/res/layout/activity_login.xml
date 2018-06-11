@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="layout.com.anew.easyItalian.LoginActivity"
-    android:background="@drawable/background_main">
+    android:background="#F0FFFF">
 
     <!-- Login progress -->
     <ProgressBar

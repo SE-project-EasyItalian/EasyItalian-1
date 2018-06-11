@@ -160,7 +160,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private fun isPasswordValid(password: String): Boolean {
         //TODO: Replace this with your own logic
-        return password.length > 6
+        return password.length >= 6
     }
 
     /**
@@ -263,6 +263,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                    this@LoginActivity.finish();
                    val intent =Intent(this@LoginActivity,MainActivity::class.java)
                    startActivity(intent);
+                   mApp.mHandler?.sendEmptyMessage(1)
                } else {
                    showProgress(false);
                    Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show();

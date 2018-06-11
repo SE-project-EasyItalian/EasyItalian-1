@@ -11,7 +11,7 @@ def dbflow_version = "4.2.4"
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "layout.com.anew.layout1"
+        applicationId "layout.com.anew.EasyItalian"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -58,33 +58,15 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation('cn.leancloud.android:avoscloud-sdk:v4.6.4')
 
-    // 推送与实时聊天需要的包
-    implementation('cn.leancloud.android:avoscloud-push:v4.6.4@aar') { transitive = true }
-
     // LeanCloud 统计包
     implementation('cn.leancloud.android:avoscloud-statistics:v4.6.4')
 
-    // LeanCloud 用户反馈包
-    implementation('cn.leancloud.android:avoscloud-feedback:v4.6.4@aar')
-
-    // avoscloud-sns：LeanCloud 第三方登录包
-    implementation('cn.leancloud.android:avoscloud-sns:v4.6.4@aar')
-    implementation('cn.leancloud.android:qq-sdk:1.6.1-leancloud')
-
-    // LeanCloud 应用内搜索包
-    implementation('cn.leancloud.android:avoscloud-search:v4.6.4@aar')
-
     implementation 'com.lapism:searchview:27.1.1.0.0'
-
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
 
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.zhihu.android:matisse:0.4.3'
-
-    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
-
     implementation 'com.github.daniel-stoneuk:material-about-library:2.3.0'
 
 }

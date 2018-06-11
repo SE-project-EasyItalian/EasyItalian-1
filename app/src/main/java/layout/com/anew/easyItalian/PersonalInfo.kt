@@ -314,12 +314,16 @@ class PersonalInfo : Activity(){
                //     Toast.makeText(this@PersonalInfo, "保存成功", Toast.LENGTH_LONG).show()
 
                     val currentUser = AVUser.getCurrentUser()
-                    CopySdcardFile(this.getExternalFilesDir("profile").absolutePath+"/$FILENAMEOFPIC3",this.getExternalFilesDir("profile").absolutePath+"/"+currentUser.objectId+".jpg")
-                    val file = AVFile.withAbsoluteLocalPath(currentUser.username+"_profile.jpg",  this.getExternalFilesDir("profile").absolutePath+"/$FILENAMEOFPIC3");
+                    CopySdcardFile(this.getExternalFilesDir("profile").absolutePath+"/$FILENAMEOFPIC3",this.getExternalFilesDir("profile").absolutePath+"/"+currentUser.email+".jpg")
+                    val file = AVFile.withAbsoluteLocalPath(currentUser.username+"_profile.jpg",  this.getExternalFilesDir("profile").absolutePath+"/"+currentUser.email+".jpg");
                     file.saveInBackground(object :SaveCallback() {
                         override fun done(p0: AVException?) {
-                            currentUser.put("profile",file.getUrl())
-                            currentUser.saveInBackground()
+                            if (p0==null){
+                                currentUser.put("profile",file.url)
+                                currentUser.saveInBackground()
+                            }else{
+                                Toast.makeText(this@PersonalInfo,"E!!",Toast.LENGTH_SHORT).show()
+                            }
                         }
                     })
 
