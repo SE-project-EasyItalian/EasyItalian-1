@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -43,7 +44,8 @@ class PersonalInfo : Activity(){
         val profileStr = resources.getString(R.string.profile_str)
         val nickNameStr = resources.getString(R.string.nickName_str)
         val wordListStr = resources.getString(R.string.wordList_str)
-        val data = arrayOf(profileStr,nickNameStr,wordListStr)
+        val logOut = resources.getString(R.string.logout)
+        val data = arrayOf(profileStr,nickNameStr,wordListStr,logOut)
         val listView = findViewById<View>(R.id.list_view1) as ListView
         listView.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data)
         listView.setOnItemClickListener{
@@ -61,6 +63,9 @@ class PersonalInfo : Activity(){
                     intent.setClass(this, SetWordList::class.java)
                     startActivity(intent)
                 }
+                3 ->{
+                    logout()
+                }
             }
         }
         val button_back = findViewById<View>(R.id.back_) as Button
@@ -74,6 +79,11 @@ class PersonalInfo : Activity(){
         }
     }
 
+    fun logout(){
+        Toast.makeText(this,"Bye",Toast.LENGTH_SHORT).show()
+        if (AVUser.getCurrentUser()!=null)
+            AVUser.logOut()
+    }
     override fun onBackPressed() {
         super.onBackPressed()
         // use handler to refresh ui
@@ -310,7 +320,6 @@ class PersonalInfo : Activity(){
                         override fun done(p0: AVException?) {
                             currentUser.put("profile",file.getUrl())
                             currentUser.saveInBackground()
-
                         }
                     })
 

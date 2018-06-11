@@ -67,6 +67,7 @@
     <string name="please_wait">请稍候</string>
     <string name="progress_dialog_setting">正在设置</string>
     <string name="progress_dialog_acquiring">正在加载</string>
+    <string name="logout">退出登录</string>
     <string name="title_activity_word_list_detail_page_ii">WordListDetailPageII</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

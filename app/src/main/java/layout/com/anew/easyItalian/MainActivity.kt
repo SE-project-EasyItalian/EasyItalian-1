@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
 import android.widget.TextView
 import com.avos.avoscloud.AVUser
+import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.content_main.*
@@ -95,26 +96,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
                             val headerView = navigationView.getHeaderView(0)
                             val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
-                            val myProfile =  AVUser.getCurrentUser().fetch().get("profile").toString()
-                            if (myProfile!="laura")
-                                Picasso.get().load(myProfile).into(profile)
+
+                            if (File(profileFile).exists()){
+                                Picasso.get().load(File(profileFile)).memoryPolicy(MemoryPolicy.NO_CACHE).into(profile)
+                                Log.d("Profile","Use local profile")}
+
+
+                            ///val myProfile =  AVUser.getCurrentUser().fetch().get("profile").toString()
+                           // if (myProfile!="laura")
+                            //    Picasso.get().load(myProfile).into(profile)
                             if(AVUser.getCurrentUser()!=null){
                                 val nickName = headerView.findViewById<TextView>(R.id.textView)
                                 nickName.setText(AVUser.getCurrentUser().fetch().get("nickName").toString() )
                             }
                         } catch (e:Exception){
-
-                            if (File(profileFile).exists()){
-                                val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
-                                val headerView = navigationView.getHeaderView(0)
-                                val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
-                                Picasso.get().load(File(profileFile)).into(profile)
-                                Log.d("Profile","Connection Error, Use local profile")
-                            }else
+                            val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+                            val headerView = navigationView.getHeaderView(0)
+                            val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
+                            val myProfile =  AVUser.getCurrentUser().fetch().get("profile").toString()
+                            if (myProfile!="laura")
+                                Picasso.get().load(myProfile).memoryPolicy(MemoryPolicy.NO_CACHE).into(profile)
+                            else
                             {
-                                val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
-                                val headerView = navigationView.getHeaderView(0)
-                                val profile = headerView.findViewById<CircleImageView>(R.id.profile_picture)
                                 Picasso.get().load(R.mipmap.laura).into(profile)
                             }
                             Log.d("Profile","Can't find local profile")

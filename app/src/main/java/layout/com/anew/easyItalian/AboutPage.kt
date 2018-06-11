@@ -8,6 +8,9 @@ import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList
 import layout.com.anew.easyItalian.R
+import android.content.Intent
+import android.net.Uri
+
 
 class AboutPage : MaterialAboutActivity() {
 
@@ -17,7 +20,7 @@ class AboutPage : MaterialAboutActivity() {
         val EI = MaterialAboutCard.Builder()
                 .addItem(MaterialAboutActionItem.Builder()
                         .icon(R.mipmap.ic_version)
-                        .text("verstion")
+                        .text("version")
                         .subText("1.0.0")
                         .setOnClickAction{
                             Toast.makeText(this,"version",Toast.LENGTH_SHORT).show()
@@ -25,10 +28,12 @@ class AboutPage : MaterialAboutActivity() {
                         .build())
                 .addItem(MaterialAboutActionItem.Builder()
                         .icon(R.mipmap.ic_version)
-                        .text("源代码")
-                        .subText("Call gitHub")
+                        .text("SourceCode")
+                        .subText("GitHub")
                         .setOnClickAction{
-
+                            val uri = Uri.parse("https://github.com/SE-project-EasyItalian/EasyItalian-1")
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            startActivity(intent)
                         }
                         .build())
                 .title("EasyItalian")
@@ -38,14 +43,15 @@ class AboutPage : MaterialAboutActivity() {
         val Author = MaterialAboutCard.Builder()
                 .addItem(MaterialAboutActionItem.Builder()
                         .icon(R.mipmap.ic_version)
-                        .text("My Name")
-                        .subText("NanJing")
+                        .text("Our Group")
+                        .subText("Lv Jiaying, Liao Yujun, XuShaoxun")
                         .build())
                 .addItem(MaterialAboutActionItem.Builder()
                         .icon(R.mipmap.ic_version)
-                        .text("Follow me")
+                        .text("Project EasyItalian")
+                        .subText("Make it easy&fun for Chinese to Learn Italian")
                         .build())
-                .title("Author")
+                .title("About us")
                 .build()
         return MaterialAboutList.Builder()
                 .addCard(EI)

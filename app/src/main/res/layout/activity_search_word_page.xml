@@ -31,13 +31,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
     <TextView
         android:id="@+id/wordForDetails"
-        android:layout_width="352dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="78dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="66dp"
         android:gravity="center"
         android:text="Ciao"
         android:textSize="38sp"
@@ -57,9 +55,14 @@
 
     <ListView
         android:id="@+id/wordDetails"
-        android:layout_width="355dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="300dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

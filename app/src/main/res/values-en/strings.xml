@@ -67,6 +67,7 @@
     <string name="please_wait">Please wait</string>
     <string name="progress_dialog_setting">Setting&#8230;</string>
     <string name="progress_dialog_acquiring">Loading&#8230;</string>
+    <string name="logout">Log Out</string>
 
 
 </resources>
