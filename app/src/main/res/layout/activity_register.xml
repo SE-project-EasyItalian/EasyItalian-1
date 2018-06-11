@@ -34,14 +34,12 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/userName"
+                <AutoCompleteTextView
+                    android:id="@+id/eMail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/username"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:inputType="text"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -88,12 +86,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
-                    android:id="@+id/eMail"
+                <EditText
+                    android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
+                    android:hint="@string/username"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -104,7 +103,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/buttonshape"
-                android:text="@string/action_sign_up" />
+                android:text="@string/action_sign_up"
+                android:textColor="#000000" />
+
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

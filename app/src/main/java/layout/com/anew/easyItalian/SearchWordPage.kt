@@ -30,7 +30,7 @@ class SearchWordPage : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_word_page)
 
-
+        findViewById<Button>(R.id.addToNewWordListS).background.alpha=100
         getWord()
         wordForDetailsS.setText(word.word)
         toolbarS.title="   "+ word.word

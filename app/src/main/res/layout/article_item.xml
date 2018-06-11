@@ -9,9 +9,14 @@
     android:layout_marginTop="4dp">
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
 
         <TextView
             android:id="@+id/title"
@@ -36,6 +41,7 @@
             android:textSize="12sp" />
 
         <LinearLayout
+            android:id="@+id/linearL"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -60,7 +66,17 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY" />
+
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout4"
+            tools:layout_editor_absoluteY="43dp" />
 
     </LinearLayout>
 

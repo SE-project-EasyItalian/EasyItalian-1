@@ -54,7 +54,8 @@ class WordDetailsActivity() : Activity() {
         voice.setOnClickListener{
             callTTS()
         }
-
+        findViewById<Button>(R.id.continue_study).background.alpha=70
+        findViewById<Button>(R.id.addToNewWordList).background.alpha=70
 
         // the buttons' listener has problem
         val button = findViewById<Button>(R.id.continue_study)

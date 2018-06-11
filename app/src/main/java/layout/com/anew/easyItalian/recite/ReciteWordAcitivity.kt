@@ -36,6 +36,14 @@ class ReciteWordAcitivity : Activity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+        findViewById<Button>(R.id.showDetails).background.alpha=180
+        findViewById<Button>(R.id.remembereIt).background.alpha=180
+        findViewById<Button>(R.id.buttonA).background.alpha=180
+        findViewById<Button>(R.id.buttonB).background.alpha=180
+        findViewById<Button>(R.id.buttonC).background.alpha=180
+        findViewById<Button>(R.id.buttonD).background.alpha=180
+
+
     }
 
 

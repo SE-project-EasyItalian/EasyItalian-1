@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_main">
+    android:background="#F0FFFF">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -37,6 +37,7 @@
         android:layout_marginTop="78dp"
         android:gravity="center"
         android:text="Ciao"
+        android:textColor="#000000"
         android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -60,6 +61,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:divider="@null"
         app:layout_constraintBottom_toBottomOf="@+id/space1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -14,6 +14,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.avos.avoscloud.AVUser
 import com.squareup.picasso.MemoryPolicy
@@ -170,7 +171,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             changeToRead.setClass(this, ReadActivity::class.java)
            startActivity(changeToRead)
         }
-
+        val v = findViewById<Button>(R.id.buttonForRead)
+        v.getBackground().setAlpha(100)
         // make sure the nav_view open&close in time
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)

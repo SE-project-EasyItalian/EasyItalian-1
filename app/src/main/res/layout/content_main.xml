@@ -11,11 +11,14 @@
 
     <Button
         android:id="@+id/buttonForLearn"
-        android:layout_width="163dp"
+        android:layout_width="0dp"
         android:layout_height="65dp"
-        android:background="@drawable/greenbutton"
+        android:background="#778899"
         android:text="@string/button_learn"
         android:textSize="28sp"
+        android:textStyle="italic"
+        android:textColor="#F8F8FF"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -24,12 +27,15 @@
 
     <Button
         android:id="@+id/buttonForRead"
-        android:layout_width="163dp"
+        android:layout_width="0dp"
         android:layout_height="65dp"
         android:layout_marginTop="36dp"
-        android:background="@drawable/greenbutton"
+        android:background="#778899"
         android:text="@string/button_read"
         android:textSize="28sp"
+        android:textColor="#F8F8FF"
+        android:textStyle="italic"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonForLearn" />
@@ -44,7 +50,8 @@
         android:theme="@style/Base.Theme.AppCompat.Light.Dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_search_black" />
+        app:srcCompat="@drawable/ic_search_black"
+        android:tint="#FFFFFF"/>
 
 
 </android.support.constraint.ConstraintLayout>
